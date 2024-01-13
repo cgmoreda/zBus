@@ -1,25 +1,26 @@
-﻿using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace zBus.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using System.ComponentModel.DataAnnotations;
+using zBus.Models;
+using zBus.Data.Enums;
+public class Trip
 {
-    public class Trip
-    {
-        [Key]
-        public int TripId { get; set; }
-        public double TripTime{ get; set;}
-        public DateTime DepartureTime { get; set; }
-        public DateTime ArrivalTime { get; set; }
-        public double TripPrice { get; set; }
-        public List<bool> seatesStatus { get; set; }
-        public int AvailableSeats { get; set; }
-        [ForeignKey("Station")]
-        public string DepartureCityID { get; set; }
+    [Key]
+    public int TripId { get; set; }
+    public double TripTime { get; set; }
+    public DateTime DepartureTime { get; set; }
+    public DateTime ArrivalTime { get; set; }
+    public double TripPrice { get; set; }
 
-        [ForeignKey("Station")]
-         public string ArrivalCityID { get; set; }
-        
+    [ForeignKey("DepartureStation")]
+    public int DepartureCityID { get; set; }
 
+    [ForeignKey("ArrivalStation")]
+    public int ArrivalCityID { get; set; }
 
-    }
+    // Navigation properties
+    public virtual Station DepartureStation { get; set; }
+
+    public virtual Station ArrivalStation { get; set; }
+    public virtual ICollection<Seat> Seats { get; set; }
+
 }

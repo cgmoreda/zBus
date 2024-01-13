@@ -8,9 +8,9 @@ namespace zBus.Models
     {
         [Key]
         public int StationId { get; set; }
-        string StationCity { get; set; }
-        string StationAddress{ get; set; }
-        string StationName { get; set; }
-        string ContactNumber { get; set; }
+        public string StationCity { get; set; }
+        public string StationAddress { get; set; }
+        public string StationName { get; set; }
+        public string ContactNumber { get; set; }
     }
 }
