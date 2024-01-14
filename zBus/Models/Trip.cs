@@ -16,11 +16,16 @@ public class Trip
 
     [ForeignKey("ArrivalStation")]
     public int ArrivalCityID { get; set; }
+    
+    [ForeignKey("Bus")]
+    public int BusId{ get; set; }
 
     // Navigation properties
     public virtual Station DepartureStation { get; set; }
 
     public virtual Station ArrivalStation { get; set; }
+
+    public virtual Bus Bus{ get; set; }
     public virtual ICollection<Seat> Seats { get; set; }
 
 }

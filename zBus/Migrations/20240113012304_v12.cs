@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace zBus.Migrations
 {
-    public partial class v10 : Migration
+    public partial class v12 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -88,13 +88,13 @@ namespace zBus.Migrations
                         column: x => x.ArrivalCityID,
                         principalTable: "Stations",
                         principalColumn: "StationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Trips_Stations_DepartureCityID",
                         column: x => x.DepartureCityID,
                         principalTable: "Stations",
                         principalColumn: "StationId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(

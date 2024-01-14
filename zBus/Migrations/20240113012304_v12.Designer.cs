@@ -12,8 +12,8 @@ using zBus.Data;
 namespace zBus.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240113003156_v1.0")]
-    partial class v10
+    [Migration("20240113012304_v12")]
+    partial class v12
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,13 +194,13 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Station", "ArrivalStation")
                         .WithMany()
                         .HasForeignKey("ArrivalCityID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("zBus.Models.Station", "DepartureStation")
                         .WithMany()
                         .HasForeignKey("DepartureCityID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("ArrivalStation");
