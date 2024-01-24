@@ -39,7 +39,7 @@ namespace zBus.Data
                             Age = 24,
                             YearsOfExperince = 0
                         }
-                     }); ;
+                     });
                     context.SaveChanges();
                 }
             }
