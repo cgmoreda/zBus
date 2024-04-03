@@ -13,7 +13,7 @@ namespace zBus.Controllers
         public IActionResult Index()
         {
             var data = _context.Stations.ToList();
-            return View();
+            return View(data);
         }
     }
 }

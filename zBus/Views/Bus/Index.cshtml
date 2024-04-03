@@ -1,0 +1,95 @@
+﻿@model IEnumerable<Bus>
+@{
+    ViewData["Title"] = "List of Buses";
+    var drivers =  (List<Driver>)ViewData["Drivers"];
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>@ViewData["Title"]</title>
+
+    <style>
+        .table th, .table td {
+            text-align: center;
+        }
+
+        .table img {
+            width: 130px;
+            height: 130px;
+            object-fit: cover;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="row">
+        <div class="col-md-8 offset-md-2">
+            <table class="table">
+
+                <thead>
+                    <tr class="text-center">
+
+                        <th>Bus ID</th>
+                        <th>Bus Picture</th>
+                        <th>Bus Model</th>
+                        <th>Number of Seats</th>
+                        <th>WiFi </th>
+                        <th>Restroom </th>
+                        <th>Driver Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="align-middle">
+                                    <img class="rounded-circle" src="@item.BusPicture" alt="@item.BusModel" style="max-width: 150px" />
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.BusId)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.BusModel)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.NumberOfSeats)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.WifiAvailable)
+                                </td>
+                                <td class="align-middle">
+                                    @Html.DisplayFor(modelItem => item.RestroomAvailable)
+                                </td>   
+                                <td class="align-middle">
+                                    @drivers.FirstOrDefault(x=>x.DriverId==item.DriverId).FullName
+                                </td>
+                                <td class="align-middle">
+                                    <a class="btn btn-outline-primary" href="#"><i class="bi bi-pencil-square"></i>Edit </a> |
+                                    <a class="btn btn-outline-info" href="#"><i class="bi bi-eye"></i>Details </a> |
+                                    <a class="btn btn-danger text-white" href="#"><i class="bi bi-trash"></i>Delete </a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="7" class="text-center">
+                                No Buses Added to the System
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</body>
+</html>

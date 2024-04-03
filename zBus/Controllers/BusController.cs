@@ -9,11 +9,13 @@ namespace zBus.Controllers
         public BusController(AppDbContext context)
         {
             _context = context;
+
         }
         public IActionResult Index()
         {
             var data = _context.Buses.ToList();
-            return View();
+            ViewData["Drivers"] = _context.Drivers.ToList();
+            return View(data);
         }
     }
 }

@@ -12,6 +12,8 @@ namespace zBus.Controllers
         }
         public IActionResult Index()
         {
+            //TBD
+            return NotFound();
             var data = _context.Trips.ToList();
             return View();
         }
