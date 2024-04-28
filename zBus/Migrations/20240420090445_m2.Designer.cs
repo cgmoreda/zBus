@@ -12,8 +12,8 @@ using zBus.Data;
 namespace zBus.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240113012304_v12")]
-    partial class v12
+    [Migration("20240420090445_m2")]
+    partial class m2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -59,6 +59,9 @@ namespace zBus.Migrations
                     b.Property<DateTime>("ArrivalTime")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("BusId")
+                        .HasColumnType("int");
+
                     b.Property<int>("DepartureCityID")
                         .HasColumnType("int");
 
@@ -74,6 +77,8 @@ namespace zBus.Migrations
                     b.HasKey("TripId");
 
                     b.HasIndex("ArrivalCityID");
+
+                    b.HasIndex("BusId");
 
                     b.HasIndex("DepartureCityID");
 
@@ -135,13 +140,14 @@ namespace zBus.Migrations
 
                     b.Property<string>("FullName")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
 
-                    b.Property<string>("ProfilePicture")
+                    b.Property<string>("ProfilePicturePath")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("YearsOfExperince")
+                    b.Property<int>("YearsOfExperience")
                         .HasColumnType("int");
 
                     b.HasKey("DriverId");
@@ -197,6 +203,12 @@ namespace zBus.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
+                    b.HasOne("zBus.Models.Bus", "Bus")
+                        .WithMany()
+                        .HasForeignKey("BusId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("zBus.Models.Station", "DepartureStation")
                         .WithMany()
                         .HasForeignKey("DepartureCityID")
@@ -204,6 +216,8 @@ namespace zBus.Migrations
                         .IsRequired();
 
                     b.Navigation("ArrivalStation");
+
+                    b.Navigation("Bus");
 
                     b.Navigation("DepartureStation");
                 });

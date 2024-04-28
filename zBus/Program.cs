@@ -5,11 +5,13 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using zBus.Data;
+using zBus.Data.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
 
 // DbContext configuration
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
@@ -19,6 +21,9 @@ if (string.IsNullOrEmpty(connectionString))
 }
 
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(connectionString));
+
+// add IDriversService to the container
+builder.Services.AddScoped<IDriversService, DriversService>();
 
 var app = builder.Build();
 
@@ -39,7 +44,6 @@ app.UseAuthorization();
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
-
 
 AppDbInitializer.seed(app);
 

@@ -1,19 +1,35 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using zBus.Data;
+using zBus.Data.Services;
+using zBus.Models;
 
 namespace zBus.Controllers
 {
     public class DriverController : Controller
     {
-        private readonly AppDbContext _context;
-        public DriverController(AppDbContext context)
+        private readonly IDriversService _service;
+        public DriverController(IDriversService service)
         {
-            _context = context;
+            _service = service;
         }
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            var data = _context.Drivers.ToList();
+            var data = await _service.GetAll();
             return View(data);
+        }
+        public IActionResult Create()
+        {
+            return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> Create([Bind("ProfilePicture,FullName,Age,YearsOfExperience")]Driver driver)
+        {
+            if (ModelState.IsValid)
+            {
+                _service.Add(driver);
+                return RedirectToAction("Index");
+            }
+            return View(driver);
         }
     }
 }

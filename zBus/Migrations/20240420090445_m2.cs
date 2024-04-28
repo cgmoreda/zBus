@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace zBus.Migrations
 {
-    public partial class v12 : Migration
+    public partial class m2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,11 +15,11 @@ namespace zBus.Migrations
                 {
                     DriverId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ProfilePicture = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    FullName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    ProfilePicturePath = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FullName = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     Contact = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Age = table.Column<int>(type: "int", nullable: false),
-                    YearsOfExperince = table.Column<int>(type: "int", nullable: false)
+                    YearsOfExperience = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -78,11 +78,18 @@ namespace zBus.Migrations
                     ArrivalTime = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TripPrice = table.Column<double>(type: "float", nullable: false),
                     DepartureCityID = table.Column<int>(type: "int", nullable: false),
-                    ArrivalCityID = table.Column<int>(type: "int", nullable: false)
+                    ArrivalCityID = table.Column<int>(type: "int", nullable: false),
+                    BusId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Trips", x => x.TripId);
+                    table.ForeignKey(
+                        name: "FK_Trips_Buses_BusId",
+                        column: x => x.BusId,
+                        principalTable: "Buses",
+                        principalColumn: "BusId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Trips_Stations_ArrivalCityID",
                         column: x => x.ArrivalCityID,
@@ -133,6 +140,11 @@ namespace zBus.Migrations
                 column: "ArrivalCityID");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Trips_BusId",
+                table: "Trips",
+                column: "BusId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Trips_DepartureCityID",
                 table: "Trips",
                 column: "DepartureCityID");
@@ -141,19 +153,19 @@ namespace zBus.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Buses");
-
-            migrationBuilder.DropTable(
                 name: "Seat");
-
-            migrationBuilder.DropTable(
-                name: "Drivers");
 
             migrationBuilder.DropTable(
                 name: "Trips");
 
             migrationBuilder.DropTable(
+                name: "Buses");
+
+            migrationBuilder.DropTable(
                 name: "Stations");
+
+            migrationBuilder.DropTable(
+                name: "Drivers");
         }
     }
 }
