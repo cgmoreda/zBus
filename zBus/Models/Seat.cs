@@ -15,5 +15,5 @@ public class Seat
     [ForeignKey("Trip")]
     public int TripId { get; set; }
 
-    public virtual Trip Trip { get; set; }
+    public virtual Trip? Trip { get; set; }
 }

@@ -22,6 +22,7 @@ namespace zBus.Data
                 .OnDelete(DeleteBehavior.Restrict);
         }
         public DbSet<Bus> Buses { get; set; }
+        public DbSet<Seat> Seats { get; set; }
         public DbSet<Driver> Drivers { get; set; }
         public DbSet<Station> Stations { get; set; }
         public DbSet<Trip> Trips { get; set; }
