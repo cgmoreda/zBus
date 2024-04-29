@@ -21,6 +21,7 @@ public class Trip
     public int BusId{ get; set; }
 
     // Navigation properties
+    [Display(Name = "Departure Station")]
     public virtual Station DepartureStation { get; set; }
 
     public virtual Station ArrivalStation { get; set; }
@@ -28,4 +29,5 @@ public class Trip
     public virtual Bus Bus{ get; set; }
     public virtual ICollection<Seat> Seats { get; set; }
 
+    public virtual ICollection<User> Users { get; set; }
 }

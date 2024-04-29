@@ -1,0 +1,53 @@
+﻿@model User;
+@{
+    Layout = "_Mylayout";
+}
+
+
+<body>
+    
+    <div class="container" style="margin-top: 120px;">
+
+        <div class="col-md-6 mb-5 mb-md-0">
+            <div class="p-3 p-lg-5 border bg-white">
+                <form asp-action="Login_Valid">
+                    <div class="form-group row">
+                        <h3 style="text-align:center">Login</h3>
+                    </div>
+                    <span asp-validation-summary="Customer" style="color:red"></span>
+                    <div class="form-group-row">
+                        <label asp-for="Email" class="text-black"></label>
+                        <span class="text-danger">*</span>
+                        <input asp-for="Email" class="form-control" />
+                        <span asp-validation-for="Email" class="formwarn"></span>
+                    </div>
+
+                    <div class="form-group-row">
+                        <label asp-for="Password" class="text-black"></label>
+                        <span class="text-danger">*</span>
+                        <input asp-for="Password" class="form-control" />
+                        <span asp-validation-for="Password" class="formwarn"></span>
+                    </div>
+
+                    <div>
+                        <span asp-validation-summary="User" class="formwarn"></span>
+                    </div>
+                    <br />
+                    <div class="form-group row">
+                        <button type="submit" style="text-align:center ; margin-left:25%;margin-right:25%" class="book_now_btn button_hover"> Login </button>
+                    </div>
+
+
+                    <div class="form-group row">
+                        <a asp-action="Register" style=" margin-left:25%;margin-right:25%; color:cadetblue">Create Account?</a>
+                    </div>
+                </form>
+            </div>
+
+
+        </div>
+
+    </div>
+
+
+</body>

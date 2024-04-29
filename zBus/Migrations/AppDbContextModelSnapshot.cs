@@ -17,7 +17,7 @@ namespace zBus.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.26")
+                .HasAnnotation("ProductVersion", "6.0.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -40,7 +40,7 @@ namespace zBus.Migrations
 
                     b.HasIndex("TripId");
 
-                    b.ToTable("Seat");
+                    b.ToTable("Seats");
                 });
 
             modelBuilder.Entity("Trip", b =>
@@ -83,6 +83,21 @@ namespace zBus.Migrations
                     b.ToTable("Trips");
                 });
 
+            modelBuilder.Entity("TripUser", b =>
+                {
+                    b.Property<int>("TripsTripId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UsersUser_Id")
+                        .HasColumnType("int");
+
+                    b.HasKey("TripsTripId", "UsersUser_Id");
+
+                    b.HasIndex("UsersUser_Id");
+
+                    b.ToTable("TripUser");
+                });
+
             modelBuilder.Entity("zBus.Models.Bus", b =>
                 {
                     b.Property<int>("BusId")
@@ -91,7 +106,7 @@ namespace zBus.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BusId"), 1L, 1);
 
-                    b.Property<bool>("AirConditioningAvailable")
+                    b.Property<bool?>("AirConditioningAvailable")
                         .HasColumnType("bit");
 
                     b.Property<string>("BusModel")
@@ -108,10 +123,10 @@ namespace zBus.Migrations
                     b.Property<int>("NumberOfSeats")
                         .HasColumnType("int");
 
-                    b.Property<bool>("RestroomAvailable")
+                    b.Property<bool?>("RestroomAvailable")
                         .HasColumnType("bit");
 
-                    b.Property<bool>("WifiAvailable")
+                    b.Property<bool?>("WifiAvailable")
                         .HasColumnType("bit");
 
                     b.HasKey("BusId");
@@ -182,6 +197,46 @@ namespace zBus.Migrations
                     b.ToTable("Stations");
                 });
 
+            modelBuilder.Entity("zBus.Models.User", b =>
+                {
+                    b.Property<int>("User_Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("User_Id"), 1L, 1);
+
+                    b.Property<string>("Address")
+                        .HasColumnType("nvarchar(255)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Fisrt_name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Last_name")
+                        .IsRequired()
+                        .HasMaxLength(20)
+                        .HasColumnType("nvarchar(20)");
+
+                    b.Property<string>("Password")
+                        .HasMaxLength(100)
+                        .HasColumnType("nvarchar(100)");
+
+                    b.Property<string>("Phone_number")
+                        .HasMaxLength(11)
+                        .HasColumnType("varchar(11)");
+
+                    b.Property<string>("PhotoPhath")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("User_Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("Seat", b =>
                 {
                     b.HasOne("Trip", "Trip")
@@ -218,6 +273,21 @@ namespace zBus.Migrations
                     b.Navigation("Bus");
 
                     b.Navigation("DepartureStation");
+                });
+
+            modelBuilder.Entity("TripUser", b =>
+                {
+                    b.HasOne("Trip", null)
+                        .WithMany()
+                        .HasForeignKey("TripsTripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("zBus.Models.User", null)
+                        .WithMany()
+                        .HasForeignKey("UsersUser_Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("zBus.Models.Bus", b =>

@@ -18,6 +18,13 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
     <link rel="stylesheet" href="/assets/scss/">
+
+    <style>
+        .formwarn {
+            color: red; 
+            font - size: 5px; /* Font size */
+        }
+    </style>
 </head>
 <body>
     <!--================Header Area =================-->
@@ -33,12 +40,15 @@
                 </button>
                 <!-- Collect the nav links, forms, and other content for toggling -->
                 <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav menu_nav ml-auto">
+                    <ul class="nav navbar-nav menu_nav ml-auto" id="menuItems">
                         <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
                         <li class="nav-item"><a class="nav-link" href="accomodation.html">Stations</a></li>
                         <li class="nav-item"><a class="nav-link" href="elements.html">Cities</a></li>
                         <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+
+                        <li> <partial name="_LoginPartialView" /></li>
+
                     </ul>
                 </div>
             </nav>
@@ -81,5 +91,20 @@
     <script src="/assets/js/stellar.js"></script>
     <script src="/assets/vendors/lightbox/simpleLightbox.min.js"></script>
     <script src="/assets/js/custom.js"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        var menuItems = document.getElementById('menuItems').getElementsByTagName('a');
+        for (var i = 0; i < menuItems.length; i++) {
+            menuItems[i].addEventListener('click', function () {
+                var current = document.getElementsByClassName('active');
+                if (current.length > 0) {
+                    current[0].className = current[0].className.replace(' active', '');
+                }
+                this.parentElement.className += ' active';
+            });
+        }
+    </script>
 </body>
 </html>

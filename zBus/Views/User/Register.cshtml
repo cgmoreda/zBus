@@ -1,0 +1,130 @@
+﻿@model User;
+@{
+    Layout = "_Mylayout";
+}
+
+<body>
+
+    
+    <div class="container">
+        <div class="row" style="margin:100px">
+
+            <div class="col-md-6 mb-5 mb-md-0">
+                <div class="p-3 p-lg-5 border bg-white">
+                    <div class="h3 mb-3 text-black" style="text-align:center">Register</div>
+                    <br>
+                    <form asp-action="Register_Save" asp-controller="User" method="post" style="border:medium">
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label asp-for="Fisrt_name" class="text-black">First Name<span class="text-danger">*</span></label>
+
+                                <input asp-for="Fisrt_name" class="form-control" />
+                                <span asp-validation-for="Fisrt_name" class="formwarn"></span>
+
+                            </div>
+                            <div class="col-md-6">
+                                <label asp-for="Last_name" class="text-black"></label>
+                                <span class="text-danger">*</span>
+                                <br />
+                                <input asp-for="Last_name" class="form-control" />
+                                <span asp-validation-for="Last_name" class="formwarn"></span>
+
+                            </div>
+                        </div>
+
+                        <div class="form-group-row">
+
+                            <label asp-for="Email" class="text-black"></label>
+                            <span class="text-danger">*</span>
+                            <br />
+                            <input asp-for="Email" class="form-control" />
+                            <span asp-validation-for="Email" class="formwarn"></span>
+
+                        </div>
+
+
+                        <div class="form-group-row">
+
+                            <label asp-for="Phone_number" class="text-black"></label>
+                            <span class="text-danger">*</span>
+                            <br />
+                            <input asp-for="Phone_number" class="form-control" />
+                            <span asp-validation-for="Phone_number" class="formwarn"></span>
+
+                        </div>
+
+
+                        <div class="form-group-row">
+
+                            <label asp-for="Address" class="text-black"></label>
+
+                            <br />
+                            <input asp-for="Address" class="form-control" />
+                            <span asp-validation-for="Address" class="formwarn"></span>
+
+                        </div>
+
+                        <div class="form-group-row">
+
+                            <label asp-for="Password" class="text-black"></label>
+                            <span class="text-danger">*</span>
+                            <br />
+                            <input asp-for="Password" id="password" class="form-control" />
+                            <span asp-validation-for="Password" class="formwarn"></span>
+
+                        </div>
+
+                        <div class="form-group-row">
+
+                            <label class="text-black">Confirm Password</label>
+                            <span class="text-danger">*</span>
+                            <br />
+                            <input id="confirmPassword" class="form-control" onchange="ConfirmPassword()" type="password" />
+                            <span asp-validation-for="Password" class="formwarn"></span>
+
+                        </div>
+                        <div>
+
+                            <span id="confirmPassword_error" class="formwarn"></span>
+                        </div>
+
+                        <div>
+                            <span asp-validation-summary="User" class="formwarn"></span>
+                        </div>
+                        <br />
+
+                        <div class="form-group row">
+                            <div class="col-md-7" style="align-content:center" >
+                                <button type="submit" class="book_now_btn button_hover">Create Account</button>
+                            </div>
+                   
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.js">  </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+
+    @section Scripts {
+        <script>
+            function ConfirmPassword() {
+                var pass1 = document.getElementById("password").value;
+                var pass2 = document.getElementById("confirmPassword").value;
+
+                if (pass1 !== pass2) {
+                    document.getElementById("confirmPassword_error").innerHTML = "Passwords do not match";
+                } else {
+                    document.getElementById("confirmPassword_error").innerHTML = "";
+                }
+            }
+        </script>
+    }
+
+
+</body>
