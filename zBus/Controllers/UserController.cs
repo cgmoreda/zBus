@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
+using System.Text.RegularExpressions;
 using zBus.Data.Services;
 using zBus.GLobal;
 using zBus.Models;
@@ -30,54 +31,55 @@ namespace zBus.Controllers
         public IActionResult Register_Save(User user)
          {
 
-           if(ModelState.IsValid)
+            if (ModelState.IsValid)
             {
-                if(_userService.Exist(user.Email))
-                {
-                    ModelState.AddModelError("email", "This Email is already registered.");
-                    return View("Register", user);
+      
+                    if (_userService.Exist(user.Email))
+                    {
+                        ModelState.AddModelError("email", "This Email is already registered.");
+                        return View("Register", user);
+                    }
+                    else
+                    {
+                        _userService.Add(user);
+                        return View("Login_Page");
+                    }
                 }
-                else
-                {
-                    _userService.Add(user);
-                    return RedirectToAction("Login_Page");
-                }   
-            }
+           
             
-            return View("Index","Home");
+            return View("Register", user);
          }
         
 
-        public IActionResult Login_Valid(string email, string password) {
-
+        public IActionResult Login_Valid(string email, string Password) {
+            ViewBag.valid=string.Empty;
             if (ModelState.IsValid)
             {
                 if (_userService.Exist(email))
                 {
                     var user = _userService.GetById(email);
-                    if (user.Password == password)
+                    if (user.Password == Password)
                     {
                         GlobalVariables.Login_Status=true;
                         GlobalVariables.User= user.Email;
                         return RedirectToAction("Index", "Home");
                     }
-                    else
+                  
                     {
-                        ModelState.AddModelError("Password", "Password does not Correct");
-                        return RedirectToAction("Login_Page");
+                        ModelState.AddModelError("password","Password is not Correct");
+                        return View("Login_Page");
                     }
                 }
                 else
                 {
-                    ModelState.AddModelError("Email", "Email does not exist try a valid one");
-                    return RedirectToAction("Login_Page");
+                    ModelState.AddModelError("email","Email does not exist try a valid one");
+                    return View("Login_Page");
                 }
             }
 
-            return RedirectToAction("Login_Page");
-        
-        }
+            return View("Login_Page");
 
+        }
 
         public IActionResult Logout() {
 
@@ -127,6 +129,11 @@ namespace zBus.Controllers
             return View();
         }
 
+        public IActionResult Book()
+        {
+
+            return View();
+        }
 
 
     }

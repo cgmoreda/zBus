@@ -62,12 +62,16 @@ namespace zBus.Data.Services
             _context.SaveChanges();
 
         }
-        
+
 
         public bool Exist(string mail)
         {
-            var user = _context.Users.FirstOrDefault(user => user.Email == mail);
-            return user==null? false: true;
+
+            bool test = _context.Users.Any(u => u.Email == mail);
+            if (test)
+                return true;
+            else
+                return false;
         }
     }
 

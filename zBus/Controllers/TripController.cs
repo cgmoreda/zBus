@@ -17,5 +17,13 @@ namespace zBus.Controllers
             var data = _context.Trips.ToList();
             return View();
         }
+
+        public IActionResult Details()
+        {
+            return View();
+
+        }
+
+      
     }
 }

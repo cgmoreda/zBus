@@ -32,10 +32,11 @@ namespace zBus.Models
         public string? Email { get; set; }
 
 
-
+        [Required(ErrorMessage = "Phone Number is Required")]
         [Phone, Column(TypeName = "varchar(11)")]
         [DataType(DataType.PhoneNumber,ErrorMessage ="Must be Digits")]
         [MaxLength(11)]
+        [MinLength(11, ErrorMessage = "Must Be 11 Digits")]
         [StringLength(11, ErrorMessage = "Must Be 11 Digits")]
         [Display(Name = "Phone Number")]
         public string? Phone_number { get; set; }
