@@ -17,43 +17,53 @@
     <!-- main css -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
-    <link rel="stylesheet" href="/assets/scss/">
+    <link href="/assets2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="/assets2/css/tiny-slider.css" rel="stylesheet">
+    <link href="/assets2/css/style.css" rel="stylesheet">
+
 
     <style>
         .formwarn {
             color: red; 
-            font - size: 5px; /* Font size */
+            font: - size: 5px; /* Font size */
         }
     </style>
 
 </head>
 <body>
     <!--================Header Area =================-->
-    <header class="header_area">
+    <!-- Start Header/Navigation -->
+    <nav class="custom-navbar navbar navbar navbar-expand-md navbar-dark bg-dark" arial-label="Furni navigation bar" style="background-color:#04091e !important">
+
         <div class="container">
-            <nav class="navbar navbar-expand-lg navbar-light">
-                <!-- Brand and toggle get grouped for better mobile display -->
-                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <!-- Collect the nav links, forms, and other content for toggling -->
-                <div class="collapse navbar-collapse offset" id="navbarSupportedContent">
-                    <ul class="nav navbar-nav menu_nav ml-auto" id="menuItems">
-                        <li class="nav-item active"><a class="nav-link" href="index.html">Home</a></li>
-                        <li class="nav-item"><a class="nav-link" href="about.html">About us</a></li>
-                        <li class="nav-item"><a class="nav-link" href="accomodation.html">Stations</a></li>
-                        <li class="nav-item"><a class="nav-link" href="elements.html">Cities</a></li>
-                        <li class="nav-item"><a class="nav-link" href="contact.html">Contact</a></li>
+            <a class="navbar-brand" href="index.html">ZBUS  <span>.</span></a>
 
-                        <li> <partial name="_LoginPartialView" /></li>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsFurni" aria-controls="navbarsFurni" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-                    </ul>
-                </div>
-            </nav>
+            <div class="collapse navbar-collapse" id="navbarsFurni">
+                <ul class="custom-navbar-nav navbar-nav ms-auto mb-2 mb-md-0">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="index.html">Home</a>
+                    </li>
+                    <li><a class="nav-link" href="shop.html">Shop</a></li>
+                    <li><a class="nav-link" href="about.html">About us</a></li>
+                    <li><a class="nav-link" href="services.html">Services</a></li>
+                    <li><a class="nav-link" href="blog.html">Blog</a></li>
+                    <li><a class="nav-link" href="contact.html">Contact us</a></li>
+                </ul>
+
+                <ul class="custom-navbar-cta navbar-nav mb-2 mb-md-0 ms-5">
+                    
+                    <li> <partial name="_LoginPartialView" /></li>
+                </ul>
+            </div>
         </div>
-    </header>
+
+    </nav>
+    <!-- End Header/Navigation -->
     <!--================Header Area =================-->
     @RenderBody();
     <!--================Banner Area =================-->

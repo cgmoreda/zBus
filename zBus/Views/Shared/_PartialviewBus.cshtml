@@ -1,0 +1,75 @@
+﻿@model List<Bus> 
+
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Card</title>
+    <link rel="stylesheet" href="/assets3/bootstrap/css/style.css">
+    <link href="/assets3/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets2/bootstrap/css/style.css" rel="stylesheet">
+    <link href="/assets2/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+       
+    </style>
+</head>
+<body>
+
+
+   <div style="margin:50px">
+        <a class="btn btn-secondary me-2" style="margin-top:20%"> Add Bus</a>
+   </div>
+
+        <div class="row mb-5">
+            <form class="col-md-12" method="post">
+                <div class="site-blocks-table">
+                
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Model OF Bus</th>
+                                <th class="product-price">Number Of Seats</th>
+                                <th class="product-quantity">Wifi Available </th>
+                                <th class="product-total">Update</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+        @foreach (var bus in @Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="images/product-1.png" alt="Image" class="img-fluid">
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">@bus.BusModel</h2>
+                                    </td>
+                                    <td>
+                                        @bus.NumberOfSeats
+                                    </td>
+
+                                    @if (@bus.WifiAvailable == true)
+                                    {
+                                        <td>YES </td>
+                                    }
+                                    else
+                                    {
+                                        <td>NO </td>
+                                    }
+
+                                    <td><a asp-action="Update" asp-controller="Bus"  class="btn btn-black btn-sm" style="background-color:darkorange">Update</a></td>
+                                    <td><a asp-action="Update" asp-controller="Bus" class="btn btn-black btn-sm" style="background-color:darkred">X</a></td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                  </div>
+                </form>
+              </div>
+
+
+  
+</body>
+

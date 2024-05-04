@@ -135,6 +135,17 @@ namespace zBus.Controllers
             return View();
         }
 
+        public IActionResult Admin()
+        {
+
+            return View();
+        }
+        public IActionResult Dashboard()
+        {
+
+            return View();
+        }
+
 
     }
 }

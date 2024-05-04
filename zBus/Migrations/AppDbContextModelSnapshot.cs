@@ -222,10 +222,12 @@ namespace zBus.Migrations
                         .HasColumnType("nvarchar(20)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasMaxLength(100)
                         .HasColumnType("nvarchar(100)");
 
                     b.Property<string>("Phone_number")
+                        .IsRequired()
                         .HasMaxLength(11)
                         .HasColumnType("varchar(11)");
 

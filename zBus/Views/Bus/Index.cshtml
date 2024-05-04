@@ -1,95 +1,93 @@
-﻿@model IEnumerable<Bus>
+﻿
 @{
-    ViewData["Title"] = "List of Buses";
-    var drivers =  (List<Driver>)ViewData["Drivers"];
+    Layout = null;
 }
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Bus Management</title>
 
-<!DOCTYPE html>
-<html>
-<head>
-    <meta name="viewport" content="width=device-width" />
-    <title>@ViewData["Title"]</title>
-
-    <style>
-        .table th, .table td {
-            text-align: center;
+        <script>
+        .bus_card {
+            background - color: #fff;
+            border - radius: 8px;
+            box - shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin - bottom: 20px;
         }
 
-        .table img {
-            width: 130px;
-            height: 130px;
-            object-fit: cover;
-            border-radius: 50%;
+        .bus_card h3 {
+            margin - top: 0;
         }
-    </style>
-</head>
-<body>
 
-    <div class="row">
-        <div class="col-md-8 offset-md-2">
-            <table class="table">
+        .bus_card p {
+            margin - bottom: 10px;
+        }
 
-                <thead>
-                    <tr class="text-center">
+        /* Button styles */
+        .theme_btn {
+            font - size: 16px;
+            font - weight: bold;
+            color: #fff;
+            background - color: #007bff;
+            border: none;
+            border - radius: 4px;
+            padding: 10px 20px;
+            cursor: pointer;
+        }
 
-                        <th>Bus ID</th>
-                        <th>Bus Picture</th>
-                        <th>Bus Model</th>
-                        <th>Number of Seats</th>
-                        <th>WiFi </th>
-                        <th>Restroom </th>
-                        <th>Driver Name</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
+        .theme_btn:hover {
+            background - color: #0056b3;
+        }
 
-                <tbody>
-                    @if (Model != null && Model.Any())
-                    {
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="align-middle">
-                                    <img class="rounded-circle" src="@item.BusPicture" alt="@item.BusModel" style="max-width: 150px" />
-                                </td>
-                                <td class="align-middle">
-                                    @Html.DisplayFor(modelItem => item.BusId)
-                                </td>
-                                <td class="align-middle">
-                                    @Html.DisplayFor(modelItem => item.BusModel)
-                                </td>
-                                <td class="align-middle">
-                                    @Html.DisplayFor(modelItem => item.NumberOfSeats)
-                                </td>
-                                <td class="align-middle">
-                                    @Html.DisplayFor(modelItem => item.WifiAvailable)
-                                </td>
-                                <td class="align-middle">
-                                    @Html.DisplayFor(modelItem => item.RestroomAvailable)
-                                </td>   
-                                <td class="align-middle">
-                                    @drivers.FirstOrDefault(x=>x.DriverId==item.DriverId).FullName
-                                </td>
-                                <td class="align-middle">
-                                    <a class="btn btn-outline-primary" href="#"><i class="bi bi-pencil-square"></i>Edit </a> |
-                                    <a class="btn btn-outline-info" href="#"><i class="bi bi-eye"></i>Details </a> |
-                                    <a class="btn btn-danger text-white" href="#"><i class="bi bi-trash"></i>Delete </a>
-                                </td>
-                            </tr>
-                        }
-                    }
-                    else
-                    {
-                        <tr>
-                            <td colspan="7" class="text-center">
-                                No Buses Added to the System
-                            </td>
-                        </tr>
-                    }
-                </tbody>
-            </table>
-        </div>
-    </div>
+        /* Container styles */
+        .container {
+            max - width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
 
+        /* Header and footer styles */
+        .header_area, .footer_area {
+            background - color: #f8f9fa;
+            padding: 20px 0;
+            text - align: center;
+        }
+
+        .title {
+            margin: 0;
+        }
+
+        .footer_text {
+            margin: 0;
+            font - size: 14px;
+        }
+
+        </script>
+        <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    </head>
+    <body>
+        <header class="header_area">
+            <div class="container">
+                <h1 class="title">Bus Management</h1>
+            </div>
+        </header>
+
+        <section class="section_gap">
+            <div class="container">
+                <h2 class="section_title">Bus Information</h2>
+                <div class="bus_cards" id="busCards">
+                    <!-- Bus cards will be dynamically populated here -->
+                </div>
+                <button id="addBusBtn" class="theme_btn">Add Bus</button>
+            </div>
+        </section>
+
+        <footer class="footer_area">
+            <div class="container">
+                <p class="footer_text">© 2024 Bus Management. All rights reserved.</p>
+            </div>
+        </footer>
+
+        <script src="/js/"></script> <!-- Link to your JavaScript file -->
 </body>
-</html>
