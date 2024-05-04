@@ -3,37 +3,65 @@
     Layout = null;
 }
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Product Card</title>
+<link rel="stylesheet" href="/assets/css/bootstrap.css">
+<link rel="stylesheet" href="/assets/vendors/linericon/style.css">
+<link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+<link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+<link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+<link rel="stylesheet" href="/assets/vendors/nice-select/css/nice-select.css">
+<link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+<!-- main css -->
+<link rel="stylesheet" href="/assets/css/style.css">
+<link rel="stylesheet" href="/assets/css/responsive.css">
 
-    <link href="/assets3/css/bootstrap.min.css" rel="stylesheet">
-    <link href="/assets2/css/tiny-slider.css" rel="stylesheet">
-   
-    <style>
 
-    </style>
+
+<link href="/assets2/css/style.css" rel="stylesheet">
+
+
+<style>
+    .banner_area {
+        background: #04091e;
+        position: relative;
+        z-index: 1;
+    }
+
+    .bg-parallax {
+        background: url("/imgs/driver.jpg") no-repeat scroll center / cover !important;
+        opacity: 0.50;
+       
+    }
+
+
+    .position {
+        width: 100%;
+        bottom: 0;
+        left: 0;
+        position: absolute;
+    }
+
+</style>
 </head>
+<body>
 
 
+    <div class="banner_area" style="left:0">
+        <div class="booking_table d_flex align-items-center">
 
-<body style="background-color:">
+            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
+            </div>
+            <a class="btn btn-secondary me-2" style="margin-top:20%"> Add Driver</a>
+        </div>
 
-    <div style="margin:50px">
-        <a class="btn btn-secondary me-2" style="margin-top:20%"> Add Driver</a>
     </div>
 
-
-
-
 	<div class="untree_co-section product-section before-footer-section">
-		<div class="containerr">
+		<div class="container">
 			<div class="row">
 
 				<!-- Start Column 1 -->
                 @foreach (var driver in @Model)
                 {
-
                     <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
                         <a class="product-item" href="cart.html">
                             <img src="/imgs/product-1.png" class="img-fluid product-thumbnail">
@@ -44,8 +72,6 @@
                             </span>
                         </a>
                     </div>
-
-
                 }
 
 			</div>
@@ -53,14 +79,16 @@
 	</div>
 
 
-
-
-
-
-   
-
-    <script src="~/assets2/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets2/js/tiny-slider.js"></script>
-    <script src="~/assets2/js/custom.js"></script>
-
+    <script src="~/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/assets/js/popper.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/assets/vendors/nice-select/js/jquery.nice-select.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/js/stellar.js"></script>
+    <script src="~/assets/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/assets/js/custom.js"></script>
 </body>

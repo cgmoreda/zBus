@@ -84,13 +84,7 @@ a:hover, a:focus {
   margin-top: 25px;
 }
 
-body {
-  line-height: 24px;
-  font-size: 14px;
-  font-family: "Poppins", sans-serif;
-  font-weight: 300;
-  color: #777777;
-}
+
 
 section {
   background: #fff;
@@ -145,7 +139,7 @@ button:focus {
 .section_title p {
   font-size: 14px;
   line-height: 30px;
-  color: #777777;
+  color: white;
   margin-bottom: 0px;
 }
 
