@@ -15,7 +15,7 @@ namespace zBus.Controllers
        // عايزك تعمل الفانكشنز دي بس سيب details زي ما هي 
        // سيب الريتيرن زي ما هي رجعلي بس الداتا بعد كتخلص 
        // اعمل كده للباقي كله وسيب الفرونت 
-        public IActionResult Details(int id)
+        public IActionResult Details()
         {
             var data = _context.Buses.ToList();
             return PartialView("_PartialviewBus",data);
@@ -45,7 +45,13 @@ namespace zBus.Controllers
             return PartialView("_PartialviewBus", data);
         }
 
+        public IActionResult search(string query)
+        {
+            var data = _context.Buses.Where(b=>b.BusModel.Contains(query));
+            return PartialView("_PartialviewBus", data);
+        }
 
-        
+
+
     }
 }

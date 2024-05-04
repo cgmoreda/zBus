@@ -137,7 +137,7 @@
                     <div class="main-nav-start">
                         <div class="search-wrapper">
                             <i data-feather="search" aria-hidden="true"></i>
-                            <input type="text" placeholder="Enter keywords ..." required>
+                            <input id="search" onchange="search()" type="text" placeholder="Enter keywords ..." required>
                         </div>
                     </div>
                     <div class="main-nav-end">
@@ -156,16 +156,16 @@
 
             </main>
  
-    <script src="~/assets3/plugins/feather.min.js"></script>
-    <script src="~/assets3/js/script.js"></script>
-    <script src="~/assets3/bootstrap/js/bootstrap.min.js"></script>
+     <script src="~/assets3/plugins/feather.min.js"></script>
+     <script src="~/assets3/js/script.js"></script>
+     <script src="~/assets3/bootstrap/js/bootstrap.min.js"></script>
             <!-- Chart library -->
-            <script src="~/assets3/plugins/chart.min.js"></script>
+    <script src="~/assets3/plugins/chart.min.js"></script>
             <!-- Icons library -->
-            <script src="~/assets3/plugins/feather.min.js"></script>
-            <!-- Custom scripts -->
+    <script src="~/assets3/plugins/feather.min.js"></script>
+            <!-- Custom scripts --> 
    
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     
 
     <script>
@@ -176,9 +176,9 @@
                         path = "/User/Dashboard";
                     }
                     else if (id == 1) { path = "/Bus/Details/"; }
-                    else if (id == 2) { path = "Driver/Index"; }
-                    else if (id == 3) { path = "Station/Index"; }
-                    else if (id == 4) { path = "Trip/Index"; }
+                    else if (id == 2) { path = "/Driver/Index"; }
+                    else if (id == 3) { path = "/Station/Index"; }
+                    else if (id == 4) { path = "/Trip/Index"; }
                     $.ajax({
                       
                         url: path,
@@ -191,6 +191,27 @@
                         }
                     });
                 }
+
+        function search(){
+
+                 var query = $('#search').val();
+                    $.ajax({
+                        url: "/Bus/search",
+                        type: "Get",
+                        data: { query: query },
+                        success: function (response) {
+                            $("#partialViewContainer").html(response); // Update the container with the partial view
+                        },
+                        error: function (error) {
+                            console.error("Error:", error);
+                        }
+                    });
+
+
+        }
+
+
+
 
     </script>
 

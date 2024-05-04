@@ -1,5 +1,66 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<Driver>
 @{
+    Layout = null;
 }
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Card</title>
+
+    <link href="/assets3/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets2/css/tiny-slider.css" rel="stylesheet">
+   
+    <style>
+
+    </style>
+</head>
+
+
+
+<body style="background-color:">
+
+    <div style="margin:50px">
+        <a class="btn btn-secondary me-2" style="margin-top:20%"> Add Driver</a>
+    </div>
+
+
+
+
+	<div class="untree_co-section product-section before-footer-section">
+		<div class="containerr">
+			<div class="row">
+
+				<!-- Start Column 1 -->
+                @foreach (var driver in @Model)
+                {
+
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+                        <a class="product-item" href="cart.html">
+                            <img src="/imgs/product-1.png" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">@driver.FullName</h3>
+                            <strong class="product-price">@driver.YearsOfExperience Years Of Experience</strong>
+                            <span class="icon-cross">
+                                <img src="/imgs/cross.svg" class="img-fluid">
+                            </span>
+                        </a>
+                    </div>
+
+
+                }
+
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+   
+
+    <script src="~/assets2/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets2/js/tiny-slider.js"></script>
+    <script src="~/assets2/js/custom.js"></script>
+
+</body>

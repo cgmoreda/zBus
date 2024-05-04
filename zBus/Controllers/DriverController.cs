@@ -15,7 +15,7 @@ namespace zBus.Controllers
         public async Task<IActionResult> Index()
         {
             var data = await _service.GetAll();
-            return View(data);
+            return View("_PartialviewDriver", data);
         }
         public IActionResult Create()
         {
