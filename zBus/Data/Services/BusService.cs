@@ -11,15 +11,17 @@ namespace zBus.Data.Services
         {
             _context = context;
         }
-        public void Add(Bus driver)
+        public void Add(Bus _bus)
         {
-            _context.Buses.Add(driver);
+            _context.Buses.Add(_bus);
             _context.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var _bus = GetById(id);
+            _context.Buses.Remove(_bus!);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<Bus>> GetAll()
@@ -30,12 +32,14 @@ namespace zBus.Data.Services
 
         public Bus GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Buses.FirstOrDefault(x => x.BusId == id)!;
         }
 
-        public void Update(int id, Bus bus)
+        public void Update(int id, Bus _bus)
         {
-            throw new NotImplementedException();
+            _bus.BusId = id;
+            _context.Buses.Update(_bus);
+            _context.SaveChanges();
         }
     }
 }
