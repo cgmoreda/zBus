@@ -24,6 +24,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 
 // add IDriversService to the container
 builder.Services.AddScoped<IDriversService, DriversService>();
+builder.Services.AddScoped<IUserService, UserService>();
 
 var app = builder.Build();
 

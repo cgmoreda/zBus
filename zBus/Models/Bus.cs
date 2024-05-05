@@ -8,12 +8,18 @@ namespace zBus.Models
         [Key]
         public int BusId { get; set; }
 
+        [Required, Display(Name = "Photo Of Bus")]
         public string BusPicture { get; set; }
+
+        [Required, Display(Name = "Model OF Bus")]
         public string BusModel { get; set; }
+        [Required, Display(Name = "Number Of Seats")]
         public int NumberOfSeats { get; set; }
-        public bool AirConditioningAvailable { get; set; }
-        public bool WifiAvailable { get; set; }
-        public bool RestroomAvailable { get; set; }
+        [Display(Name = "Air Conditioning")]
+        public bool? AirConditioningAvailable { get; set; }
+        [Display(Name = "Wifi Available ")]
+        public bool? WifiAvailable { get; set; }
+        public bool? RestroomAvailable { get; set; }
 
         [ForeignKey("Driver")]
         public int DriverId { get; set; }

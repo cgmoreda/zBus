@@ -1,0 +1,148 @@
+﻿@model List<Bus> 
+@{
+    Layout=null;
+}
+<head>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/linericon/style.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/assets/vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+    <!-- main css -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+  
+    <link href="/assets2/css/style.css" rel="stylesheet">
+
+    <style>
+        .banner_area {
+            background: #04091e;
+            position: relative;
+            z-index: 1;
+        }
+
+        .bg-parallax {
+            background: url("/imgs/busses.jpg") no-repeat scroll center / cover !important;
+            opacity: 0.50;
+        }
+
+
+        .position {
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+        }
+
+        btn:hover
+        {
+            opacity: 0.50 !important;
+            transform: scale(1.1);
+        }
+
+    </style>
+</head>
+<body>  
+   
+    <div class="banner_area">
+        <div class="booking_table d_flex align-items-center">
+
+            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
+            </div>
+            <div class="container">
+            <div class="banner_content text-center">
+                <h2>Welcome To Bus Managment Board </h2>
+                <h3>You Can Add Delete And Update Buses Status</h3>
+               <a class="btn btn-secondary me-2" > Add Driver</a>
+            </div>
+        </div>
+        </div>
+
+    </div>
+
+        <div class="row mb-5" >
+            <form class="col-md-12" method="post">
+                <div class="site-blocks-table">
+                
+
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th class="product-thumbnail">Image</th>
+                                <th class="product-name">Model OF Bus</th>
+                                <th class="product-price">Number Of Seats</th>
+                                <th class="product-quantity">Wifi Available </th>
+                                <th class="product-total">Update</th>
+                                <th class="product-remove">Remove</th>
+                            </tr>
+                        </thead>
+        @foreach (var bus in @Model)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td class="product-thumbnail">
+                                        <img src="images/product-1.png" alt="Image" class="img-fluid">
+                                    </td>
+                                    <td class="product-name">
+                                        <h2 class="h5 text-black">@bus.BusModel</h2>
+                                    </td>
+                                    <td>
+                                        @bus.NumberOfSeats
+                                    </td>
+
+                                    @if (@bus.WifiAvailable == true)
+                                    {
+                                        <td>YES </td>
+                                    }
+                                    else
+                                    {
+                                        <td>NO </td>
+                                    }
+
+                                    <td><a asp-action="Update" asp-controller="Bus"  class="btn" style="background-color:darkorange !important">Update</a></td>
+                                <td><a asp-action="Update" asp-controller="Bus" class="btn" style="background-color:darkred !important">X</a></td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                  </div>
+                </form>
+              </div>
+
+
+    <script src="~/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/assets/js/popper.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/assets/vendors/nice-select/js/jquery.nice-select.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/js/stellar.js"></script>
+    <script src="~/assets/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/assets/js/custom.js"></script>
+
+    <script>
+        document.getElementById('registration-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get form data
+            var formData = new FormData(this);
+            var username = formData.get('username');
+            var email = formData.get('email');
+            var password = formData.get('password');
+
+            // Display message
+            var messageBox = document.getElementById('message-box');
+            messageBox.innerHTML = 'Registration successful!<br>';
+            messageBox.innerHTML += 'Username: ' + username + '<br>';
+            messageBox.innerHTML += 'Email: ' + email;
+        });
+    </script>
+</body>
+

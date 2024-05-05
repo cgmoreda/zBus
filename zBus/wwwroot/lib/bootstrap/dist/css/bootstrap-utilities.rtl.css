@@ -1310,8 +1310,8 @@
 }
 
 .text-danger {
-  --bs-text-opacity: 1;
-  color: rgba(var(--bs-danger-rgb), var(--bs-text-opacity)) !important;
+    --bs-text-opacity: 1;
+    color: darkred !important;
 }
 
 .text-light {

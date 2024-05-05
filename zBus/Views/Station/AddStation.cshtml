@@ -1,0 +1,120 @@
+﻿@model Station;
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="/assets3/css/style.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+
+        .avatar-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            overflow: hidden;
+            border-radius: 50%;
+            display: block;
+            text-align: center;
+            border: 2px solid #ccc;
+            background-image: url('/imgs/add-photo-24.png');
+         /* Replace 'background-image.jpg' with your actual image path */
+            background-size: cover;
+            background-position: center;
+        }
+
+        .avatar-preview {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .form-input[type="file"] {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .upload-text {
+            position: absolute;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 14px;
+            color: #333;
+        }
+
+
+        .formwarn {
+            color: red;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+
+
+    <main class="page-center">
+        <article class="sign-up">
+            <h1 class="sign-up__title">Add New Station</h1>
+            <form class="sign-up-form form" asp-action="Valid_Add" asp-controller="Station" method="post">
+                <div class="form-label-wrapper" style=" display: block; text-align: center">
+                    <label asp-for="PhotoUrl" class="text-black" >Photo</label>
+                    <div class="avatar-container" style=" display: block; text-align: center">
+                        
+                        <input type="file" accept=".png, .jpg, .jpeg" asp-for="PhotoUrl" class="form-input" onchange="previewAvatar(event)" style=" display: block; text-align: center" />
+                        
+                    </div>
+                    <span asp-validation-for="PhotoUrl" class="formwarn"></span>
+                </div>
+
+                <div class="form-label-wrapper">
+                    <label asp-for="StationCity" class="text-black">City<span class="formwarn">*</span></label>
+                    <input asp-for="StationCity" class="form-input" oninput="this.value = this.value.trim()" />
+                    <span asp-validation-for="StationCity" class="formwarn"></span>
+                </div>
+
+                <div class="form-label-wrapper">
+                    <label asp-for="StationAddress" class="text-black">Address<span class="formwarn">*</span></label>
+                    <input asp-for="StationAddress" class="form-input" oninput="this.value = this.value.trim()" />
+                    <span asp-validation-for="StationAddress" class="formwarn"></span>
+                </div>
+
+                <div class="form-label-wrapper">
+                    <label asp-for="StationName" class="text-black">Name<span class="formwarn">*</span></label>
+                    <input asp-for="StationName" class="form-input" oninput="this.value = this.value.trim()" />
+                    <span asp-validation-for="StationName" class="formwarn"></span>
+                </div>
+
+                <div class="form-label-wrapper">
+                    <label asp-for="ContactNumber" class="text-black">Contact Number</label>
+                    <input asp-for="ContactNumber" class="form-input" oninput="this.value = this.value.trim()" />
+                    <span asp-validation-for="ContactNumber" class="formwarn"></span>
+                </div>
+                <div>
+                    <span asp-validation-summary="All" class="formwarn"></span>
+                </div>
+                <br />
+
+                <button class="form-btn primary-default-btn transparent-btn">Add Station</button>
+            </form>
+
+        </article>
+    </main>
+
+    <script src="~/assets3/plugins/chart.min.js"></script>
+    <!-- Icons library -->
+    <script src="~/assets3/plugins/feather.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="~/assets3/js/script.js"></script>
+
+
+    <script src="~/lib/jquery/dist/jquery.js">  </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+</body>
