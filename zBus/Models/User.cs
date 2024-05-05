@@ -29,7 +29,8 @@ namespace zBus.Models
         [DataType(DataType.EmailAddress)]
         [RegularExpression(@"^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$", ErrorMessage = "Invalid email address.")]
         [Display(Name = "Email Address")]
-        public string? Email { get; set; }
+        [Required(ErrorMessage = "Enter an Email")]
+        public string Email { get; set; }
 
 
         [Required(ErrorMessage = "Phone Number is Required")]
@@ -48,12 +49,12 @@ namespace zBus.Models
         [Display(Name = "Address")]
         public string? Address { get; set; }
 
-        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", ErrorMessage = "Password must be between 6 and 20 characters and contain one uppercase letter, one lowercase letter, one digit and one special character.")]
+        [RegularExpression(@"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[^\da-zA-Z]).{8,15}$", ErrorMessage = "Must be contains 6 characters, and special character.")]
         [Display(Name = "Password")]
         [DataType(DataType.Password)]
         [Column(TypeName = "nvarchar(100)")]
         [MaxLength(100, ErrorMessage = "Maximam 100 charachters")]
-        [Required]
+        [Required( ErrorMessage="Enter Password")]
         public string? Password { get; set; }
 
         public virtual ICollection<Trip>? Trips { get; set; }

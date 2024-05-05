@@ -15,9 +15,8 @@
     <link rel="stylesheet" href="/assets/css/responsive.css">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-
+  
     <link href="/assets2/css/style.css" rel="stylesheet">
-
 
     <style>
         .banner_area {
@@ -39,17 +38,28 @@
             position: absolute;
         }
 
+        btn:hover
+        {
+            opacity: 0.50 !important;
+            transform: scale(1.1);
+        }
+
     </style>
 </head>
-<body>
-
-
+<body>  
+   
     <div class="banner_area">
         <div class="booking_table d_flex align-items-center">
 
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
             </div>
-            <a class="btn btn-secondary me-2" style="margin-top:20%"> Add Driver</a>
+            <div class="container">
+            <div class="banner_content text-center">
+                <h2>Welcome To Bus Managment Board </h2>
+                <h3>You Can Add Delete And Update Buses Status</h3>
+               <a class="btn btn-secondary me-2" > Add Driver</a>
+            </div>
+        </div>
         </div>
 
     </div>
@@ -93,8 +103,8 @@
                                         <td>NO </td>
                                     }
 
-                                    <td><a asp-action="Update" asp-controller="Bus"  class="btn btn-black btn-sm" style="background-color:darkorange">Update</a></td>
-                                    <td><a asp-action="Update" asp-controller="Bus" class="btn btn-black btn-sm" style="background-color:darkred">X</a></td>
+                                    <td><a asp-action="Update" asp-controller="Bus"  class="btn" style="background-color:darkorange !important">Update</a></td>
+                                <td><a asp-action="Update" asp-controller="Bus" class="btn" style="background-color:darkred !important">X</a></td>
                                 </tr>
                             </tbody>
                         }
@@ -116,5 +126,23 @@
     <script src="~/assets/js/stellar.js"></script>
     <script src="~/assets/vendors/lightbox/simpleLightbox.min.js"></script>
     <script src="~/assets/js/custom.js"></script>
+
+    <script>
+        document.getElementById('registration-form').addEventListener('submit', function (event) {
+            event.preventDefault();
+
+            // Get form data
+            var formData = new FormData(this);
+            var username = formData.get('username');
+            var email = formData.get('email');
+            var password = formData.get('password');
+
+            // Display message
+            var messageBox = document.getElementById('message-box');
+            messageBox.innerHTML = 'Registration successful!<br>';
+            messageBox.innerHTML += 'Username: ' + username + '<br>';
+            messageBox.innerHTML += 'Email: ' + email;
+        });
+    </script>
 </body>
 
