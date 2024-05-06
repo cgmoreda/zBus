@@ -90,7 +90,7 @@ namespace zBus.Controllers
         
         public IActionResult Account() {
 
-            var user = _userService.GetById(GlobalVariables.User);
+            var user = _userService.GetById(GlobalVariables.User!);
             return View(user);
         }
 
@@ -98,14 +98,14 @@ namespace zBus.Controllers
 
         public IActionResult Delete()
         {
-            _userService.Delete(GlobalVariables.User);
+            _userService.Delete(GlobalVariables.User!);
             return RedirectToAction("Index", "Home");
         }
         public IActionResult Update_save(User user)
         {
             if (ModelState.IsValid)
             {
-                _userService.Update(GlobalVariables.User, user);
+                _userService.Update(GlobalVariables.User!, user);
                 return RedirectToAction("Index", "Home");
             }
 

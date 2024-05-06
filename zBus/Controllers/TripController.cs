@@ -12,10 +12,9 @@ namespace zBus.Controllers
         }
         public IActionResult Index()
         {
-            //TBD
-            return NotFound();
+            
             var data = _context.Trips.ToList();
-            return View();
+            return View("_PartialviewTrip", data);
         }
 
         public IActionResult Details()

@@ -13,7 +13,7 @@ body {
   font-family: "Inter", sans-serif;
   font-weight: 400;
   line-height: 28px;
-  color: #6a6a6a;
+  color: #ffffff;
   font-size: 14px;
   background-color: #eff2f1; }
 
@@ -23,7 +23,7 @@ a {
   -o-transition: .3s all ease;
   transition: .3s all ease;
   color: #2f2f2f;
-  text-decoration: underline; }
+     }
   a:hover {
     color: #2f2f2f;
     text-decoration: none; }
@@ -310,7 +310,7 @@ a {
   .feature p {
     font-size: 14px;
     line-height: 22px;
-    color: #6a6a6a; }
+    color: #ffffff; }
 
 .we-help-section {
   padding: 7rem 0; }
@@ -683,7 +683,7 @@ textarea {
     border-top: 1px solid #3b5d50 !important; }
   .site-blocks-table .btn {
     background: none !important;
-    color: #000000;
+    color: white !important;
     border: none;
     height: auto !important; }
 

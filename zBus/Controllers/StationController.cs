@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 
 using zBus.Data;
+using zBus.Models;
 namespace zBus.Controllers
 {
     public class StationController :Controller
@@ -13,7 +14,32 @@ namespace zBus.Controllers
         public IActionResult Index()
         {
             var data = _context.Stations.ToList();
-            return View(data);
+            return PartialView("_PartialviewStation", data);
         }
+
+       
+        public IActionResult AddStation()
+        {
+            return View(new Station());
+        }
+
+        public IActionResult Valid_Add(Station station)
+        {
+
+            if(ModelState.IsValid)
+            {
+                _context.Stations.Add(station);
+                return RedirectToAction("Index");
+
+            }
+            else
+            {
+                return View("Add", station);
+            }
+
+
+        }
+
+
     }
 }
