@@ -19,7 +19,9 @@ namespace zBus.Data.Services
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var _trip = GetById(id);
+            _context.Trips.Remove(_trip!);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<Trip>> GetAll()
@@ -30,12 +32,14 @@ namespace zBus.Data.Services
 
         public Trip GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Trips.FirstOrDefault(x => x.TripId == id)!;
         }
 
-        public void Update(int id, Trip seat)
+        public void Update(int id, Trip _trip)
         {
-            throw new NotImplementedException();
+            _trip.TripId = id;
+            _context.Trips.Update(_trip);
+            _context.SaveChanges();
         }
     }
 }

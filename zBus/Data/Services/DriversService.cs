@@ -19,7 +19,9 @@ namespace zBus.Data.Services
 
         public void Delete(int id)
         {
-            throw new NotImplementedException();
+            var _driver = GetById(id);
+            _context.Drivers.Remove(_driver!);
+            _context.SaveChanges();
         }
 
         public async Task<IEnumerable<Driver>> GetAll()
@@ -30,12 +32,14 @@ namespace zBus.Data.Services
 
         public Driver GetById(int id)
         {
-            throw new NotImplementedException();
+            return _context.Drivers.FirstOrDefault(x => x.DriverId == id)!;
         }
 
-        public void Update(int id, Driver driver)
+        public void Update(int id, Driver _driver)
         {
-            throw new NotImplementedException();
+            _driver.DriverId = id;
+            _context.Drivers.Update(_driver);
+            _context.SaveChanges();
         }
     }
 }
