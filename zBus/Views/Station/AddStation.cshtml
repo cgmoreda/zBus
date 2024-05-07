@@ -61,12 +61,12 @@
     <main class="page-center">
         <article class="sign-up">
             <h1 class="sign-up__title">Add New Station</h1>
-            <form class="sign-up-form form" asp-action="Valid_Add" asp-controller="Station" method="post">
+            <form class="sign-up-form form" asp-action="Valid_Add" asp-controller="Driver" method="post" enctype="multipart/form-data">
                 <div class="form-label-wrapper" style=" display: block; text-align: center">
-                    <label asp-for="PhotoUrl" class="text-black" >Photo</label>
+                    <label  class="text-black" >Photo</label>
                     <div class="avatar-container" style=" display: block; text-align: center">
                         
-                        <input type="file" accept=".png, .jpg, .jpeg" asp-for="PhotoUrl" class="form-input" onchange="previewAvatar(event)" style=" display: block; text-align: center" />
+                        <input type="file" accept=".png, .jpg, .jpeg" name="photo" class="form-input" onchange="previewAvatar(event)" style=" display: block; text-align: center" required />
                         
                     </div>
                     <span asp-validation-for="PhotoUrl" class="formwarn"></span>
@@ -100,7 +100,7 @@
                 </div>
                 <br />
 
-                <button class="form-btn primary-default-btn transparent-btn">Add Station</button>
+                <button class="form-btn primary-default-btn transparent-btn">Add Driver</button>
             </form>
 
         </article>
@@ -116,5 +116,22 @@
     <script src="~/lib/jquery/dist/jquery.js">  </script>
     <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script>
+       
+        function previewAvatar(event) {
+            var input = event.target;
+            var reader = new FileReader();
+            reader.onload = function () {
+                var img = document.createElement('img');
+                img.src = reader.result;
+                // Display the preview image
+                document.getElementById('preview').innerHTML = '';
+                document.getElementById('preview').appendChild(img);
+            }
+            reader.readAsDataURL(input.files[0]);
+        }
+
+    </script>
 
 </body>

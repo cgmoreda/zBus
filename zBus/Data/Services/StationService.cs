@@ -38,8 +38,13 @@ namespace zBus.Data.Services
 
         public void Update(int id, Station _station)
         {
-            _station.StationId = id;
-            _context.Stations.Update(_station);
+            var old=_context.Stations.FirstOrDefault(x => x.StationId == id)!;
+            old.StationCity = _station.StationCity;
+            old.StationAddress = _station.StationAddress;
+            old.PhotoUrl = _station.PhotoUrl;
+            old.ContactNumber = _station.ContactNumber;
+            old.StationName = _station.StationName;
+            _context.Stations.Update(old);
             _context.SaveChanges();
         }
     }

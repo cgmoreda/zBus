@@ -25,7 +25,9 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(conn
 // add IDriversService to the container
 builder.Services.AddScoped<IDriversService, DriversService>();
 builder.Services.AddScoped<IUserService, UserService>();
-
+builder.Services.AddScoped<IStationService, StationService>();
+builder.Services.AddScoped<IBusService, BusService>();
+builder.Services.AddScoped<ITripService, TripService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

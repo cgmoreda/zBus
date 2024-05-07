@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
 
 namespace zBus.Models
 {
@@ -9,15 +10,26 @@ namespace zBus.Models
 
         [Display(Name = "Profile Picture")]
         [Required(ErrorMessage = "Profile Picture is required")]
-        public string ProfilePicturePath { get; set; } // Change type to string
+        public string ProfilePicturePath { get; set; }
+        
+        // Change type to string
+        [Required(ErrorMessage = "Required Feild")]
+        [MinLength(3, ErrorMessage = "At least 3 charachters")]
+        [MaxLength(20, ErrorMessage = "maximam 20 charachters")]
+        [Display(Name = "First Name")]
+        public string Fisrt_name { get; set; }
 
-        [Display(Name = "Full Name")]
-        [Required(ErrorMessage = "Full Name is required")]
-        [StringLength(50, MinimumLength = 3, ErrorMessage = "Full Name Must be between 3 and 50 chars")]
-        public string FullName { get; set; }
 
-        [Display(Name = "Contact Number")]
-        [Required(ErrorMessage = "Contact Number is required")]
+
+        [Required(ErrorMessage = "Required Feild")]
+        [MinLength(3, ErrorMessage = "At least 3 charachters")]
+        [MaxLength(20, ErrorMessage = "maximam 20 charachters")]
+        [Display(Name = "Last Name")]
+        public string Last_name { get; set; }
+
+        [RegularExpression(@"^\d{11}$", ErrorMessage = "Invalid contact number")]
+        [DisplayName("Contact Number")]
+        [Required(ErrorMessage = "Required Feild")]
         public string Contact { get; set; }
 
         [Display(Name = "Age")]

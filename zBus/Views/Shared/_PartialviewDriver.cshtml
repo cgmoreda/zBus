@@ -53,7 +53,7 @@
             <div class="banner_content text-center">
                 <h2>Welcome To Drivers Managment Board </h2>
                 <h3>You Can Add Delete And Update Drivers Status</h3>
-                <a class="btn btn-secondary me-2"> Add Driver</a>
+                    <a asp-action="AddDriver"  class="btn btn-secondary me-2"> Add Driver</a>
             </div>
         </div>
     </div>
@@ -66,9 +66,9 @@
                 @foreach (var driver in @Model)
                 {
                     <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
-                        <a class="product-item" href="cart.html">
-                            <img src="/imgs/product-1.png" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">@driver.FullName</h3>
+                        <a class="product-item" asp-controller="Driver" asp-action="Update" asp-route-id="@driver.DriverId" >
+                            <img src="@driver.ProfilePicturePath" class="img-fluid product-thumbnail">
+                            <h3 class="product-title">@driver.Fisrt_name @driver.Last_name</h3>
                             <strong class="product-price">@driver.YearsOfExperience Years Of Experience</strong>
                             <span class="icon-cross">
                                 <img src="/imgs/cross.svg" class="img-fluid">

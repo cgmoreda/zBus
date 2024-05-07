@@ -1,0 +1,114 @@
+﻿@model Driver;
+@{
+    Layout = null;
+
+}
+<head>
+    <link rel="stylesheet" href="/assets3/css/style.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .formwarn {
+            color: red;
+            font-size: 13px;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="layer"></div>
+    <main class="page-center">
+        <article class="sign-up">
+            <h1 class="sign-up__title">Get started</h1>
+            
+            <form class="sign-up-form form" asp-action="Valid_Add" asp-controller="Driver" method="post" enctype="multipart/form-data">
+
+                <div class="form-label-wrapper" style=" display: block; text-align: center">
+                    <label class="text-black">Photo</label>
+                    <div class="avatar-container" style=" display: block; text-align: center">
+
+                        <input type="file" accept=".png, .jpg, .jpeg" name="photo" class="form-input" onchange="previewAvatar(event)" style=" display: block; text-align: center" required />
+
+                    </div>
+                    
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <label asp-for="Fisrt_name" class="text-black">First Name<span class="formwarn">*</span></label>
+                        <br />
+                        <input asp-for="Fisrt_name" class="form-input" oninput="this.value = this.value.trim()" />
+                        <br />
+                        <span asp-validation-for="Fisrt_name" class="formwarn"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <label asp-for="Last_name" class="text-black">Last Name<span class="formwarn">*</span></label>
+                        <br />
+                        <input asp-for="Last_name" class="form-input" oninput="this.value = this.value.trim()" />
+                        <br />
+                        <span asp-validation-for="Last_name" class="formwarn"></span>
+                    </div>
+                </div>
+
+
+                <div class="form-label-wrapper">
+                    <label asp-for="Contact" class="text-black">Phone Number<span class="formwarn">*</span></label>
+                    <input asp-for="Contact" class="form-input" oninput="this.value = this.value.trim()" />
+                    <span asp-validation-for="Contact" class="formwarn"></span>
+                </div>
+
+                <div class="form-label-wrapper">
+                    <label asp-for="Age" class="text-black">Age<span class="formwarn">*</span></label>
+                    <select asp-for="Age" class="form-input" required>
+                        <option value="">Select Age</option>
+                        @for (int i = 18; i <= 65; i++)
+                        {
+                            <option required value="@i">@i</option>
+                        }
+                    </select>  <span asp-validation-for="Age" class="formwarn"></span>
+                </div>
+
+                <div class="form-label-wrapper">
+                    <label asp-for="YearsOfExperience" class="text-black">Years Of Experience<span class="formwarn">*</span></label>
+                    <select asp-for="YearsOfExperience" class="form-input" required>
+                        <option value="">Years Of Experience</option>
+                        @for (int i = 0; i <= 50; i++)
+                        {
+                            <option required value="@i">@i</option>
+                        }
+                    </select>   <span asp-validation-for="YearsOfExperience" class="formwarn"></span>
+                </div>
+
+               
+                <div>
+                    <span asp-validation-summary="Driver" class="formwarn"></span>
+                </div>
+                <br />
+
+                <div class="form-checkbox-wrapper">
+                    <input class="form-checkbox" type="checkbox" required>
+                    <span class="form-checkbox-label">Remember me next time</span>
+                </div>
+                <button class="form-btn primary-default-btn transparent-btn">Create Account</button>
+            </form>
+
+        </article>
+    </main>
+
+    <!-- Chart library -->
+    <script src="~/assets3/plugins/chart.min.js"></script>
+    <!-- Icons library -->
+    <script src="~/assets3/plugins/feather.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="~/assets3/js/script.js"></script>
+
+
+    <script src="~/lib/jquery/dist/jquery.js">  </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+   
+
+
+
+</body>

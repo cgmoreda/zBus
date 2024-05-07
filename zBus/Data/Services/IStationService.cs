@@ -6,8 +6,8 @@ namespace zBus.Data.Services
     {
         Task<IEnumerable<Station>> GetAll();
         Station GetById(int id);
-        void Add(Station driver);
-        void Update(int id, Station driver);
+        void Add(Station station);
+        void Update(int id, Station station);
         void Delete(int id);
     }
 }

@@ -3,11 +3,11 @@ using zBus.Models;
 
 namespace zBus.Data.Services
 {
-    public class BussService : IBusService
+    public class BusService : IBusService
     {
         private readonly AppDbContext _context;
 
-        public BussService(AppDbContext context)
+        public BusService(AppDbContext context)
         {
             _context = context;
         }

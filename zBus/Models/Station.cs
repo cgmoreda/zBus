@@ -23,13 +23,14 @@ namespace zBus.Models
     
         public string StationName { get; set; }
 
-        [RegularExpression(@"^\d{10}$", ErrorMessage = "Invalid contact number")]
+        [RegularExpression(@"^\d{11}$", ErrorMessage = "Invalid contact number")]
         [DisplayName("Contact Number")]
         public string ContactNumber { get; set; }
 
         // Add photo property
-        [DataType(DataType.ImageUrl)]
+       // [DataType(DataType.ImageUrl)]
         [DisplayName("Photo")]
-        public string? PhotoUrl { get; set; }
+        [Required(ErrorMessage = "Photo is required")]
+        public string PhotoUrl { get; set; }
     }
 }

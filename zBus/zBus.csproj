@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\img2\**" />
+    <Content Remove="wwwroot\img2\**" />
+    <EmbeddedResource Remove="wwwroot\img2\**" />
+    <None Remove="wwwroot\img2\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.16" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.16">
@@ -18,7 +25,11 @@
 
   <ItemGroup>
     <Folder Include="Migrations\" />
-    <Folder Include="wwwroot\img2\" />
+    <Folder Include="wwwroot\User\" />
+    <Folder Include="wwwroot\Trip\" />
+    <Folder Include="wwwroot\Bus\" />
+    <Folder Include="wwwroot\Driver\" />
+    <Folder Include="wwwroot\Station\" />
   </ItemGroup>
 
 </Project>

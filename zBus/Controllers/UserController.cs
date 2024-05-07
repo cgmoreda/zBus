@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
 using zBus.Data.Services;
 using zBus.GLobal;
+using zBus.Migrations;
 using zBus.Models;
+using static System.Collections.Specialized.BitVector32;
 
 namespace zBus.Controllers
 {
@@ -11,10 +14,11 @@ namespace zBus.Controllers
     {
         
         private readonly IUserService _userService;
-
-        public UserController(IUserService userService)
+        public IWebHostEnvironment _webHostEnvironment;
+        public UserController(IUserService userService, IWebHostEnvironment webHostEnvironment)
         {
             _userService = userService;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         public IActionResult Login_Page() {
@@ -28,7 +32,7 @@ namespace zBus.Controllers
             return View(new User());
 
         }
-        public IActionResult Register_Save(User user)
+        public IActionResult Register_Save(User user, IFormFile photo)
          {
 
             if (ModelState.IsValid)
@@ -41,8 +45,24 @@ namespace zBus.Controllers
                     }
                     else
                     {
+
+                    if (photo != null)
+                    {
+                        string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "User");
+                        string filePath = Path.Combine(serverFolder, fileName);
+                        using (var filestream = new FileStream(filePath, FileMode.Create))
+                        {
+                            photo.CopyTo(filestream);
+                        }
+                        user.PhotoPhath = "/User/" + fileName;
                         _userService.Add(user);
                         return View("Login_Page");
+
+                    }
+                     
+                    else { return View("Register", user); }
+                    
                     }
                 }
            
@@ -95,7 +115,7 @@ namespace zBus.Controllers
         }
 
 
-
+        
         public IActionResult Delete()
         {
             _userService.Delete(GlobalVariables.User!);
@@ -124,6 +144,11 @@ namespace zBus.Controllers
         }
         
 
+
+
+
+
+
         public IActionResult Index()
         {
             return View();
@@ -137,7 +162,7 @@ namespace zBus.Controllers
 
         public IActionResult Admin()
         {
-
+         
             return View();
         }
         public IActionResult Dashboard()
