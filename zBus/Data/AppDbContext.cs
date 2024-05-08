@@ -12,14 +12,15 @@ namespace zBus.Data
             modelBuilder.Entity<Trip>()
                 .HasOne(t => t.DepartureStation)
                 .WithMany()
-                .HasForeignKey(t => t.DepartureCityID)
+                .HasForeignKey(t => t.DepartureStationID)
                 .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Trip>()
                 .HasOne(t => t.ArrivalStation)
                 .WithMany()
-                .HasForeignKey(t => t.ArrivalCityID)
+                .HasForeignKey(t => t.ArrivalStationID)
                 .OnDelete(DeleteBehavior.Restrict);
+          
         }
         public DbSet<Bus> Buses { get; set; }
         public DbSet<User> Users { get; set; }

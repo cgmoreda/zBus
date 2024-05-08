@@ -57,7 +57,7 @@
             <div class="banner_content text-center">
                 <h2>Welcome To Bus Managment Board </h2>
                 <h3>You Can Add Delete And Update Buses Status</h3>
-               <a class="btn btn-secondary me-2" > Add Driver</a>
+               <a asp-action="Add" asp-controller="Bus" class="btn btn-secondary me-2" > Add Bus</a>
             </div>
         </div>
         </div>
@@ -85,7 +85,7 @@
                             <tbody>
                                 <tr>
                                     <td class="product-thumbnail">
-                                        <img src="images/product-1.png" alt="Image" class="img-fluid">
+                                        <img src="@bus.BusPicture" alt="Image" class="img-fluid">
                                     </td>
                                     <td class="product-name">
                                         <h2 class="h5 text-black">@bus.BusModel</h2>
@@ -103,8 +103,8 @@
                                         <td>NO </td>
                                     }
 
-                                    <td><a asp-action="Update" asp-controller="Bus"  class="btn" style="background-color:darkorange !important">Update</a></td>
-                                <td><a asp-action="Update" asp-controller="Bus" class="btn" style="background-color:darkred !important">X</a></td>
+                                <td><a asp-action="Update" asp-controller="Bus" asp-route-id="@bus.BusId" class="btn" style="background-color:darkorange !important">Update</a></td>
+                                <td><a asp-action="Delete" asp-controller="Bus" asp-route-id="@bus.BusId" class="btn" style="background-color:darkred !important">X</a></td>
                                 </tr>
                             </tbody>
                         }

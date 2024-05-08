@@ -24,9 +24,9 @@ namespace zBus.Data.Services
             _context.SaveChanges();
         }
 
-        public async Task<IEnumerable<Driver>> GetAll()
+        public List<Driver> GetAll()
         {
-            var drivers = await _context.Drivers.ToListAsync();
+            var drivers =  _context.Drivers.ToList();
             return drivers;
         }
 

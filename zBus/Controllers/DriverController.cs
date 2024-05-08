@@ -17,10 +17,10 @@ namespace zBus.Controllers
             _service = service;
           
         }
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
     
-            var data = await _service.GetAll();
+            var data =  _service.GetAll();
             return PartialView("_PartialviewDriver", data);
         }
        
@@ -30,13 +30,12 @@ namespace zBus.Controllers
             return View(new Driver());
         }
 
-        [HttpPost]
         public IActionResult Delete(int id)
         {
             _service.Delete(id);
             return RedirectToAction("Admin", "User");
         }
-        [HttpPost]
+      
         public IActionResult Valid_Add(Driver Driver, IFormFile photo)
         {
             ModelState["ProfilePicturePath"].ValidationState = ModelValidationState.Valid;
@@ -60,7 +59,7 @@ namespace zBus.Controllers
             }
             else
             {
-                return View("Update", Driver);
+                return View("AddDriver", Driver);
             }
         }
         
@@ -69,7 +68,7 @@ namespace zBus.Controllers
             var Driver = _service.GetById(id);
             return View(Driver);
         }
-        [HttpPost]
+       
         public IActionResult Update_Valid(Driver Driver, IFormFile photo, int id)
         {
             ModelState["ProfilePicturePath"].ValidationState = ModelValidationState.Valid;

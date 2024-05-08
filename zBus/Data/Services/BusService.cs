@@ -37,8 +37,15 @@ namespace zBus.Data.Services
 
         public void Update(int id, Bus _bus)
         {
-            _bus.BusId = id;
-            _context.Buses.Update(_bus);
+            var old= GetById(id)!;
+            old.BusModel=_bus.BusModel;
+            old.WifiAvailable = _bus.WifiAvailable;
+            old.BusPicture= _bus.BusPicture;
+            old.NumberOfSeats= _bus.NumberOfSeats;
+            old.DriverId= _bus.DriverId;
+            old.AirConditioningAvailable= _bus.AirConditioningAvailable;
+            old.RestroomAvailable= _bus.RestroomAvailable;
+            _context.Buses.Update(old);
             _context.SaveChanges();
         }
     }

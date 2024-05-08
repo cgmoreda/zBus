@@ -29,13 +29,12 @@ namespace zBus.Controllers
             return View(new Station());
         }
 
-        [HttpPost]
         public IActionResult Delete(int id)
         {
             _stationService.Delete(id);
             return RedirectToAction("Admin", "User");
         }
-        [HttpPost]
+       
         public IActionResult Valid_Add(Station station, IFormFile photo)
             {
             ModelState["PhotoUrl"].ValidationState = ModelValidationState.Valid;
@@ -62,13 +61,13 @@ namespace zBus.Controllers
                 return View("AddStation", station);
             }
         }
-        [HttpPost]
+       
         public IActionResult Update( int id)
         {
            var station= _stationService.GetById(id);
             return View(station);
         }
-        [HttpPost]
+       
         public IActionResult Update_Valid(Station station, IFormFile photo, int id)
         {
             ModelState["PhotoUrl"].ValidationState = ModelValidationState.Valid;
@@ -95,7 +94,7 @@ namespace zBus.Controllers
             }
             else
             {
-                return View("AddStation", station);
+                return View("Update", station);
             }
 
 

@@ -33,7 +33,7 @@ namespace zBus.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("TripId")
+                    b.Property<int?>("TripId")
                         .HasColumnType("int");
 
                     b.HasKey("SeatId");
@@ -51,7 +51,7 @@ namespace zBus.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("TripId"), 1L, 1);
 
-                    b.Property<int>("ArrivalCityID")
+                    b.Property<int>("ArrivalStationID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("ArrivalTime")
@@ -60,7 +60,7 @@ namespace zBus.Migrations
                     b.Property<int>("BusId")
                         .HasColumnType("int");
 
-                    b.Property<int>("DepartureCityID")
+                    b.Property<int>("DepartureStationID")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("DepartureTime")
@@ -69,16 +69,13 @@ namespace zBus.Migrations
                     b.Property<double>("TripPrice")
                         .HasColumnType("float");
 
-                    b.Property<double>("TripTime")
-                        .HasColumnType("float");
-
                     b.HasKey("TripId");
 
-                    b.HasIndex("ArrivalCityID");
+                    b.HasIndex("ArrivalStationID");
 
                     b.HasIndex("BusId");
 
-                    b.HasIndex("DepartureCityID");
+                    b.HasIndex("DepartureStationID");
 
                     b.ToTable("Trips");
                 });
@@ -107,6 +104,7 @@ namespace zBus.Migrations
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("BusId"), 1L, 1);
 
                     b.Property<bool?>("AirConditioningAvailable")
+                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.Property<string>("BusModel")
@@ -124,9 +122,11 @@ namespace zBus.Migrations
                         .HasColumnType("int");
 
                     b.Property<bool?>("RestroomAvailable")
+                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.Property<bool?>("WifiAvailable")
+                        .IsRequired()
                         .HasColumnType("bit");
 
                     b.HasKey("BusId");
@@ -253,20 +253,16 @@ namespace zBus.Migrations
 
             modelBuilder.Entity("Seat", b =>
                 {
-                    b.HasOne("Trip", "Trip")
+                    b.HasOne("Trip", null)
                         .WithMany("Seats")
-                        .HasForeignKey("TripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Trip");
+                        .HasForeignKey("TripId");
                 });
 
             modelBuilder.Entity("Trip", b =>
                 {
                     b.HasOne("zBus.Models.Station", "ArrivalStation")
                         .WithMany()
-                        .HasForeignKey("ArrivalCityID")
+                        .HasForeignKey("ArrivalStationID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
@@ -278,7 +274,7 @@ namespace zBus.Migrations
 
                     b.HasOne("zBus.Models.Station", "DepartureStation")
                         .WithMany()
-                        .HasForeignKey("DepartureCityID")
+                        .HasForeignKey("DepartureStationID")
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 

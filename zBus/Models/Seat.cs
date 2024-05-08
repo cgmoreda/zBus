@@ -11,9 +11,4 @@ public class Seat
     public SeatStatus Status { get; set; }
     
     // add id if occupied?
-
-    [ForeignKey("Trip")]
-    public int TripId { get; set; }
-
-    public virtual Trip? Trip { get; set; }
 }

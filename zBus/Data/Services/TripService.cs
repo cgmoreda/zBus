@@ -11,9 +11,9 @@ namespace zBus.Data.Services
         {
             _context = context;
         }
-        public void Add(Trip seat)
+        public void Add(Trip trip)
         {
-            _context.Trips.Add(seat);
+            _context.Trips.Add(trip);
             _context.SaveChanges();
         }
 
