@@ -1,4 +1,4 @@
-﻿using AspNetCore;
+﻿
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
@@ -32,7 +32,7 @@ namespace zBus.Controllers
         public IActionResult Add()
         { 
             var drivers = _DriverService.GetAll();
-            TempData["Drivers"] = drivers;
+            TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
             return View(new Bus());
         }
 

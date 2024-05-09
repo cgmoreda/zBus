@@ -85,7 +85,7 @@ namespace zBus.Migrations
                         column: x => x.DriverId,
                         principalTable: "Drivers",
                         principalColumn: "DriverId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,19 +109,19 @@ namespace zBus.Migrations
                         column: x => x.BusId,
                         principalTable: "Buses",
                         principalColumn: "BusId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Trips_Stations_ArrivalStationID",
                         column: x => x.ArrivalStationID,
                         principalTable: "Stations",
                         principalColumn: "StationId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_Trips_Stations_DepartureStationID",
                         column: x => x.DepartureStationID,
                         principalTable: "Stations",
                         principalColumn: "StationId",
-                        onDelete: ReferentialAction.Restrict);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -158,13 +158,13 @@ namespace zBus.Migrations
                         column: x => x.TripsTripId,
                         principalTable: "Trips",
                         principalColumn: "TripId",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                     table.ForeignKey(
                         name: "FK_TripUser_Users_UsersUser_Id",
                         column: x => x.UsersUser_Id,
                         principalTable: "Users",
                         principalColumn: "User_Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateIndex(

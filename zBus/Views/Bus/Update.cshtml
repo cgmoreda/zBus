@@ -4,7 +4,7 @@
     Layout = null;
     string photo = ViewBag.photo as string;
    
-    //var drivers = TempData.Peek("Drivers") as List<Driver>;
+    var drivers = TempData.Peek("Drivers") as List<Driver>;
 }
 <head>
     <link rel="stylesheet" href="/assets3/css/style.min.css">
@@ -105,7 +105,7 @@
                     <label asp-for="DriverId" class="text-black">Driver Id</label>
                     <select asp-for="@Model.DriverId" class="form-input" required>
                         <option value="1">Select</option>
-                        @foreach (var driver in Drivers)
+                        @foreach (var driver in drivers)
                                 {
                                     <option value="@driver.DriverId">ID: @driver.DriverId, Name: @driver.Fisrt_name @driver.Last_name</option>
                                 }

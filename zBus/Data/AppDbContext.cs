@@ -13,13 +13,13 @@ namespace zBus.Data
                 .HasOne(t => t.DepartureStation)
                 .WithMany()
                 .HasForeignKey(t => t.DepartureStationID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
 
             modelBuilder.Entity<Trip>()
                 .HasOne(t => t.ArrivalStation)
                 .WithMany()
                 .HasForeignKey(t => t.ArrivalStationID)
-                .OnDelete(DeleteBehavior.Restrict);
+                .OnDelete(DeleteBehavior.NoAction);
           
         }
         public DbSet<Bus> Buses { get; set; }

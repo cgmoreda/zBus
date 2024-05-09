@@ -11,9 +11,7 @@ namespace zBus.Data
             {
                 var context = serviceScope.ServiceProvider.GetService<AppDbContext>();
                 context.Database.EnsureCreated();
-            
-                
-                    //context.SaveChanges();
+                 
                 }
 
             }

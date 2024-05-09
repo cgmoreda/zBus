@@ -20,11 +20,10 @@ namespace zBus.Controllers
             _busService = busService;
             _stationService = stationService;
         }
-        public IActionResult Index()
+        public async Task <IActionResult> Index()
         {
-            
-            
-            return View("_PartialviewTrip");
+            var trips= await _TripService.GetAll();
+            return View("_PartialviewTrip", trips);
         }
 
         public IActionResult Details()
@@ -44,7 +43,7 @@ namespace zBus.Controllers
             return View(new Trip());
         }
 
-        public void Modlestate(Trip trip)
+        public Trip Modlestate(Trip trip)
         { 
             int NOS = _busService.GetById(trip.BusId).NumberOfSeats;
             var seats = new List<Seat>();
@@ -52,7 +51,6 @@ namespace zBus.Controllers
             {
                 seats.Add(new Seat
                 {
-                    SeatId = i,
                     Status = SeatStatus.Available,
                 });
             }
@@ -66,8 +64,30 @@ namespace zBus.Controllers
             ModelState["ArrivalStation"]!.ValidationState = ModelValidationState.Valid;
             ModelState["DepartureStation"]!.ValidationState = ModelValidationState.Valid;
             ModelState["Bus"]!.ValidationState = ModelValidationState.Valid;
+            return trip;
         }
         public IActionResult Valid_Add(Trip trip)
+        {
+            trip=Modlestate(trip);
+            if (ModelState.IsValid)
+            {
+                _TripService.Add(trip);
+                return RedirectToAction("Admin", "User");
+            }
+            return RedirectToAction("AddTrip", trip);
+        }
+
+        public async Task< IActionResult> Update(int id)
+        {
+            var selected = await _stationService.GetAll();
+            var Stations = selected.Select(i => new { i.StationId, i.StationName, i.StationCity }).ToList();
+            var selsectedbus = await _busService.GetAll();
+            TempData["Stations"] = JsonConvert.SerializeObject(Stations);
+            TempData["Bus"] = JsonConvert.SerializeObject(selsectedbus);
+            var trip=_TripService.GetById(id);
+            return View(trip);
+        }
+        public IActionResult Valid_Update(Trip trip)
         {
             Modlestate(trip);
             if (ModelState.IsValid)
@@ -76,6 +96,12 @@ namespace zBus.Controllers
                 return RedirectToAction("Admin", "User");
             }
             return RedirectToAction("AddTrip", trip);
+        }
+
+        public IActionResult Delete(int id)
+        {
+            _TripService.Delete(id);
+            return RedirectToAction("Admin", "User");
         }
 
 

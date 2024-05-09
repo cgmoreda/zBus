@@ -263,7 +263,7 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Station", "ArrivalStation")
                         .WithMany()
                         .HasForeignKey("ArrivalStationID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("zBus.Models.Bus", "Bus")
@@ -275,7 +275,7 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Station", "DepartureStation")
                         .WithMany()
                         .HasForeignKey("DepartureStationID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.Navigation("ArrivalStation");

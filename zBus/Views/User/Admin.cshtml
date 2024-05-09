@@ -28,7 +28,7 @@
     <div class="page-flex" style="flex:auto;">
         <!-- Your content here -->
         <!-- ! Sidebar -->  
-        <aside class="sidebar" style="background-color:04091e">
+        <aside class="sidebar" style="background-color:#04091e">
             <div class="sidebar-start">
                 <div class="sidebar-head">
                     <a href="/" class="logo-wrapper" title="Home">
@@ -78,48 +78,13 @@
                             </a>
                         </li>
 
-
-                   
-
-                    </ul>
-                    <span class="system-menu__title">system</span>
-                    <ul class="sidebar-body-menu">
-                        <li>
-                            <a href="appearance.html"><span class="icon edit" aria-hidden="true"></span>Appearance</a>
-                        </li>
-                        <li>
-                            <a class="show-cat-btn" href="##">
-                                <span class="icon category" aria-hidden="true"></span>Extentions
-                                <span class="category__btn transparent-btn" title="Open list">
-                                    <span class="sr-only">Open list</span>
-                                    <span class="icon arrow-down" aria-hidden="true"></span>
-                                </span>
-                            </a>
-                            <ul class="cat-sub-menu">
-                                <li>
-                                    <a href="extention-01.html">Extentions-01</a>
-                                </li>
-                                <li>
-                                    <a href="extention-02.html">Extentions-02</a>
-                                </li>
-                            </ul>
-                        </li>
                         <li>
                             <a class="show-cat-btn" href="##">
                                 <span class="icon user-3" aria-hidden="true"></span>Users
-                                <span class="category__btn transparent-btn" title="Open list">
-                                    <span class="sr-only">Open list</span>
-                                    <span class="icon arrow-down" aria-hidden="true"></span>
-                                </span>
+                             
+                                
                             </a>
-                            <ul class="cat-sub-menu">
-                                <li>
-                                    <a href="users-01.html">Users-01</a>
-                                </li>
-                                <li>
-                                    <a href="users-02.html">Users-02</a>
-                                </li>
-                            </ul>
+                            
                         </li>
                         <li>
                             <a href="##"><span class="icon setting" aria-hidden="true"></span>Settings</a>
@@ -162,10 +127,8 @@
     <script src="~/assets3/plugins/chart.min.js"></script>
             <!-- Icons library -->
     <script src="~/assets3/plugins/feather.min.js"></script>
-            <!-- Custom scripts --> 
-   
-     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    
+            <!-- Custom scripts -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
                 function loadPartialViewBtn(id) {
@@ -177,9 +140,8 @@
                     else if (id == 1) { path = "/Bus/Details"; }
                     else if (id == 2) { path = "/Driver/Index"; }
                     else if (id == 3) { path = "/Station/Index"; }
-                    else if (id == 4) { path = "/Trip/Index"; }
+                    else if (id == 4) { path = "/Trip/Index"; console.log("sdsd") }
                     $.ajax({
-                      
                         url: path,
                         type: "Get",
                         success: function (response) {

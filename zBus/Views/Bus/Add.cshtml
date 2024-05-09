@@ -4,7 +4,7 @@
     Layout = null;
     string photo = ViewBag.photo as string;
     var driverstring = TempData["Drivers"]?.ToString();
-    var Drivers = JsonConvert.DeserializeObject<List<Driver>>(driverstring ?? " ");
+    var Drivers = JsonConvert.DeserializeObject<List<Driver>>(driverstring);
     //var drivers = TempData.Peek("Drivers") as List<Driver>;
 }
 <head>
@@ -106,16 +106,11 @@
                     <label asp-for="DriverId" class="text-black">Driver Id</label>
                     <select asp-for="DriverId" class="form-input" required>
                         <option value="">Select</option>
-                        @{
-                            var drivers = TempData.Peek("Drivers") as List<Driver>;
-                            if (drivers != null)
-                            {
-                                foreach (var driver in drivers)
+                       @foreach (var driver in Drivers)
                                 {
                                     <option value="@driver.DriverId">ID: @driver.DriverId, Name: @driver.Fisrt_name @driver.Last_name</option>
                                 }
-                            }
-                        }
+                      
 
                     </select>
                     <span asp-validation-for="DriverId" style="color:red"></span>
