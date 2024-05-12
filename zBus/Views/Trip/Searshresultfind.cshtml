@@ -4,12 +4,11 @@
     Layout = null;
     var station = TempData["trips"]?.ToString();
     var routeDictionary = JsonConvert.DeserializeObject<Dictionary<int, string>>(station);
-
-    // Extract station names from the dictionary values
+    //Extract station names from the dictionary values
     //var stationNames = routeDictionary?.Values.ToList();
 }
 <head>
-  
+
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/assets/vendors/linericon/style.css">
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
@@ -49,7 +48,7 @@
             opacity: 0.50 !important;
             transform: scale(1.1);
         }
-      
+
         .container {
             display: block;
             text-decoration: none;
@@ -64,7 +63,7 @@
             margin-left: 50px;
             margin-bottom: 50px;
             display: block;
-            justify-content:center;
+            justify-content: center;
         }
 
         h1 {
@@ -101,7 +100,8 @@
             margin-right: 10px;
             transition: background-color 0.3s;
         }
-            .dander{
+
+        .dander {
             background-color: red;
             color: white;
             border: none;
@@ -110,82 +110,57 @@
             cursor: pointer;
             margin-right: 10px;
             transition: background-color 0.3s;
-            }
+        }
 
-            .btn:hover {
-                background-color: #333;
-            }
+        .btn:hover {
+            background-color: #333;
+        }
     </style>
 </head>
 <body>
-
-
-    <div class="banner_area">
-        <div class="booking_table d_flex align-items-center">
-
-            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
-            </div>
-            <div class="container">
-                <div class="banner_content text-center">
-                    <h2>Welcome To Trips Managment Board </h2>
-                    <h3>You Can Add Delete And Update Trips Status</h3>
-                    <a class="btn btn-secondary me-2" style="color:white" asp-action="AddTrip"> Add Trip</a>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="untree_co-section product-section before-footer-section">
-
-        <div class="row" style="display: flex; align-items: center; justify-content: center;">
+    <div>
         @foreach (var trip in Model)
-                {
-                        <div class="card">
-                            <h1>Trip Details</h1>
-                            <div class="trip-detail">
-                                <label for="departureTime">Departure Time:</label>
-                                <span>@trip.DepartureTime</span>
-                            </div>
-                            <div class="trip-detail">
-                                <label for="arrivalTime">Arrival Time:</label>
-                                <span>@trip.ArrivalTime</span>
-                            </div>
-                            <div class="trip-detail">
-                                <label for="tripPrice">Trip Price:</label>
-                                <span>@trip.TripPrice</span>
-                            </div>
-                            <div class="trip-detail">
-                                <label for="departureStation">Departure Station:</label>
-                        <span>@routeDictionary[trip.DepartureStationID]</span>
-                            </div>
-                            <div class="trip-detail">
-                                <label for="arrivalStation">Arrival Station:</label>
-                        <span>@routeDictionary[trip.ArrivalStationID]</span>
-                            </div>
-                            <div class="trip-detail">
-                                <label for="busId">Bus ID:</label>
-                                <span>@trip.BusId</span>
-                            </div>
-                            <div class="row" style="justify-content:center">
-                                <div class="col-6">
-                            <a class="btn btn-primary btn-block" asp-controller="Trip" asp-action="Update" asp-route-id="@trip.TripId">Update</a>
-                                </div>
-                                <div class="col-6">
-                            <a class="btn btn-danger btn-block" style="background-color:darkred;" asp-controller="Trip" asp-action="Delete" asp-route-id="@trip.TripId">Delete</a>
-                                </div>
-                            </div>
+        {
+            <div class="card">
+                <h1>Trip Details</h1>
+                <div class="trip-detail">
+                    <label for="departureTime">Departure Time:</label>
+                    <span>@trip.DepartureTime</span>
+                </div>
+                <div class="trip-detail">
+                    <label for="arrivalTime">Arrival Time:</label>
+                    <span>@trip.ArrivalTime</span>
+                </div>
+                <div class="trip-detail">
+                    <label for="tripPrice">Trip Price:</label>
+                    <span>@trip.TripPrice</span>
+                </div>
+                <div class="trip-detail">
+                    <label for="departureStation">Departure Station:</label>
+                    <span>@routeDictionary[trip.DepartureStationID]</span>
+                </div>
+                <div class="trip-detail">
+                    <label for="arrivalStation">Arrival Station:</label>
+                    <span>@routeDictionary[trip.ArrivalStationID]</span>
+                </div>
+                <div class="trip-detail">
+                    <label for="busId">Bus ID:</label>
+                    <span>@trip.BusId</span>
+                </div>
+                <div class="row" style="justify-content:center">
+                    <div class="col-4">
+                        <a class="book_now_btn button_hover" asp-controller="Trip" asp-action="Update" asp-route-id="@trip.TripId">Book </a>
+                    </div>
 
-                        </div>
-                  
-                }
-      
+                </div>
 
             </div>
-     
-</div>
 
+        }
+    </div>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
-     <script src="~/assets3/plugins/feather.min.js"></script>
+    <script src="~/assets3/plugins/feather.min.js"></script>
     <script src="~/assets3/js/script.js"></script>
     <script src="~/assets3/bootstrap/js/bootstrap.min.js"></script>
     <!-- Chart library -->
@@ -194,5 +169,10 @@
     <script src="~/assets3/plugins/feather.min.js"></script>
     <script src="~/lib/jquery/dist/jquery.js">  </script>
     <script src="~/lib/jquery/dist/jquery.min.js">  </script>
-     <!-- Custom scripts -->
+
+    <script>
+       
+    </script>
+
 </body>
+    <!-- Custom scripts -->

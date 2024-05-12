@@ -1,0 +1,310 @@
+﻿@model List<Trip>
+@using Newtonsoft.Json;
+
+@{
+    Layout=null;
+    var st = TempData["Stations"]?.ToString();
+    var Stations = JsonConvert.DeserializeObject<List<Station>>(st);
+    var stat = TempData["trips"]?.ToString();
+    var routeDictionary = JsonConvert.DeserializeObject<Dictionary<int, string>>(stat);
+
+}
+<head>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/linericon/style.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/assets/vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+    <!-- main css -->
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link href="/css/site.css" rel="stylesheet">
+
+
+    <style>
+        .banner_area {
+            background: #04091e;
+            position: relabltive;
+            z-index: 1;
+           
+        }
+
+        .bg-parallax {
+            background: url("/imgs/bus.png") no-repeat scroll center / cover !important;
+            opacity: 0.50;
+
+        }
+
+
+        .position {
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+        }
+
+        btn:hover {
+            opacity: 0.50 !important;
+            transform: scale(1.1);
+        }
+
+        .container {
+            display: block;
+            text-decoration: none;
+        }
+
+        .card {
+            display: flex;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin: 50px;
+          
+            display: block;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #04091e;
+        }
+
+        .trip-detail {
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Dynamic styles */
+        .trip-detail span {
+            color: orange;
+            font-weight: bold;
+        }
+
+        /* Attractive styles */
+        .trip-detail:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
+            background-color: #04091e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .dander {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #333;
+        }
+    </style>
+</head>
+<body>
+
+
+  
+        <!-- Banner Section -->
+        <div class="banner_area" style="position:page !important">
+        <div class="booking_table d-flex align-items-center" >
+                <div class="overlay bg-parallax" style="height:" " data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+                <div class="container">
+                    <div class="banner_content text-center">
+                        <h2>Welcome To ZBUS </h2>
+                        <h3> Where You Can Add Find Suitable Trips</h3>
+                    </div>
+                <main class="popup" id="popup" style="justify-content:center; align-items: center;">
+                    <h2>Hello!</h2>
+                    <p style="font-size:15px">There is No Trips Avaliable!</p>
+                    <button type="button" onclick="closePopup()">OK</button>
+                </main>
+                <div class="container" style="background-color:#04091e;padding:10px;border-radius:15px">
+                    <div class="row mt-5">
+                        <div class="col-md-3">
+                            <h2 style="color:white">Book Your Ticket</h2>
+                        </div>
+                        <div class="col-md-9">
+                            <div class="boking_table">
+                                <div class="row justify-content-center">
+                                    <div class="col-md-4">
+                                        <div class="book_tabel_item">
+                                            <div class="input-group">
+                                                <select class="wide" id="id1" name="Departure">
+                                                    <option data-display="Departure Station"></option>
+            @foreach (var station in Stations)
+            {
+                                                        <option value="@station.StationId"> @station.StationName </option>
+            }
+                                                </select>
+                                            </div>
+                                            <div class="input-group">
+                                                <select class="wide" id="id2" name="Arrival">
+                                                    <option data-display="Arrival Station"></option>
+            @foreach (var station in Stations)
+            {
+                                                        <option value="@station.StationId"> @station.StationName </option>
+            }
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="book_tabel_item">
+                                            <div class="form-group">
+                                                <input type="date" class="input-field" id="date" name="date">
+                                                
+                                            </div>
+
+                                            <a class="book_now_btn button_hover" onclick="loadPartialViewBtn()">Search Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                </div>
+            </div>
+        </div>
+
+        <!-- Booking Section -->
+
+    <div id="partialViewContainer">
+        <!-- Trip Details Section -->
+            @foreach (var trip in Model)
+            {
+        <div class="card">
+            <h1>Trip Details</h1>
+            <div class="trip-detail">
+                <label for="departureTime">Departure Time:</label>
+                <span>@trip.DepartureTime</span>
+            </div>
+            <div class="trip-detail">
+                <label for="arrivalTime">Arrival Time:</label>
+                <span>@trip.ArrivalTime</span>
+            </div>
+            <div class="trip-detail">
+                <label for="tripPrice">Trip Price:</label>
+                <span>@trip.TripPrice</span>
+            </div>
+            <div class="trip-detail">
+                <label for="departureStation">Departure Station:</label>
+                <span>@routeDictionary[trip.DepartureStationID]</span>
+            </div>
+            <div class="trip-detail">
+                <label for="arrivalStation">Arrival Station:</label>
+                <span>@routeDictionary[trip.ArrivalStationID]</span>
+            </div>
+            <div class="trip-detail">
+                <label for="busId">Bus ID:</label>
+                <span>@trip.BusId</span>
+            </div>
+            <div class="row" style="justify-content:center">
+                <div class="col-4">
+                    <a class="book_now_btn button_hover" asp-controller="Trip" asp-action="Update" asp-route-id="@trip.TripId">Book </a>
+                </div>
+                
+            </div>
+
+        </div>
+
+            }
+<div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <script src="~/assets/plugins/feather.min.js"></script>
+    <script src="~/assets/js/script.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Chart library -->
+    <script src="~/assets/plugins/chart.min.js"></script>
+    <!-- Icons library -->
+    <
+    <script src="~/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/assets/js/popper.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/assets/vendors/nice-select/js/jquery.nice-select.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/js/stellar.js"></script>
+    <script src="~/assets/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/assets/js/custom.js"></script>
+
+
+    <script>
+      'use strict'
+
+                function loadPartialViewBtn() {
+                    let path = "/Trip/Searchtrip";
+                    let id1 = $("#id1").val();
+                    let id2 = $("#id2").val();
+                    let date = $("#date").val();
+                    console.log(id1);
+                    console.log(id2);
+                    console.log(date);
+
+                    $.ajax({
+                        url: path,
+                        type: "post",
+                        data: { Departure: id1, Arrival: id2, departuredate: date },
+                        success: function (response) {
+                            $("#partialViewContainer").html(response); // Update the container with the partial view
+                        },
+                        error: function (error) {
+                            console.error("Error:", error);
+                        }
+                    });
+                }
+
+                $(function () {
+                    $('#datetimepicker1').datetimepicker({
+                        defaultDate: new Date() // Set a default date, e.g., today's date
+                    });
+
+                    // Listen for change event on the input field
+                    $('#datetimepicker1 input').on('change', function () {
+                        // Check if the input field is empty
+                        if (!$(this).val()) {
+                            // If empty, set the input field value to null
+                            $(this).val('');
+                        }
+                    });
+                });
+
+                $(function () {
+                    $('#datetimepicker1').datetimepicker({
+                        format: 'YYYY-MM-DD', // Set the format to display only date without time
+                        useCurrent: false // Prevent the plugin from auto-updating the value when clicking
+                    });
+                });
+
+                function closePopup() {
+                    let popup = document.getElementById("popup");
+                    popup.classList.remove("open-popup");
+                }
+
+    </script>
+   
+</body>

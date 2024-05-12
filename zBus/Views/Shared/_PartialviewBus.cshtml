@@ -13,6 +13,7 @@
     <!-- main css -->
     <link rel="stylesheet" href="/assets/css/style.css">
     <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link href="/css/site.css" rel="stylesheet">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
   
@@ -54,6 +55,7 @@
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
             </div>
             <div class="container">
+               
             <div class="banner_content text-center">
                 <h2>Welcome To Bus Managment Board </h2>
                 <h3>You Can Add Delete And Update Buses Status</h3>
@@ -67,44 +69,52 @@
         <div class="row mb-5" >
             <form class="col-md-12" method="post">
                 <div class="site-blocks-table">
-                
-
                     <table class="table">
                         <thead>
                             <tr>
-                                <th class="product-thumbnail">Image</th>
-                                <th class="product-name">Model OF Bus</th>
-                                <th class="product-price">Number Of Seats</th>
-                                <th class="product-quantity">Wifi Available </th>
-                                <th class="product-total">Update</th>
-                                <th class="product-remove">Remove</th>
+                            <th class="stat-cards-info__num"> Image</th>
+                            <th class="stat-cards-info__num">Model OF Bus</th>
+                            <th class="stat-cards-info__num">Number Of Seats</th>
+                            <th class="stat-cards-info__num">Wifi Available </th>
+                            <th class="stat-cards-info__num">Update</th>
+                            <th class="stat-cards-info__num">Remove</th>
                             </tr>
                         </thead>
+                    
         @foreach (var bus in @Model)
                         {
+                        <main class="popup" id="popup" style="justify-content:center; align-items: center;">
+                            <h2>Hello!</h2>
+                            <p style="font-size:15px">THe bus is already in Trip Try later!</p>
+                            <button type="button" onclick="closePopup()">OK</button>
+                        </main>
                             <tbody>
                                 <tr>
                                     <td class="product-thumbnail">
                                         <img src="@bus.BusPicture" alt="Image" class="img-fluid">
                                     </td>
                                     <td class="product-name">
-                                        <h2 class="h5 text-black">@bus.BusModel</h2>
+                                    <h2 class="stat-cards-info__num">@bus.BusModel</h2>
                                     </td>
-                                    <td>
+                                <td class="stat-cards-info__num">
                                         @bus.NumberOfSeats
                                     </td>
 
                                     @if (@bus.WifiAvailable == true)
                                     {
-                                        <td>YES </td>
+
+
+                                   
+                                    <td class="stat-cards-info__num"> Not Avaliable </td>
+                                  
                                     }
                                     else
                                     {
-                                        <td>NO </td>
+                                    <td class="stat-cards-info__num"> Avaliable </td>
                                     }
 
                                 <td><a asp-action="Update" asp-controller="Bus" asp-route-id="@bus.BusId" class="btn" style="background-color:darkorange !important">Update</a></td>
-                                <td><a asp-action="Delete" asp-controller="Bus" asp-route-id="@bus.BusId" class="btn" style="background-color:darkred !important">X</a></td>
+                                <td><a onclick="openPopup(@bus.BusId)" class="btn" style="background-color:darkred !important">X</a></td>
                                 </tr>
                             </tbody>
                         }
@@ -126,23 +136,35 @@
     <script src="~/assets/js/stellar.js"></script>
     <script src="~/assets/vendors/lightbox/simpleLightbox.min.js"></script>
     <script src="~/assets/js/custom.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
-        document.getElementById('registration-form').addEventListener('submit', function (event) {
-            event.preventDefault();
 
-            // Get form data
-            var formData = new FormData(this);
-            var username = formData.get('username');
-            var email = formData.get('email');
-            var password = formData.get('password');
+        function openPopup(id) {
+            $.ajax({
+                url: "/Bus/Delete",
+                data: { id: id },
+                type: "post",
+                success: function (response) {
+                    
+                    if (response.loggedIn === false) {
+                        let popup = document.getElementById("popup");
+                        popup.classList.add("open-popup");
+                    }
+                   
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
 
-            // Display message
-            var messageBox = document.getElementById('message-box');
-            messageBox.innerHTML = 'Registration successful!<br>';
-            messageBox.innerHTML += 'Username: ' + username + '<br>';
-            messageBox.innerHTML += 'Email: ' + email;
-        });
+
+        function closePopup() {
+            let popup = document.getElementById("popup");
+            popup.classList.remove("open-popup");
+        }
+
     </script>
 </body>
 

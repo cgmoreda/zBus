@@ -12,8 +12,8 @@ using zBus.Data;
 namespace zBus.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240509010605_CascadeUpdate")]
-    partial class CascadeUpdate
+    [Migration("20240509172903_db4")]
+    partial class db4
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,7 @@ namespace zBus.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TripId")
+                    b.Property<int>("TripId")
                         .HasColumnType("int");
 
                     b.HasKey("SeatId");
@@ -255,9 +255,13 @@ namespace zBus.Migrations
 
             modelBuilder.Entity("Seat", b =>
                 {
-                    b.HasOne("Trip", null)
-                        .WithMany("Seats")
-                        .HasForeignKey("TripId");
+                    b.HasOne("Trip", "Trip")
+                        .WithMany()
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trip");
                 });
 
             modelBuilder.Entity("Trip", b =>
@@ -265,7 +269,7 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Station", "ArrivalStation")
                         .WithMany()
                         .HasForeignKey("ArrivalStationID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("zBus.Models.Bus", "Bus")
@@ -277,7 +281,7 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Station", "DepartureStation")
                         .WithMany()
                         .HasForeignKey("DepartureStationID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ArrivalStation");
@@ -311,11 +315,6 @@ namespace zBus.Migrations
                         .IsRequired();
 
                     b.Navigation("Driver");
-                });
-
-            modelBuilder.Entity("Trip", b =>
-                {
-                    b.Navigation("Seats");
                 });
 #pragma warning restore 612, 618
         }

@@ -326,7 +326,7 @@ a {
         }
 
         .product-section .product-item h3, .product-section .product-item strong {
-            color: #2f2f2f;
+            color: darkred;
             text-decoration: none;
         }
 

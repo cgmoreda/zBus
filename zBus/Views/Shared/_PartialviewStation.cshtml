@@ -68,12 +68,11 @@
                         <div class="col-12 col-sm-6 col-md-4 mb-5" id="@station.StationName">
                             <div class="post-entry">
                                 <a asp-action="Update" asp-route-id="@station.StationId" class="post-thumbnail"><img src="@station.PhotoUrl" alt="Image" class="img-fluid"></a>
-                                <div class="post-content-entry">
-                                    <h3><a href="#">@station.StationName <span>on <a href="#">@station.StationCity</a></span></a></h3>
+                            
+                             <p style="font-size:20px" class="stat-cards-info__num"> @station.StationName on @station.StationCity </p>
 
-                                </div>
                             </div>
-                            <div class="meta" style="margin-top:5%; display:flex;justify-content: center">
+                            <div class="meta" style=" display:flex;justify-content: center">
 
                                 <a asp-action="Delete" asp-route-id="@station.StationId" class="btn btn-black btn-sm" style="background-color:darkred">X</a>
 

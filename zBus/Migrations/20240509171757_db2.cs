@@ -4,7 +4,7 @@
 
 namespace zBus.Migrations
 {
-    public partial class TripUpdate2 : Migration
+    public partial class db2 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

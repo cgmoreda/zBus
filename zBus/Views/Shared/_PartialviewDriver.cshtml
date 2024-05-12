@@ -65,11 +65,12 @@
 				<!-- Start Column 1 -->
                 @foreach (var driver in @Model)
                 {
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0">
+        
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0 darkmode" style="border-radius:20px">
                         <a class="product-item" asp-controller="Driver" asp-action="Update" asp-route-id="@driver.DriverId" >
-                            <img src="@driver.ProfilePicturePath" class="img-fluid product-thumbnail">
-                            <h3 class="product-title">@driver.Fisrt_name @driver.Last_name</h3>
-                            <strong class="product-price">@driver.YearsOfExperience Years Of Experience</strong>
+                            <img src="@driver.ProfilePicturePath" class="img-fluid product-thumbnail" style="border-radius:20px">>
+                            <p class="stat-cards-info__num darkmode" da>@driver.Fisrt_name @driver.Last_name</p>
+                            <p class="stat-cards-info__num darkmode">@driver.YearsOfExperience Years Of Experience</p>
                             <span class="icon-cross">
                                 <img src="/imgs/cross.svg" class="img-fluid">
                             </span>

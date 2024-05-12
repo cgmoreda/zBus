@@ -91,7 +91,7 @@ namespace zBus.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("email","Email does not exist try a valid one");
+                    ModelState.AddModelError("email","Email Already  Exists Try Another one");
                     return View("Login_Page");
                 }
             }

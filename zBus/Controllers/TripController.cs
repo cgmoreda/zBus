@@ -1,38 +1,61 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
+using System.Security.Cryptography.X509Certificates;
+using System.Linq;
 using zBus.Data;
 using zBus.Data.Enums;
 using zBus.Data.Services;
+using zBus.GLobal;
 using zBus.Models;
 
 namespace zBus.Controllers
 {
     public class TripController : Controller
     {
+       // private readonly ILogger<TripController> _logger;
         private readonly ITripService _TripService;
         private readonly IBusService _busService;
         private readonly IStationService _stationService;
-     
-        public TripController(ITripService TripService, IBusService busService, IStationService stationService)
+        private readonly ISeatsService _seatService;
+
+        public TripController(ITripService tripService, IBusService busService, IStationService stationService, ISeatsService seatService)
         {
-            _TripService = TripService;
+            //_logger = logger;
+            _TripService = tripService;
             _busService = busService;
             _stationService = stationService;
+            _seatService = seatService;
         }
-        public async Task <IActionResult> Index()
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            var trips= await _TripService.GetAll();
+            var trips = await _TripService.GetAll();
+            Dictionary<int, string> routes = new Dictionary<int, string>();
+            foreach (var trip in trips)
+            {
+                int departureStationID = trip.DepartureStationID;
+                int arrivalStationID = trip.ArrivalStationID;
+                string departureStationName = _stationService.GetById(departureStationID)?.StationName;
+                string arrivalStationName = _stationService.GetById(arrivalStationID)?.StationName;
+                if (!string.IsNullOrEmpty(departureStationName))
+                    routes[departureStationID] = departureStationName;
+                if (!string.IsNullOrEmpty(arrivalStationName))
+                    routes[arrivalStationID] = arrivalStationName;
+            }
+            TempData["trips"] = JsonConvert.SerializeObject(routes);
             return View("_PartialviewTrip", trips);
         }
 
-        public IActionResult Details()
+    public IActionResult Details()
         {
            
             return View();
 
         }
 
+        [HttpGet]
         public async Task<IActionResult> AddTrip()
         {
             var selected = await _stationService.GetAll();
@@ -44,39 +67,52 @@ namespace zBus.Controllers
         }
 
         public Trip Modlestate(Trip trip)
-        { 
-            int NOS = _busService.GetById(trip.BusId).NumberOfSeats;
+        {   
+          
+            int numberOfSeats = _busService.GetById(trip.BusId).NumberOfSeats;
             var seats = new List<Seat>();
-            for (int i = 1; i <= NOS; i++)
+            for (int i = 1; i <= numberOfSeats; i++)
             {
-                seats.Add(new Seat
+                var newSeat = new Seat
                 {
                     Status = SeatStatus.Available,
-                });
+                    TripId = trip.TripId,
+                    Trip=trip,
+                   
+                };
+                seats.Add(newSeat);
+                _seatService.Add(newSeat);
             }
-            trip.Seats = seats;
-            trip.Users = new List<User>();
+
+
+           
+            trip.Users=(new List<User>());
             trip.ArrivalStation = _stationService.GetById(trip.ArrivalStationID);
             trip.DepartureStation = _stationService.GetById(trip.DepartureStationID);
+            trip.DepartureStation= _stationService.GetById(trip.DepartureStationID);
             trip.Bus = _busService.GetById(trip.BusId);
-            ModelState["Seats"]!.ValidationState = ModelValidationState.Valid;
+           // ModelState["Seats"]!.ValidationState = ModelValidationState.Valid;
             ModelState["Users"]!.ValidationState = ModelValidationState.Valid;
             ModelState["ArrivalStation"]!.ValidationState = ModelValidationState.Valid;
             ModelState["DepartureStation"]!.ValidationState = ModelValidationState.Valid;
             ModelState["Bus"]!.ValidationState = ModelValidationState.Valid;
             return trip;
         }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public IActionResult Valid_Add(Trip trip)
         {
             trip=Modlestate(trip);
             if (ModelState.IsValid)
             {
                 _TripService.Add(trip);
+             
                 return RedirectToAction("Admin", "User");
             }
             return RedirectToAction("AddTrip", trip);
         }
 
+        [HttpGet]
         public async Task< IActionResult> Update(int id)
         {
             var selected = await _stationService.GetAll();
@@ -87,6 +123,8 @@ namespace zBus.Controllers
             var trip=_TripService.GetById(id);
             return View(trip);
         }
+        [HttpPost]
+        [AutoValidateAntiforgeryToken]
         public IActionResult Valid_Update(Trip trip)
         {
             Modlestate(trip);
@@ -97,12 +135,95 @@ namespace zBus.Controllers
             }
             return RedirectToAction("AddTrip", trip);
         }
-
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
             _TripService.Delete(id);
             return RedirectToAction("Admin", "User");
         }
+
+
+		public IActionResult Check_log()
+		{
+			if (GlobalVariables.Login_Status)
+			{
+                return RedirectToAction("Book");
+			}
+			else
+			{
+				return Json(new { loggedIn = false });
+			}
+		}
+        [HttpGet]
+        public async Task <IActionResult> Book()
+		{
+            var selected = await _stationService.GetAll();
+            var Stations = selected.Select(i => new { i.StationId, i.StationName, i.StationCity }).ToList();
+            TempData["Stations"] = JsonConvert.SerializeObject(Stations);
+            TempData.Keep("Stations");
+
+            var trips=  await _TripService.GetAll();
+            Dictionary<int, string> routes = new Dictionary<int, string>();
+
+            foreach (var trip in trips)
+            {
+                int departureStationID = trip.DepartureStationID;
+                int arrivalStationID = trip.ArrivalStationID;
+
+                // Retrieve station names using station IDs
+                string departureStationName = _stationService.GetById(departureStationID)?.StationName;
+                string arrivalStationName = _stationService.GetById(arrivalStationID)?.StationName;
+
+                // Add station names to the dictionary
+                if (!string.IsNullOrEmpty(departureStationName))
+                    routes[departureStationID] = departureStationName;
+                if (!string.IsNullOrEmpty(arrivalStationName))
+                    routes[arrivalStationID] = arrivalStationName;
+            }
+
+           
+            TempData["trips"] = JsonConvert.SerializeObject(routes);
+            return View(trips);
+		}
+
+        [HttpPost]
+        public async Task<IActionResult> Searchtrip(int Departure, int Arrival, DateTime departuredate)
+        { 
+            var tripsresuslt = await _TripService.Search(Departure, Arrival, departuredate);
+            if(tripsresuslt.Count()==0)
+            {
+                return View("Empty");
+            }
+            else { 
+                if(!TempData.ContainsKey("trips"))
+                {
+                    var trips = await _TripService.GetAll();
+                    Dictionary<int, string> routes = new Dictionary<int, string>();
+
+                    foreach (var trip in trips)
+                    {
+                        int departureStationID = trip.DepartureStationID;
+                        int arrivalStationID = trip.ArrivalStationID;
+
+                        // Retrieve station names using station IDs
+                        string departureStationName = _stationService.GetById(departureStationID)?.StationName;
+                        string arrivalStationName = _stationService.GetById(arrivalStationID)?.StationName;
+
+                        // Add station names to the dictionary
+                        if (!string.IsNullOrEmpty(departureStationName))
+                            routes[departureStationID] = departureStationName;
+                        if (!string.IsNullOrEmpty(arrivalStationName))
+                            routes[arrivalStationID] = arrivalStationName;
+                        
+                    }
+                    TempData["trips"] = JsonConvert.SerializeObject(routes);
+                }
+                return View("Searshresultfind", tripsresuslt); 
+            
+            }
+           
+        }
+
 
 
     }

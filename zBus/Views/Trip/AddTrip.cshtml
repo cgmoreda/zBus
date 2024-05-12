@@ -5,8 +5,8 @@
     var stationsJson = TempData["Stations"]?.ToString();
     var busesJson = TempData["Bus"]?.ToString();
 
-    var Stations = JsonConvert.DeserializeObject<List<Station>>(stationsJson);
-    var Buses = JsonConvert.DeserializeObject<List<Bus>>(busesJson);
+    var Stations = JsonConvert.DeserializeObject<List<Station>>(stationsJson!);
+    var Buses = JsonConvert.DeserializeObject<List<Bus>>(busesJson!);
     Layout = null;
 }
 

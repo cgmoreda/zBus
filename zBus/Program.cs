@@ -27,6 +27,7 @@ builder.Services.AddScoped<IUserService, UserService>();
 builder.Services.AddScoped<IStationService, StationService>();
 builder.Services.AddScoped<IBusService, BusService>();
 builder.Services.AddScoped<ITripService, TripService>();
+builder.Services.AddScoped<ISeatsService, SeatService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

@@ -1,10 +1,12 @@
 ﻿@model Bus;
-
+@using Newtonsoft.Json;
 @{
     Layout = null;
+    
+ 
+    var driv = TempData["Drivers"]?.ToString();
+    var drivers = JsonConvert.DeserializeObject<List<Driver>>(driv);
     string photo = ViewBag.photo as string;
-   
-    var drivers = TempData.Peek("Drivers") as List<Driver>;
 }
 <head>
     <link rel="stylesheet" href="/assets3/css/style.min.css">
@@ -17,7 +19,6 @@
             border-radius: 50%;
             justify-content: center;
         }
-
         .upload {
             display: block;
             width: 150;
@@ -51,7 +52,7 @@
             <form class="sign-up-form form" asp-action="Update_Add" asp-controller="Bus" asp-route-id="@Model.BusId" method="post" enctype="multipart/form-data">
                 <span id="photo_valid" style="color:red;margin-bottom:10px">@photo</span>
                 <div class="form-label-wrapper" style="display: block; text-align: center;justify-content:center">
-                    <img id="image" src="@Model.Driver" />
+                    <img id="image" src="@Model.BusPicture" />
                     <input type="file" accept="image/jpeg, image/png, image/jpg" id="photo" name="photo" class="form-input" required oninput="updateTargetInput(this.value)" onchange="displaySelectedImage(this);" style="display:none" />
                     <label class="upload" for="photo">Uplaod Image</label>
 
@@ -104,7 +105,7 @@
                 <div class="form-label-wrapper">
                     <label asp-for="DriverId" class="text-black">Driver Id</label>
                     <select asp-for="@Model.DriverId" class="form-input" required>
-                        <option value="1">Select</option>
+                        <option value="">Select</option>
                         @foreach (var driver in drivers)
                                 {
                                     <option value="@driver.DriverId">ID: @driver.DriverId, Name: @driver.Fisrt_name @driver.Last_name</option>

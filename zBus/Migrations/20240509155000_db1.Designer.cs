@@ -12,8 +12,8 @@ using zBus.Data;
 namespace zBus.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240508195741_TripUpdate2")]
-    partial class TripUpdate2
+    [Migration("20240509155000_db1")]
+    partial class db1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,7 @@ namespace zBus.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TripId")
+                    b.Property<int>("TripId")
                         .HasColumnType("int");
 
                     b.HasKey("SeatId");
@@ -255,9 +255,13 @@ namespace zBus.Migrations
 
             modelBuilder.Entity("Seat", b =>
                 {
-                    b.HasOne("Trip", null)
+                    b.HasOne("Trip", "Trip")
                         .WithMany("Seats")
-                        .HasForeignKey("TripId");
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Trip");
                 });
 
             modelBuilder.Entity("Trip", b =>
@@ -265,7 +269,7 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Station", "ArrivalStation")
                         .WithMany()
                         .HasForeignKey("ArrivalStationID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("zBus.Models.Bus", "Bus")
@@ -277,7 +281,7 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Station", "DepartureStation")
                         .WithMany()
                         .HasForeignKey("DepartureStationID")
-                        .OnDelete(DeleteBehavior.Restrict)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ArrivalStation");

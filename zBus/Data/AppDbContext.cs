@@ -9,17 +9,6 @@ namespace zBus.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Trip>()
-                .HasOne(t => t.DepartureStation)
-                .WithMany()
-                .HasForeignKey(t => t.DepartureStationID)
-                .OnDelete(DeleteBehavior.NoAction);
-
-            modelBuilder.Entity<Trip>()
-                .HasOne(t => t.ArrivalStation)
-                .WithMany()
-                .HasForeignKey(t => t.ArrivalStationID)
-                .OnDelete(DeleteBehavior.NoAction);
           
         }
         public DbSet<Bus> Buses { get; set; }

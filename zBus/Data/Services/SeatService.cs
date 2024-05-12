@@ -3,7 +3,7 @@ using zBus.Models;
 
 namespace zBus.Data.Services
 {
-    public class SeatService : ISeatService
+    public class SeatService : ISeatsService
     {
         private readonly AppDbContext _context;
 

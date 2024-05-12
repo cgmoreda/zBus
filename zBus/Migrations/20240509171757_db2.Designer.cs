@@ -12,8 +12,8 @@ using zBus.Data;
 namespace zBus.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240508200333_TripUpdate3")]
-    partial class TripUpdate3
+    [Migration("20240509171757_db2")]
+    partial class db2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,7 @@ namespace zBus.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int?>("TripId")
+                    b.Property<int>("TripId")
                         .HasColumnType("int");
 
                     b.HasKey("SeatId");
@@ -257,7 +257,9 @@ namespace zBus.Migrations
                 {
                     b.HasOne("Trip", null)
                         .WithMany("Seats")
-                        .HasForeignKey("TripId");
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("Trip", b =>
@@ -265,19 +267,19 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Station", "ArrivalStation")
                         .WithMany()
                         .HasForeignKey("ArrivalStationID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("zBus.Models.Bus", "Bus")
                         .WithMany()
                         .HasForeignKey("BusId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("zBus.Models.Station", "DepartureStation")
                         .WithMany()
                         .HasForeignKey("DepartureStationID")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("ArrivalStation");
@@ -292,13 +294,13 @@ namespace zBus.Migrations
                     b.HasOne("Trip", null)
                         .WithMany()
                         .HasForeignKey("TripsTripId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("zBus.Models.User", null)
                         .WithMany()
                         .HasForeignKey("UsersUser_Id")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
 
@@ -307,7 +309,7 @@ namespace zBus.Migrations
                     b.HasOne("zBus.Models.Driver", "Driver")
                         .WithMany()
                         .HasForeignKey("DriverId")
-                        .OnDelete(DeleteBehavior.NoAction)
+                        .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Driver");

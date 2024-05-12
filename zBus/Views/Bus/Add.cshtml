@@ -50,10 +50,12 @@
         <article class="sign-up">
             <h1 class="sign-up__title">Add New Bus</h1>
             <form class="sign-up-form form" asp-action="Valid_Add" asp-controller="Bus" method="post" enctype="multipart/form-data">
-                <span id="photo_valid" style="color:red;margin-bottom:10px" >@photo</span>
+              
                 <div class="form-label-wrapper" style="display: block; text-align: center;justify-content:center">
                     <img id="image" src="~/imgs/driver.jpg" />
                     <input type="file" accept="image/jpeg, image/png, image/jpg" id="photo" name="photo" class="form-input" required oninput="updateTargetInput(this.value)" onchange="displaySelectedImage(this);" style="display:none" />
+                    <br />
+                    <span id="photo_valid" class="formwarn" style="color:red !important;text-align:center;margin:15x">@photo</span>
                     <label class="upload" for="photo">Uplaod Image</label>
 
                 </div>

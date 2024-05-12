@@ -1,4 +1,5 @@
 ﻿
+//using AspNetCore;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using Newtonsoft.Json;
@@ -33,10 +34,10 @@ namespace zBus.Controllers
         { 
             var drivers = _DriverService.GetAll();
             TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
+            TempData.Keep("Drivers");
+           ViewBag.photo=string.Empty;
             return View(new Bus());
         }
-
-
         public IActionResult Valid_Add(Bus Bus, IFormFile photo)
         {
             ModelState["BusPicture"].ValidationState = ModelValidationState.Valid;
@@ -68,6 +69,7 @@ namespace zBus.Controllers
             }
             else
             {
+                ViewBag.photo = $"You Must Upload Photo Try";
                 return View("Add", Bus);
             }
         }
@@ -75,14 +77,25 @@ namespace zBus.Controllers
 
         public IActionResult Delete(int id)
         {
-            _service.Delete(id);
-            return RedirectToAction("Admin", "User");
+            bool check = _service.Delete(id);
+            if (check)
+            {
+                return Json(new { loggedIn = true });
+            }
+            {
+                //var bus = _service.GetAll();
+                return Json(new { loggedIn = false });
+            }  
         }
 
 
         public IActionResult Update(int id)
         {
-           var bus= _service.GetById(id);
+            var drivers = _DriverService.GetAll();
+            TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
+            TempData.Keep("Drivers");
+            var bus= _service.GetById(id);
+            ViewBag.photo = string.Empty;
             return View(bus);
         }
 
