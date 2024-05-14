@@ -32,20 +32,22 @@ namespace zBus.Controllers
         public async Task<IActionResult> Index()
         {
             var trips = await _TripService.GetAll();
-            Dictionary<int, string> routes = new Dictionary<int, string>();
+            List<TripDetails> ViewModel = new List<TripDetails>();
             foreach (var trip in trips)
             {
-                int departureStationID = trip.DepartureStationID;
-                int arrivalStationID = trip.ArrivalStationID;
-                string departureStationName = _stationService.GetById(departureStationID)?.StationName;
-                string arrivalStationName = _stationService.GetById(arrivalStationID)?.StationName;
-                if (!string.IsNullOrEmpty(departureStationName))
-                    routes[departureStationID] = departureStationName;
-                if (!string.IsNullOrEmpty(arrivalStationName))
-                    routes[arrivalStationID] = arrivalStationName;
+                var TripDetails = new TripDetails();
+                TripDetails.Seats = _seatService.GetById(trip.TripId);
+                TripDetails.AvailableSeatsCount = TripDetails.Seats.Count(s => s.Status == SeatStatus.Available);
+                TripDetails.arrivalstation = _stationService.GetById(trip.ArrivalStationID).StationName;
+                TripDetails.depturestation = _stationService.GetById(trip.DepartureStationID).StationName;
+                TripDetails.trip = trip;
+                TripDetails.Id = trip.TripId;
+                TripDetails.Allseatscount = _busService.GetById(trip.BusId).NumberOfSeats;
+                ViewModel.Add(TripDetails);
+
             }
-            TempData["trips"] = JsonConvert.SerializeObject(routes);
-            return View("_PartialviewTrip", trips);
+            //return View(ViewModel);
+            return View("_PartialviewTrip", ViewModel);
         }
 
     public IActionResult Details()
@@ -55,7 +57,6 @@ namespace zBus.Controllers
 
         }
 
-        [HttpGet]
         public async Task<IActionResult> AddTrip()
         {
             var selected = await _stationService.GetAll();
@@ -98,16 +99,15 @@ namespace zBus.Controllers
             ModelState["Bus"]!.ValidationState = ModelValidationState.Valid;
             return trip;
         }
-        [HttpPost]
-        [AutoValidateAntiforgeryToken]
+   
         public IActionResult Valid_Add(Trip trip)
         {
             trip=Modlestate(trip);
             if (ModelState.IsValid)
             {
                 _TripService.Add(trip);
-             
-                return RedirectToAction("Admin", "User");
+
+                return RedirectToAction("Admin", "User", new { id = 4 });
             }
             return RedirectToAction("AddTrip", trip);
         }
@@ -124,22 +124,21 @@ namespace zBus.Controllers
             return View(trip);
         }
         [HttpPost]
-        [AutoValidateAntiforgeryToken]
         public IActionResult Valid_Update(Trip trip)
         {
             Modlestate(trip);
             if (ModelState.IsValid)
             {
                 _TripService.Add(trip);
-                return RedirectToAction("Admin", "User");
+                return RedirectToAction("Admin", "User", new { id = 4 });
             }
             return RedirectToAction("AddTrip", trip);
         }
-        [HttpDelete]
+       
         public IActionResult Delete(int id)
         {
             _TripService.Delete(id);
-            return RedirectToAction("Admin", "User");
+            return RedirectToAction("Admin", "User", new {id=4});
         }
 
 
@@ -157,74 +156,88 @@ namespace zBus.Controllers
         [HttpGet]
         public async Task <IActionResult> Book()
 		{
-            var selected = await _stationService.GetAll();
-            var Stations = selected.Select(i => new { i.StationId, i.StationName, i.StationCity }).ToList();
-            TempData["Stations"] = JsonConvert.SerializeObject(Stations);
-            TempData.Keep("Stations");
-
-            var trips=  await _TripService.GetAll();
-            Dictionary<int, string> routes = new Dictionary<int, string>();
-
-            foreach (var trip in trips)
+            var tripsresuslt = await _TripService.GetAll();
+            if(!TempData.ContainsKey("Stations"))
             {
-                int departureStationID = trip.DepartureStationID;
-                int arrivalStationID = trip.ArrivalStationID;
-
-                // Retrieve station names using station IDs
-                string departureStationName = _stationService.GetById(departureStationID)?.StationName;
-                string arrivalStationName = _stationService.GetById(arrivalStationID)?.StationName;
-
-                // Add station names to the dictionary
-                if (!string.IsNullOrEmpty(departureStationName))
-                    routes[departureStationID] = departureStationName;
-                if (!string.IsNullOrEmpty(arrivalStationName))
-                    routes[arrivalStationID] = arrivalStationName;
+                var station = await _stationService.GetAll();
+                TempData["Stations"]= JsonConvert.SerializeObject(station);
+                TempData.Keep("Stations");
             }
 
-           
-            TempData["trips"] = JsonConvert.SerializeObject(routes);
-            return View(trips);
-		}
+            if (tripsresuslt.Count() == 0)
+            {
+                return View("Empty");
+            }
+            else
+            {
+                List<TripDetails> ViewModel = new List<TripDetails>();
+                foreach (var trip in tripsresuslt)
+                {
+                    var TripDetails = new TripDetails();
+                    TripDetails.Seats = _seatService.GetById(trip.TripId);
+                    TripDetails.AvailableSeatsCount = TripDetails.Seats.Count(s => s.Status == SeatStatus.Available);
+                    TripDetails.arrivalstation = _stationService.GetById(trip.ArrivalStationID).StationName;
+                    TripDetails.depturestation = _stationService.GetById(trip.DepartureStationID).StationName;
+                    TripDetails.trip = trip;
+                    TripDetails.Id = trip.TripId;
+                    TripDetails.Allseatscount = _busService.GetById(trip.BusId).NumberOfSeats;
+                    ViewModel.Add(TripDetails);
+
+                }
+                return View(ViewModel);
+
+            }
+        }
 
         [HttpPost]
         public async Task<IActionResult> Searchtrip(int Departure, int Arrival, DateTime departuredate)
         { 
             var tripsresuslt = await _TripService.Search(Departure, Arrival, departuredate);
+
             if(tripsresuslt.Count()==0)
             {
                 return View("Empty");
             }
-            else { 
-                if(!TempData.ContainsKey("trips"))
+            else
+            {
+                List<TripDetails> ViewModel = new List<TripDetails>();
+                foreach (var trip in tripsresuslt)
                 {
-                    var trips = await _TripService.GetAll();
-                    Dictionary<int, string> routes = new Dictionary<int, string>();
+                    var TripDetails = new TripDetails();
+                    TripDetails.Seats = _seatService.GetById(trip.TripId);
+                    TripDetails.AvailableSeatsCount= TripDetails.Seats.Count(s=>s.Status==SeatStatus.Available);
+                    TripDetails.arrivalstation=_stationService.GetById(trip.ArrivalStationID).StationName;
+                    TripDetails.depturestation = _stationService.GetById(trip.DepartureStationID).StationName;
+                    TripDetails.trip = trip;
+                    TripDetails.Id = trip.TripId;
+                    TripDetails.Allseatscount = _busService.GetById(trip.BusId).NumberOfSeats;
+                    ViewModel.Add(TripDetails);
 
-                    foreach (var trip in trips)
-                    {
-                        int departureStationID = trip.DepartureStationID;
-                        int arrivalStationID = trip.ArrivalStationID;
-
-                        // Retrieve station names using station IDs
-                        string departureStationName = _stationService.GetById(departureStationID)?.StationName;
-                        string arrivalStationName = _stationService.GetById(arrivalStationID)?.StationName;
-
-                        // Add station names to the dictionary
-                        if (!string.IsNullOrEmpty(departureStationName))
-                            routes[departureStationID] = departureStationName;
-                        if (!string.IsNullOrEmpty(arrivalStationName))
-                            routes[arrivalStationID] = arrivalStationName;
-                        
-                    }
-                    TempData["trips"] = JsonConvert.SerializeObject(routes);
                 }
-                return View("Searshresultfind", tripsresuslt); 
+
+                return View("Searshresultfind", ViewModel); 
             
             }
            
         }
 
 
+        public IActionResult Checkout(TripDetails trip)
+        {
+            trip.Seats = _seatService.GetById(trip.Id);
+            ViewBag.price = _TripService.GetById(trip.Id).TripPrice;
 
+            return View("Checkout", trip);
+        }
+
+        public IActionResult Checkout_pay(List<int> selectedSeats, int trip)
+        {
+            if(selectedSeats.Count()==0)
+            {
+                return Json(new { staus = false });
+            }
+            _seatService.Update(trip, selectedSeats);
+            return Json(new { staus = true } );
+        }
     }
 }

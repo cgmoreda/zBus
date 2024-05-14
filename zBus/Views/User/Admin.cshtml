@@ -1,10 +1,7 @@
-﻿
+﻿@model AdminViewModel;
 @{
-    Layout=null;
+    Layout = null;
 }
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -19,7 +16,6 @@
 <body>
     <div class="layer"></div>
     <!-- ! Body -->
-    <a class="skip-link sr-only" href="#partialViewContainer">Skip to content</a>
     <div class="page-flex">
         <!-- ! Sidebar -->
         <aside class="sidebar">
@@ -47,7 +43,7 @@
                         <li>
                             <a class="show-cat-btn" onclick="loadPartialViewBtn(1)">
                                 <span class="icon document" aria-hidden="true"></span>Bus
-                               
+
                             </a>
                         </li>
                         <li>
@@ -68,17 +64,17 @@
 
                             </a>
                         </li>
-                    
+
                     </ul>
                     <span class="system-menu__title">system</span>
                     <ul class="sidebar-body-menu">
-                       
+
                         <li>
                             <a class="show-cat-btn" href="##">
                                 <span class="icon user-3" aria-hidden="true"></span>Users
-                              
+
                             </a>
-                           
+
                         </li>
                         <li>
                             <a href="##"><span class="icon setting" aria-hidden="true"></span>Settings</a>
@@ -87,6 +83,7 @@
                 </div>
             </div>
         </aside>
+
         <div class="main-wrapper">
             <!-- ! Main nav -->
             <nav class="main-nav--bg" style="display:flex !important">
@@ -102,148 +99,39 @@
                             <span class="sr-only">Toggle menu</span>
                             <span class="icon menu-toggle--gray" aria-hidden="true"></span>
                         </button>
-                        
+
                         <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
                             <span class="sr-only">Switch theme</span>
                             <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
                             <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
                         </button>
-                        
+
                     </div>
                 </div>
             </nav>
-            <!-- ! Main -->
-            <main class="main users chart-page" id="partialViewContainer">
-                <div class="container">
-                    <h2 class="main-title">Dashboard</h2>
-                    <div class="row stat-cards">
-                        <div class="col-md-6 col-xl-3">
-                            <article class="stat-cards-item">
-                                <div class="stat-cards-icon primary">
-                                    <i data-feather="bar-chart-2" aria-hidden="true"></i>
-                                </div>
-                                <div class="stat-cards-info">
-                                    <p class="stat-cards-info__num">1478 286</p>
-                                    <p class="stat-cards-info__title">Total Buses</p>
-                                    <p class="stat-cards-info__progress">
-                                        <span class="stat-cards-info__profit success">
-                                            <i data-feather="trending-up" aria-hidden="true"></i>4.07%
-                                        </span>
-                                        
-                                    </p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-md-6 col-xl-3">
-                            <article class="stat-cards-item">
-                                <div class="stat-cards-icon warning">
-                                    <i data-feather="file" aria-hidden="true"></i>
-                                </div>
-                                <div class="stat-cards-info">
-                                    <p class="stat-cards-info__num">1478 286</p>
-                                    <p class="stat-cards-info__title">Total Drivers</p>
-                                    <p class="stat-cards-info__progress">
-                                        <span class="stat-cards-info__profit success">
-                                            <i data-feather="trending-up" aria-hidden="true"></i>0.24%
-                                        </span>
-                                        
-                                    </p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-md-6 col-xl-3">
-                            <article class="stat-cards-item">
-                                <div class="stat-cards-icon purple">
-                                    <i data-feather="file" aria-hidden="true"></i>
-                                </div>
-                                <div class="stat-cards-info">
-                                    <p class="stat-cards-info__num">1478 286</p>
-                                    <p class="stat-cards-info__title">Total Stations</p>
-                                    <p class="stat-cards-info__progress">
-                                        <span class="stat-cards-info__profit danger">
-                                            <i data-feather="trending-down" aria-hidden="true"></i>1.64%
-                                        </span>
-                                        
-                                    </p>
-                                </div>
-                            </article>
-                        </div>
-                        <div class="col-md-6 col-xl-3">
-                            <article class="stat-cards-item">
-                                <div class="stat-cards-icon success">
-                                    <i data-feather="feather" aria-hidden="true"></i>
-                                </div>
-                                <div class="stat-cards-info">
-                                    <p class="stat-cards-info__num">1478 286</p>
-                                    <p class="stat-cards-info__title">Total Trips</p>
-                                    <p class="stat-cards-info__progress">
-                                        <span class="stat-cards-info__profit warning">
-                                            <i data-feather="trending-up" aria-hidden="true"></i>0.00%
-                                        </span>
-                                       
-                                    </p>
-                                </div>
-                            </article>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-lg-9">
-                            <div class="chart">
-                                <canvas id="myChart" aria-label="Site statistics" role="img"></canvas>
-                            </div>
-                            
-           
-                        </div>
-                        <div class="col-lg-3">
-                            <article class="customers-wrapper">
-                                <canvas id="customersChart" aria-label="Customers statistics" role="img"></canvas>
-                                <!--             <p class="customers__title">New Customers <span>+958</span></p>
-                                <p class="customers__date">28 Daily Avg.</p>
-                                <picture><source srcset="./img/svg/customers.svg" type="image/webp"><img src="./img/svg/customers.svg" alt=""></picture> -->
-                            </article>
-                            <article class="white-block">
-                                <div class="top-cat-title">
-                                    <h3>Top categories</h3>
-                                    <p>28 Categories, 1400 Posts</p>
-                                </div>
-                                <ul class="top-cat-list">
-                                    <li>
-                                        <a href="##">
-                                            <div class="top-cat-list__title">
-                                                Lifestyle <span>8.2k</span>
-                                            </div>
-                                            <div class="top-cat-list__subtitle">
-                                                Dailiy lifestyle articles <span class="purple">+472</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="##">
-                                            <div class="top-cat-list__title">
-                                                Tutorials <span>8.2k</span>
-                                            </div>
-                                            <div class="top-cat-list__subtitle">
-                                                Coding tutorials <span class="blue">+472</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li>
-                                        <a href="##">
-                                            <div class="top-cat-list__title">
-                                                Technology <span>8.2k</span>
-                                            </div>
-                                            <div class="top-cat-list__subtitle">
-                                                Dailiy technology articles <span class="danger">+472</span>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    
-                                </ul>
-                            </article>
-                        </div>
-                    </div>
-                </div>
-            </main>
+            <div id="partialViewContainer">
+                @if (Model.Id == 0)
+                {
+                    @Html.Partial("_PartialviewDashbord")
+                }
+                else if (Model.Id == 1)
+                {
+                    @Html.Partial("_PartialviewBus", Model.Buses)
+                }
+                else if (Model.Id == 2)
+                {
+                    @Html.Partial("_PartialviewDriver", Model.Drivers)
+                }
+                else if (Model.Id == 3)
+                {
+                    @Html.Partial("_PartialviewStation", Model.Stations)
+                }
+                else if (Model.Id == 4)
+                {
+                    @Html.Partial("_PartialviewTrip", Model.Trips)
+
+                }
+            </div>
             <!-- ! Footer -->
             <footer class="footer">
                 <div class="container footer--flex">
@@ -261,16 +149,18 @@
                 </div>
             </footer>
         </div>
+
     </div>
+
     <!-- Chart library -->
     <script src="~/assets3/plugins/chart.min.js"></script>
     <!-- Icons library -->
     <script src="~/assets3/plugins/feather.min.js"></script>
     <!-- Custom scripts -->
     <script src="~/assets3/js/script.js"></script>
-    <script src="~/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/assets3/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets3/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets3/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 
@@ -281,8 +171,8 @@
             datasets: [{
                 label: 'Site Users',
                 data: [100, 150, 200, 250, 300, 350, 400],
-                
-               
+
+
             }]
         };
 
@@ -339,4 +229,3 @@
 
 </body>
 
-</html>

@@ -5,9 +5,9 @@ namespace zBus.Data.Services
     public interface ISeatsService
     {
         Task<IEnumerable<Seat>> GetAll();
-        Seat GetById(int id);
+        List<Seat> GetById(int id);
         void Add(Seat Seat);
-        void Update(int id, Seat Seat);
+        void Update(int id,List<int> ids);
         void Delete(int id);
     }
 }

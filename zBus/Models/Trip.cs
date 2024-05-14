@@ -37,7 +37,7 @@ public class Trip
 
     public virtual Bus Bus { get; set; }
 
-   // public virtual ICollection<Seat> Seats { get; set; }
-
+    // public virtual ICollection<Seat> Seats { get; set; }
+ 
     public virtual ICollection<User> Users { get; set; }
 }

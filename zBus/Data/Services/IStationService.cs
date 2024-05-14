@@ -8,6 +8,6 @@ namespace zBus.Data.Services
         Station GetById(int id);
         void Add(Station station);
         void Update(int id, Station station);
-        void Delete(int id);
+        bool Delete(int id);
     }
 }

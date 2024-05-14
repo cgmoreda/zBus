@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System.Net.NetworkInformation;
 using zBus.Models;
-
+using zBus.Data.Enums;
 namespace zBus.Data.Services
 {
     public class SeatService : ISeatsService
@@ -19,7 +20,7 @@ namespace zBus.Data.Services
 
         public void Delete(int id)
         {
-            var _seat = GetById(id);
+            var _seat = _context.Seats.FirstOrDefault(s => s.SeatId == id); ;
             _context.Seats.Remove(_seat!);
             _context.SaveChanges();
         }
@@ -30,17 +31,21 @@ namespace zBus.Data.Services
             return seats;
         }
 
-        public Seat GetById(int id)
+        public List<Seat> GetById(int id)
         {
-            return _context.Seats.FirstOrDefault(x => x.SeatId == id)!;
+            return _context.Seats.Where(x => x.TripId == id).ToList()?? new List<Seat>();
         }
 
-        public void Update(int id, Seat _seat)
+        public void Update(int id, List<int> _seat)
         {
-         
-            _seat.SeatId = id;
-            _context.Seats.Update(_seat);
-            _context.SaveChanges();
+          foreach(var item in _seat)
+            {
+                var seat = _context.Seats.FirstOrDefault(x => x.SeatId == item && x.TripId == id);
+                seat.Status = SeatStatus.Booked;
+                _context.Seats.Update(seat);
+                _context.SaveChanges();
+
+            }
         }
     }
 }

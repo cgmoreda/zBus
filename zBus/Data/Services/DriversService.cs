@@ -17,16 +17,21 @@ namespace zBus.Data.Services
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            var _driver = GetById(id);
-            _context.Drivers.Remove(_driver!);
-            _context.SaveChanges();
+            try
+            {
+                var _driver = GetById(id);
+                _context.Drivers.Remove(_driver!);
+                _context.SaveChanges();
+                return true;
+            }
+            catch {  return false; }
         }
 
-        public List<Driver> GetAll()
+        public async Task<IEnumerable<Driver>> GetAll()
         {
-            var drivers =  _context.Drivers.ToList();
+            var drivers = await _context.Drivers.ToListAsync();
             return drivers;
         }
 

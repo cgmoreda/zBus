@@ -2,164 +2,200 @@
 @using Newtonsoft.Json;
 @{
     Layout = null;
-    string photo = ViewBag.photo as string;
-    var driverstring = TempData["Drivers"]?.ToString();
+    var driverstring = TempData.Peek("Drivers")?.ToString();
     var Drivers = JsonConvert.DeserializeObject<List<Driver>>(driverstring);
     //var drivers = TempData.Peek("Drivers") as List<Driver>;
 }
 <head>
     <link rel="stylesheet" href="/assets3/css/style.min.css">
+
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
 
-        img{
+        img {
             width: 180px;
             height: 180px;
             border-radius: 50%;
-           
-            justify-content:center;
+            justify-content: center;
         }
-        .upload
-        {
+
+        .upload {
             display: block;
-            width: 150 ;
-            background: #e3362c ;
-            color: #fff ;
-            padding: 12px ;
-            margin: 10px auto ;
-            border-radius: 5px ;
-            cursor: pointer ;
+            width: 150;
+            background: #e3362c;
+            color: #fff;
+            padding: 12px;
+            margin: 10px auto;
+            border-radius: 5px;
+            cursor: pointer;
         }
+
         }
 
         span.formwarn {
             color: red !important;
             font-size: 13px;
         }
-        danger
-        {
+
+        danger {
             color: red !important;
             font-size: 13px;
         }
+
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-container {
+            width: 50%; /* Adjust the width as needed */
+        }
+
+        .photo-container {
+            justify-content: center;
+            /* Adjust the margin as needed */
+        }
+
     </style>
 </head>
 <body>
 
+    <div id="buspartial">
+        <main class="page-center">
+            <form class="sign-up-form form" id="formdata" onsubmit="get(this)" asp-action="Valid_Add" asp-controller="Bus" method="post" enctype="multipart/form-data">
+                <div class="container">
+                    <div class="photo-container">
+                        <label class="form-label-wrapper" style="display: block; text-align: center;justify-content:center">
+                            <input style="visibility:hidden" asp-for="BusPicture" id="BusPicture" />
 
-    <main class="page-center">
-        <article class="sign-up">
-            <h1 class="sign-up__title">Add New Bus</h1>
-            <form class="sign-up-form form" asp-action="Valid_Add" asp-controller="Bus" method="post" enctype="multipart/form-data">
-              
-                <div class="form-label-wrapper" style="display: block; text-align: center;justify-content:center">
-                    <img id="image" src="~/imgs/driver.jpg" />
-                    <input type="file" accept="image/jpeg, image/png, image/jpg" id="photo" name="photo" class="form-input" required oninput="updateTargetInput(this.value)" onchange="displaySelectedImage(this);" style="display:none" />
-                    <br />
-                    <span id="photo_valid" class="formwarn" style="color:red !important;text-align:center;margin:15x">@photo</span>
-                    <label class="upload" for="photo">Uplaod Image</label>
+                            <img id="image" src="~/imgs/Addbus.jpg" />
+                            <input type="file" accept="image/jpeg, image/png, image/jpg" id="photo" name="photo" class="form-input" required oninput="this.value = this.value.trim()" onchange="displaySelectedImage(this);" style="display:none" />
+                            <br />
+                            <span id="photo_valid" class="formwarn" style="color:red !important;text-align:center;margin:15px"></span>
+                            <label class="upload" for="photo">Uplaod Image</label>
+
+                            <span asp-validation-for="BusPicture" id="BusPicture_asp" style="color:red;text-align:center"></span>
+                        </label>
+                    </div>
+                    <div class="form-container">
+                        <article class="sign-up">
+                            <h1 class="sign-up__title">Add New Bus</h1>
+
+                            <label class="form-label-wrapper">
+                                <label asp-for="BusModel" class="form-label"> Model <span style="color:red">*</span></label>
+                                <input asp-for="BusModel" class="form-input" placeholder="Enter Bus Model" oninput="globalEval.trim()" />
+                                <span asp-validation-for="BusModel" style="color:red"></span>
+                            </label>
+
+                            <label class="form-label-wrapper">
+                                <label asp-for="NumberOfSeats" class="form-label">Number Of Seats <span style="color:red">*</span></label>
+                                <input asp-for="NumberOfSeats" min="1" class="form-input" type="number" />
+                                <span asp-validation-for="NumberOfSeats" style="color:red"></span>
+                            </label>
+
+                            <div class="form-label-wrapper">
+                                <label class="form-label">Air Conditioning <span style="color:red">*</span></label>
+                                <select asp-for="AirConditioningAvailable" class="form-input" required>
+                                    <option value="">Select</option>
+                                    <option value="true">Available</option>
+                                    <option value="false">Not Available</option>
+                                </select>
+                                <span asp-validation-for="AirConditioningAvailable" style="color:red"></span>
+                            </div>
+
+                            <div class="form-label-wrapper">
+                                <label class="form-label">Wifi Available <span style="color:red">*</span> </label>
+                                <select asp-for="WifiAvailable" class="form-input" required>
+                                    <option value="">Select</option>
+                                    <option value="true">Available</option>
+                                    <option value="false">Not Available</option>
+                                </select>
+                                <span asp-validation-for="WifiAvailable" style="color:red"></span>
+                            </div>
+
+                            <div class="form-label-wrapper">
+                                <label class="form-label">Restroom Available <span style="color:red">*</span></label>
+                                <select asp-for="RestroomAvailable" class="form-input" required>
+                                    <option value="">Select</option>
+                                    <option value="true">Available</option>
+                                    <option value="false">Not Available</option>
+
+                                </select>
+                                <span asp-validation-for="RestroomAvailable" style="color:red"></span>
+                            </div>
+
+                            <label class="form-label-wrapper">
+                                <label asp-for="DriverId" class="form-label">Driver <span style="color:red">*</span></label>
+                                <select asp-for="DriverId" class="form-input" required>
+                                    <option value="">Select</option>
+                                    @if (Drivers != null)
+                                    {
+                                        foreach (var driver in Drivers)
+                                        {
+                                            <option value="@driver.DriverId">ID: @driver.DriverId, Name: @driver.Fisrt_name @driver.Last_name</option>
+                                        }
+                                    }
+                                    else
+                                    {
+                                        <option>No drivers available</option>
+                                    }
+
+                                </select>
+                                <span asp-validation-for="DriverId" style="color:red"></span>
+                            </label>
+
+                            <label>
+                                <span asp-validation-summary="All" style="color:red"></span>
+                            </label>
+                            <br />
+
+                            <button class="form-btn primary-default-btn transparent-btn">Add Bus</button>
+
+                        </article>
+                    </div>
+
 
                 </div>
-
-                
-                <div class="form-label-wrapper">
-                    <label asp-for="BusModel" class="text-black">Model<span class="danger">*</span></label>
-                    <input asp-for="BusModel" class="form-input" oninput="globalEval.trim()" />
-                    <span asp-validation-for="BusModel" style="color:red"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label asp-for="NumberOfSeats" class="text-black">Number Of Seats<span style="color:red">*</span></label>
-                    <input asp-for="NumberOfSeats" min="1" class="form-input" type="number" />
-                    <span asp-validation-for="NumberOfSeats" style="color:red"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label class="text-black">Air Conditioning</label>
-                    <select asp-for="AirConditioningAvailable" class="form-input" required>
-                        <option value="">Select</option>
-                        <option value="true">Available</option>
-                        <option value="false">Not Available</option>
-                    </select>
-                    <span asp-validation-for="AirConditioningAvailable" style="color:red"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label class="text-black">Wifi Available</label>
-                    <select asp-for="WifiAvailable" class="form-input" required>
-                        <option value="">Select</option>
-                        <option value="true">Available</option>
-                        <option value="false">Not Available</option>
-                    </select>
-                    <span asp-validation-for="WifiAvailable" style="color:red"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label class="text-black">Restroom Available</label>
-                    <select asp-for="RestroomAvailable" class="form-input" required>
-                        <option value="">Select</option>
-                        <option value="true">Available</option>
-                        <option value="false">Not Available</option>
-                       
-                    </select>
-                    <span asp-validation-for="RestroomAvailable" style="color:red"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label asp-for="DriverId" class="text-black">Driver Id</label>
-                    <select asp-for="DriverId" class="form-input" required>
-                        <option value="">Select</option>
-                       @foreach (var driver in Drivers)
-                                {
-                                    <option value="@driver.DriverId">ID: @driver.DriverId, Name: @driver.Fisrt_name @driver.Last_name</option>
-                                }
-                      
-
-                    </select>
-                    <span asp-validation-for="DriverId" style="color:red"></span>
-                </div>
-
-                <div>
-                    <span asp-validation-summary="All" style="color:red"></span>
-                </div>
-                <br />
-
-                <button class="form-btn primary-default-btn transparent-btn">Add Bus</button>
             </form>
 
-        </article>
-    </main>
+        </main>
 
-    <script src="~/assets3/plugins/chart.min.js"></script>
-    <!-- Icons library -->
-    <script src="~/assets3/plugins/feather.min.js"></script>
-    <!-- Custom scripts -->
-    <script src="~/assets3/js/script.js"></script>
-
-
-    <script src="~/lib/jquery/dist/jquery.js">  </script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
-
-    <script>
+        <script src="~/assets3/plugins/chart.min.js"></script>
+        <!-- Icons library -->
+        <script src="~/assets3/plugins/feather.min.js"></script>
+        <!-- Custom scripts -->
+        <script src="~/assets3/js/script.js"></script>
 
 
-        function displaySelectedImage(input) {
-            if (input.files && input.files[0]) {
-                document.getElementById('image').src = URL.createObjectURL(input.files[0]);
+        <script src="~/lib/jquery/dist/jquery.js">  </script>
+        <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
+        <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+        <script>
+
+
+            function displaySelectedImage(input) {
+                if (input.files && input.files[0]) {
+                    var filename = input.files[0].name;
+                    document.getElementById('BusPicture').value = filename;
+                    document.getElementById('BusPicture_asp').innerHTML = '';
+                    document.getElementById('image').src = URL.createObjectURL(input.files[0]);
+                    let flag = document.getElementById('BusPicture').value;
+
+                    // Check if the string ends with ".jpg", ".png", or ".jpeg" (case-insensitive)
+                    if ((filename.toLowerCase().endsWith(".jpg") || filename.toLowerCase().endsWith(".png") || filename.toLowerCase().endsWith(".jpeg")) && flag != '') {
+                        document.getElementById("photo_valid").innerHTML = "";
+
+                    } else {
+                        //console.log("You must Upload an Image");
+                        let out = filename.split('.').pop().toLowerCase()
+                        document.getElementById("photo_valid").innerHTML = `You uploaded ${out} You must upload  (.jpg - .png - .jpeg) format`;
+                    }
+
+                }
             }
-        }
 
-        function updateTargetInput(value) {
-            // Check if the string ends with ".jpg", ".png", or ".jpeg" (case-insensitive)
-            if (value.toLowerCase().endsWith(".jpg") || value.toLowerCase().endsWith(".png") || value.toLowerCase().endsWith(".jpeg")) {
-                document.getElementById("photo_valid").innerHTML = "";
 
-            } else {
-                //console.log("You must Upload an Image");
-                document.getElementById("photo_valid").innerHTML = "You must Upload an Image Format (.jpg - .png - .jpeg ) ";
-            }
-        }
-
-    </script>
+        </script>
 
 </body>

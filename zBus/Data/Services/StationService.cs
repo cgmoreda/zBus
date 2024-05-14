@@ -18,11 +18,16 @@ namespace zBus.Data.Services
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            var _station = GetById(id);
-            _context.Stations.Remove(_station!);
-            _context.SaveChanges();
+            try
+            {
+                var _station = GetById(id);
+                _context.Stations.Remove(_station!);
+                _context.SaveChanges();
+                return true;
+            }
+            catch { return false; }
         }
 
         public async Task<IEnumerable<Station>> GetAll()

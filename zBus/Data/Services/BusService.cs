@@ -21,7 +21,8 @@ namespace zBus.Data.Services
         {
             try
             {
-                var _bus = GetById(id);
+                var _bus = _context.Buses.FirstOrDefault(x => x.BusId == id)!;
+
                 _context.Buses.Remove(_bus!);
                 _context.SaveChanges();
                 return true;
@@ -29,7 +30,6 @@ namespace zBus.Data.Services
             catch (Exception ex) {
 
                 return false;
-            
             }
         }
 

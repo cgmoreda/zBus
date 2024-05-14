@@ -29,83 +29,31 @@ namespace zBus.Controllers
             var data = await _service.GetAll();
             return PartialView("_PartialviewBus", data);
         }
-
+        [HttpGet]
         public IActionResult Add()
-        { 
+        {
             var drivers = _DriverService.GetAll();
-            TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
-            TempData.Keep("Drivers");
-           ViewBag.photo=string.Empty;
+            if (!TempData.ContainsKey("Drivers"))
+            {
+                TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
+                TempData.Keep("Drivers");
+            }
             return View(new Bus());
         }
+        [HttpPost]
         public IActionResult Valid_Add(Bus Bus, IFormFile photo)
         {
-            ModelState["BusPicture"].ValidationState = ModelValidationState.Valid;
-            ModelState["Driver"].ValidationState = ModelValidationState.Valid;
+
+            ModelState["Driver"]!.ValidationState = ModelValidationState.Valid;
+            if (!TempData.ContainsKey("Drivers"))
+            {
+                var drivers = _DriverService.GetAll();
+                TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
+                TempData.Keep("Drivers");
+            }
             if (ModelState.IsValid)
             {
-                if (photo != null)
-                {
-                    if(photo.ContentType.StartsWith("image/"))
-                    {
-                        string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
-                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Bus");
-                        string filePath = Path.Combine(serverFolder, fileName);
-                        using (var filestream = new FileStream(filePath, FileMode.Create))
-                        {
-                            photo.CopyTo(filestream);
-                        }
-                        Bus.BusPicture = "/Bus/" + fileName;
-                    }
-                    else { 
-                       
-                        ViewBag.photo= $"You Uploaded {photo.ContentType.Split('/').Last()} Try (.jpg - .png - .jpeg )";
-                        return View("Add", Bus);
-                    }
-                }
-                _service.Add(Bus);
-                return RedirectToAction("Admin", "User");
-                // return PartialView("_PartialviewStation", station);
-            }
-            else
-            {
-                ViewBag.photo = $"You Must Upload Photo Try";
-                return View("Add", Bus);
-            }
-        }
-
-
-        public IActionResult Delete(int id)
-        {
-            bool check = _service.Delete(id);
-            if (check)
-            {
-                return Json(new { loggedIn = true });
-            }
-            {
-                //var bus = _service.GetAll();
-                return Json(new { loggedIn = false });
-            }  
-        }
-
-
-        public IActionResult Update(int id)
-        {
-            var drivers = _DriverService.GetAll();
-            TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
-            TempData.Keep("Drivers");
-            var bus= _service.GetById(id);
-            ViewBag.photo = string.Empty;
-            return View(bus);
-        }
-
-
-        public IActionResult Update_Add(Bus Bus, IFormFile photo,int id)
-        {
-            ModelState["BusPicture"].ValidationState = ModelValidationState.Valid;
-            ModelState["Driver"].ValidationState = ModelValidationState.Valid;
-            if (ModelState.IsValid)
-            {
+                Bus.Driver = _DriverService.GetById(Bus.DriverId);
                 if (photo != null)
                 {
                     if (photo.ContentType.StartsWith("image/"))
@@ -121,24 +69,96 @@ namespace zBus.Controllers
                     }
                     else
                     {
-
-                        ViewBag.photo = $"You Uploaded {photo.ContentType.Split('/').Last()} Try (.jpg - .png - .jpeg )";
+                        ModelState.AddModelError("BusPicture", "You must Upload a Photo");
                         return View("Add", Bus);
                     }
+                    _service.Add(Bus);
+                    int id = 1;
+                    return RedirectToAction("Admin","User", new {id=1});
                 }
-                _service.Update(id,Bus);
-                return RedirectToAction("Admin", "User");
-                // return PartialView("_PartialviewStation", station);
+                ModelState.AddModelError("BusPicture", "You must Upload a Photo");
+                return View("Add", Bus);
+
             }
             else
             {
+                ModelState.AddModelError("BusPicture", "You must Upload a Photo");
                 return View("Add", Bus);
             }
         }
 
-       
+        [HttpDelete]
+        public IActionResult Delete(int id)
+        {
+            bool check = _service.Delete(id);
+            if (check)
+            {
+                return RedirectToAction("Admin", "User", new { id = 1 });
+            }
+            {
+                //var bus = _service.GetAll();
+                return Json(new { loggedIn = false });
+            }
+        }
 
 
+        public IActionResult Update(int id)
+        {
+            if (!TempData.ContainsKey("Drivers"))
+            {
+                var drivers = _DriverService.GetAll();
+                TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
+                TempData.Keep("Drivers");
+            }
+            var bus = _service.GetById(id);
+            return View(bus);
+        }
 
+        [HttpPost]
+        public IActionResult Update_Add(Bus Bus, IFormFile photo, int id)
+        {
+            if (!TempData.ContainsKey("Drivers"))
+            {
+                var drivers = _DriverService.GetAll();
+                TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
+                TempData.Keep("Drivers");
+            }
+            ModelState["Driver"]!.ValidationState = ModelValidationState.Valid;
+            if (ModelState.IsValid)
+            {
+                Bus.Driver = _DriverService.GetById(Bus.DriverId);
+                if (photo != null)
+                {
+                    if (photo.ContentType.StartsWith("image/"))
+                    {
+                        string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Bus");
+                        string filePath = Path.Combine(serverFolder, fileName);
+                        using (var filestream = new FileStream(filePath, FileMode.Create))
+                        {
+                            photo.CopyTo(filestream);
+                        }
+                        Bus.BusPicture = "/Bus/" + fileName;
+                    }
+                    else
+                    {
+                        ModelState.AddModelError("BusPicture", "You must Upload a Photo");
+                        return View("Update", Bus);
+                    }
+                    _service.Update(id, Bus);
+                   
+                    return RedirectToAction("Admin", "User", new {id=1});
+                }
+
+                ModelState.AddModelError("BusPicture", "You must Upload a Photo");
+                return View("Update", Bus);
+            }
+            else
+            {
+                ModelState.AddModelError("BusPicture", "You must Upload a Photo");
+                return View("Update", Bus);
+            }
+        }
     }
+
 }

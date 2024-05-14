@@ -10,6 +10,7 @@ namespace zBus.Models
 
         [Required(ErrorMessage = "Photo is Required") ,Display(Name = "Photo Of Bus")]
         public string BusPicture { get; set; }
+ 
 
         [Required(ErrorMessage = "Bus Model is Required"), Display(Name = "Model Bus")]
         public string BusModel { get; set; }
