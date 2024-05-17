@@ -17,7 +17,7 @@ namespace zBus.Controllers
             _service = service;
           
         }
-        public async Task<IActionResult> Index()
+        public async Task< IActionResult> Index()
         {
     
             var data = await _service.GetAll();
@@ -30,37 +30,48 @@ namespace zBus.Controllers
             return View(new Driver());
         }
 
-        [HttpPost]
         public IActionResult Delete(int id)
         {
-            _service.Delete(id);
-            return RedirectToAction("Admin", "User");
+            bool check = _service.Delete(id);
+            if (check)
+            {
+                return RedirectToAction("Admin", "User", new { id = 2 });
+            }
+               
+                return Json(new { loggedIn = false });
         }
-        [HttpPost]
         public IActionResult Valid_Add(Driver Driver, IFormFile photo)
         {
-            ModelState["ProfilePicturePath"].ValidationState = ModelValidationState.Valid;
             if (ModelState.IsValid)
             {
                 if (photo != null)
                 {
-                    string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Driver");
-                    string filePath = Path.Combine(serverFolder, fileName);
-                    using (var filestream = new FileStream(filePath, FileMode.Create))
+                    if (photo.ContentType.StartsWith("image/"))
                     {
-                        photo.CopyTo(filestream);
+                        string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Driver");
+                        string filePath = Path.Combine(serverFolder, fileName);
+                        using (var filestream = new FileStream(filePath, FileMode.Create))
+                        {
+                            photo.CopyTo(filestream);
+                        }
+                        Driver.ProfilePicturePath = "/Driver/" + fileName;
+                        _service.Add(Driver);
+                        return RedirectToAction("Admin", "User", new { id = 2 });
                     }
-                    Driver.ProfilePicturePath = "/Driver/" + fileName;
-
+                    ModelState.AddModelError("ProfilePicturePath", "Upload a Photo");
+                    return View("AddDriver", Driver);
                 }
-                _service.Add(Driver);
-                return RedirectToAction("Admin", "User");
-                // return PartialView("_PartialviewStation", station);
+                else
+                {
+                    ModelState.AddModelError("ProfilePicturePath", "Upload a Photo");
+                    return View("AddDriver", Driver);
+                }
+               
             }
             else
             {
-                return View("Update", Driver);
+                return View("AddDriver", Driver);
             }
         }
         
@@ -69,29 +80,34 @@ namespace zBus.Controllers
             var Driver = _service.GetById(id);
             return View(Driver);
         }
-        [HttpPost]
+       
         public IActionResult Update_Valid(Driver Driver, IFormFile photo, int id)
         {
-            ModelState["ProfilePicturePath"].ValidationState = ModelValidationState.Valid;
+           
             if (ModelState.IsValid)
             {
 
                 if (photo != null)
                 {
-                    string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Driver");
-                    string filePath = Path.Combine(serverFolder, fileName);
-                    using (var filestream = new FileStream(filePath, FileMode.Create))
+                    if (photo.ContentType.StartsWith("image/"))
                     {
-                        photo.CopyTo(filestream);
+                        string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Driver");
+                        string filePath = Path.Combine(serverFolder, fileName);
+                        using (var filestream = new FileStream(filePath, FileMode.Create))
+                        {
+                            photo.CopyTo(filestream);
+                        }
+                        Driver.ProfilePicturePath = "/Driver/" + fileName;
+                        _service.Update(id, Driver);
+                        return RedirectToAction("Admin", "User", new { id = 2 });
                     }
-                    Driver.ProfilePicturePath = "/Driver/" + fileName;
-
+                    ModelState.AddModelError("ProfilePicturePath", "Upload a Photo");
+                    return View("Update", Driver);
                 }
 
-                _service.Update(id, Driver);
-                return RedirectToAction("Admin","User");
-                // return PartialView("_PartialviewStation", station);
+                ModelState.AddModelError("ProfilePicturePath", "Upload a Photo");
+                return View("Update", Driver);
 
             }
             else

@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.DotNet.Scaffolding.Shared.Project;
+using Newtonsoft.Json;
 using System.ComponentModel.DataAnnotations;
 using System.Text.RegularExpressions;
+using zBus.Data.Enums;
 using zBus.Data.Services;
 using zBus.GLobal;
-using zBus.Migrations;
 using zBus.Models;
 using static System.Collections.Specialized.BitVector32;
 
@@ -15,10 +17,21 @@ namespace zBus.Controllers
         
         private readonly IUserService _userService;
         public IWebHostEnvironment _webHostEnvironment;
-        public UserController(IUserService userService, IWebHostEnvironment webHostEnvironment)
+        private readonly ITripService _TripService;
+        private readonly IBusService _busService;
+        private readonly IStationService _stationService;
+        private readonly IDriversService _driversService;
+        private readonly ISeatsService _seatsService;
+        public UserController(IUserService userService, IWebHostEnvironment webHostEnvironment , ITripService TripService
+            , IBusService busService, IStationService stationService, IDriversService driversService, ISeatsService seatsService)
         {
             _userService = userService;
             _webHostEnvironment = webHostEnvironment;
+            _TripService = TripService;
+            _busService = busService;
+            _stationService = stationService;
+            _driversService = driversService;
+            _seatsService = seatsService;
         }
 
         public IActionResult Login_Page() {
@@ -92,7 +105,7 @@ namespace zBus.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError("email","Email does not exist try a valid one");
+                    ModelState.AddModelError("email","Email Already  Exists Try Another one");
                     return View("Login_Page");
                 }
             }
@@ -160,11 +173,44 @@ namespace zBus.Controllers
             return View();
         }
 
-        public IActionResult Admin()
+        public async Task<IActionResult> Admin(int id=0)
         {
-         
-            return View();
+          
+            var buses = await _busService.GetAll();
+            var drivers = await _driversService.GetAll();
+            var stations = await _stationService.GetAll();
+            var trips = await _TripService.GetAll();
+            List<TripDetails> tripdetails = new List<TripDetails>();
+            foreach (var trip in trips)
+            {
+                var TripDetails = new TripDetails();
+                TripDetails.Seats = _seatsService.GetById(trip.TripId);
+                TripDetails.AvailableSeatsCount = TripDetails.Seats.Count(s => s.Status == SeatStatus.Available);
+                TripDetails.arrivalstation = _stationService.GetById(trip.ArrivalStationID).StationName;
+                TripDetails.depturestation = _stationService.GetById(trip.DepartureStationID).StationName;
+                TripDetails.trip = trip;
+                TripDetails.Id = trip.TripId;
+                TripDetails.Allseatscount = _busService.GetById(trip.BusId).NumberOfSeats;
+                tripdetails.Add(TripDetails);
+
+            }
+            var viewModel = new AdminViewModel
+            {
+                Id = id,
+                Buses = buses,
+                Drivers = drivers,
+                Stations = stations,
+                Trips= tripdetails
+
+            };
+
+            
+
+
+
+            return View("Admin",viewModel);
         }
+
         public IActionResult Dashboard()
         {
 

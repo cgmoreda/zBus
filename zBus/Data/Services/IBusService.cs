@@ -7,7 +7,7 @@ namespace zBus.Data.Services
         Task<IEnumerable<Bus>> GetAll();
         Bus GetById(int id);
         void Add(Bus driver);
-        void Update(int id, Bus driver);
-        void Delete(int id);
+        void Update(int id, Bus bus);
+        bool Delete(int id);
     }
 }

@@ -1,16 +1,19 @@
-﻿@{
+﻿@using zBus.GLobal
+@{
     ViewData["Title"] = "Home Page";
     Layout = "_MyLayout";
 }
 <head>
 
-	
 
-	<link href="/assets2/css/bootstrap.min.css" rel="stylesheet">
-	<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-	<link href="/assets2/css/tiny-slider.css" rel="stylesheet">
-	<link href="/assets2/css/style.css" rel="stylesheet">
-	<style>
+
+    <link href="/assets2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="/assets2/css/tiny-slider.css" rel="stylesheet">
+    <link href="/assets2/css/style.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+
+    <style>
         .banner_area {
             background: #04091e;
             position: relative;
@@ -21,6 +24,7 @@
             background: url("/vid/Book ticket.mp4") no-repeat scroll center / cover !important;
             opacity: 0.50;
         }
+
         .position {
             width: 100%;
             bottom: 0;
@@ -42,12 +46,18 @@
                     Your browser does not support the video tag.
                 </video>
             </div>
-                
+
             <div class="container">
-                <div class="banner_content text-center">
+                <div class="banner_content text-center" tyle="justify-content:center; align-items: center;">
+
                     <h6>Assuit City</h6>
                     <h2>Book Your Tickets</h2>
-                    <a class="btn btn-secondary me-2"> Book Now</a>
+                    <a class="btn btn-secondary me-2" onclick="openPopup()"> Book Now</a>
+                    <main class="popup" id="popup" style="justify-content:center; align-items: center;">
+                        <h2>Hello!</h2>
+                        <p style="font-size:15px">You Have to Login Or Create Account First!</p>
+                        <button type="button" onclick="closePopup()">OK</button>
+                    </main>
 
                 </div>
             </div>
@@ -55,125 +65,151 @@
 
     </section>
 
-	<div class="why-choose-section" style="background-color:aliceblue;color:darkgrey">
-		<div class="container" >
-			<div class="row justify-content-between">
-				<div class="col-lg-6">
-					<h2 class="section-title">Why Choose Us</h2>
-					
-					<div class="row my-5">
-						<div class="col-6 col-md-6">
-							<div class="feature">
-								<div class="icon">
-									<img src="/assets2/imgs/truck.svg" alt="Image" class="imf-fluid">
-								</div>
-								<h3>Fast &amp; Free Shipping</h3>
-											</div>
-						</div>
+    <div class="why-choose-section" style="background-color:aliceblue;color:darkgrey">
+        <div class="container">
+            <div class="row justify-content-between">
+                <div class="col-lg-6">
+                    <h2 class="section-title">Why Choose Us</h2>
 
-						<div class="col-6 col-md-6">
-							<div class="feature">
-								<div class="icon">
-									<img src="/assets2/imgs/bag.svg" alt="Image" class="imf-fluid">
-								</div>
-								<h3>Easy to Shop</h3>
-									</div>
-						</div>
+                    <div class="row my-5">
+                        <div class="col-6 col-md-6">
+                            <div class="feature">
+                                <div class="icon">
+                                    <img src="/assets2/imgs/truck.svg" alt="Image" class="imf-fluid">
+                                </div>
+                                <h3>Fast &amp; Free Shipping</h3>
+                            </div>
+                        </div>
 
-						<div class="col-6 col-md-6">
-							<div class="feature">
-								<div class="icon">
-									<img src="/assets2/imgs/support.svg" alt="Image" class="imf-fluid">
-								</div>
-								<h3>24/7 Support</h3>
-									</div>
-						</div>
+                        <div class="col-6 col-md-6">
+                            <div class="feature">
+                                <div class="icon">
+                                    <img src="/assets2/imgs/bag.svg" alt="Image" class="imf-fluid">
+                                </div>
+                                <h3>Easy to Shop</h3>
+                            </div>
+                        </div>
 
-						<div class="col-6 col-md-6">
-							<div class="feature">
-								<div class="icon">
-									<img src="/assets2/imgs/return.svg" alt="Image" class="imf-fluid">
-								</div>
-								<h3>Hassle Free Returns</h3>
-								</div>
-						</div>
+                        <div class="col-6 col-md-6">
+                            <div class="feature">
+                                <div class="icon">
+                                    <img src="/assets2/imgs/support.svg" alt="Image" class="imf-fluid">
+                                </div>
+                                <h3>24/7 Support</h3>
+                            </div>
+                        </div>
 
-					</div>
-				</div>
+                        <div class="col-6 col-md-6">
+                            <div class="feature">
+                                <div class="icon">
+                                    <img src="/assets2/imgs/return.svg" alt="Image" class="imf-fluid">
+                                </div>
+                                <h3>Hassle Free Returns</h3>
+                            </div>
+                        </div>
 
-				<div class="col-lg-5" style="display:flex">
-					<div class="img-wrap">
-						<img src="/imgs/trip.jpg" alt="Image" class="img-fluid" style="display:flex">>
-                        <img src="/imgs/6.jpg"alt="Image" class="img-fluid" style="display:flex">>
-					</div>
-				</div>
+                    </div>
+                </div>
 
-			</div>
-		</div>
-	</div>
-	<!-- End Why Choose Us Section -->
-	<!-- Start We Help Section -->
-	
-	
-	<!-- End Testimonial Slider -->
-	<!-- Start Blog Section -->
-	<div class="blog-section" style="background-color:aliceblue"	>
-		<div class="container">
-			<div class="row mb-5">
-				<div class="col-md-6">
-					<h2 class="section-title">Recent Blog</h2>
-				</div>
-				<div class="col-md-6 text-start text-md-end">
-					<a href="#" class="more">View All Posts</a>
-				</div>
-			</div>
+                <div class="col-lg-5" style="display:flex">
+                    <div class="img-wrap">
+                        <img src="/imgs/trip.jpg" alt="Image" class="img-fluid" style="display:flex">>
+                        <img src="/imgs/6.jpg" alt="Image" class="img-fluid" style="display:flex">>
+                    </div>
+                </div>
 
-			<div class="row" style="background-color:aliceblue">
+            </div>
+        </div>
+    </div>
+    <!-- End Why Choose Us Section -->
+    <!-- Start We Help Section -->
+    <!-- End Testimonial Slider -->
+    <!-- Start Blog Section -->
+    <div class="blog-section" style="background-color:aliceblue">
+        <div class="container">
+            <div class="row mb-5">
+                <div class="col-md-6">
+                    <h2 class="section-title">Recent Blog</h2>
+                </div>
+                <div class="col-md-6 text-start text-md-end">
+                    <a href="#" class="more">View All Posts</a>
+                </div>
+            </div>
 
-				<div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-					<div class="post-entry">
-						<a href="#" class="post-thumbnail"><img src="/imgs/busses.jpg" alt="Image" class="img-fluid"></a>
-						<div class="post-content-entry">
-							<h3><a href="#">First Time Home Owner Ideas</a></h3>
-							<div class="meta">
-								<span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19, 2021</a></span>
-							</div>
-						</div>
-					</div>
-				</div>
+            <div class="row" style="background-color:aliceblue">
 
-				<div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-					<div class="post-entry">
-						<a href="#" class="post-thumbnail"><img src="/imgs/17.jpg" alt="Image" class="img-fluid"></a>
-						<div class="post-content-entry">
-							<h3><a href="#">How To Keep Your Furniture Clean</a></h3>
-							<div class="meta">
-								<span>by <a href="#">Robert Fox</a></span> <span>on <a href="#">Dec 15, 2021</a></span>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                    <div class="post-entry">
+                        <a href="#" class="post-thumbnail"><img src="/imgs/busses.jpg" alt="Image" class="img-fluid"></a>
+                        <div class="post-content-entry">
+                            <h3><a href="#">First Time Home Owner Ideas</a></h3>
+                            <div class="meta">
+                                <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 19, 2021</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-				<div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
-					<div class="post-entry">
-						<a href="#" class="post-thumbnail"><img src="/imgs//station.jpg" alt="Image" class="img-fluid"></a>
-						<div class="post-content-entry">
-							<h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
-							<div class="meta">
-								<span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12, 2021</a></span>
-							</div>
-						</div>
-					</div>
-				</div>
+                <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                    <div class="post-entry">
+                        <a href="#" class="post-thumbnail"><img src="/imgs/17.jpg" alt="Image" class="img-fluid"></a>
+                        <div class="post-content-entry">
+                            <h3><a href="#">How To Keep Your Furniture Clean</a></h3>
+                            <div class="meta">
+                                <span>by <a href="#">Robert Fox</a></span> <span>on <a href="#">Dec 15, 2021</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-			</div>
-		</div>
-	</div>
-	<!-- End Blog Section -->
+                <div class="col-12 col-sm-6 col-md-4 mb-4 mb-md-0">
+                    <div class="post-entry">
+                        <a href="#" class="post-thumbnail"><img src="/imgs//station.jpg" alt="Image" class="img-fluid"></a>
+                        <div class="post-content-entry">
+                            <h3><a href="#">Small Space Furniture Apartment Ideas</a></h3>
+                            <div class="meta">
+                                <span>by <a href="#">Kristin Watson</a></span> <span>on <a href="#">Dec 12, 2021</a></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-	<script src="~/assets2/js/bootstrap.bundle.min.js"></script>
-	<script src="~/assets2/js/tiny-slider.js"></script>
-	<script src="~/assets2/js/custom.js"></script>
+            </div>
+        </div>
+    </div>
+    <!-- End Blog Section -->
 
+    <script src="~/assets2/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets2/js/tiny-slider.js"></script>
+    <script src="~/assets2/js/custom.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script>
+        function openPopup() {
+
+            $.ajax({
+                url: "/Trip/Check_log",
+                type: "Get",
+                success: function (response) {
+                    if (response.loggedIn === false) {
+                        let popup = document.getElementById("popup");
+
+                        popup.classList.add("open-popup");
+                    }
+
+                    // Update the container with the partial view
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+
+        function closePopup() {
+            let popup = document.getElementById("popup");
+            popup.classList.remove("open-popup");
+        }
+
+
+    </script>
 </body>
 

@@ -2,23 +2,32 @@
 using System.ComponentModel.DataAnnotations;
 using zBus.Models;
 using zBus.Data.Enums;
+
 public class Trip
 {
     [Key]
     public int TripId { get; set; }
-    public double TripTime { get; set; }
+
+    [Required(ErrorMessage = "Departure time is required.")]
     public DateTime DepartureTime { get; set; }
+
+    [Required(ErrorMessage = "Arrival time is required.")]
     public DateTime ArrivalTime { get; set; }
+
+    [Required(ErrorMessage = "Trip price is required.")]
     public double TripPrice { get; set; }
 
     [ForeignKey("DepartureStation")]
-    public int DepartureCityID { get; set; }
+    [Required(ErrorMessage = "Departure Station is required.")]
+    public int DepartureStationID { get; set; }
 
     [ForeignKey("ArrivalStation")]
-    public int ArrivalCityID { get; set; }
-    
+    [Required(ErrorMessage = "Arrival Station is required.")]
+    public int ArrivalStationID { get; set; }
+
     [ForeignKey("Bus")]
-    public int BusId{ get; set; }
+    [Required(ErrorMessage = "Bus Trip is required.")]
+    public int BusId { get; set; }
 
     // Navigation properties
     [Display(Name = "Departure Station")]
@@ -26,8 +35,9 @@ public class Trip
 
     public virtual Station ArrivalStation { get; set; }
 
-    public virtual Bus Bus{ get; set; }
-    public virtual ICollection<Seat> Seats { get; set; }
+    public virtual Bus Bus { get; set; }
 
+    // public virtual ICollection<Seat> Seats { get; set; }
+ 
     public virtual ICollection<User> Users { get; set; }
 }

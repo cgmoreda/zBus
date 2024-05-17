@@ -29,73 +29,91 @@ namespace zBus.Controllers
             return View(new Station());
         }
 
-        [HttpPost]
+        [HttpDelete]
         public IActionResult Delete(int id)
         {
-            _stationService.Delete(id);
-            return RedirectToAction("Admin", "User");
+           ;
+            bool check = _stationService.Delete(id);
+            if (check)
+            {
+                return RedirectToAction("Admin", "User", new { id = 2 });
+            }
+
+            return Json(new { loggedIn = false });
         }
-        [HttpPost]
+       
         public IActionResult Valid_Add(Station station, IFormFile photo)
             {
-            ModelState["PhotoUrl"].ValidationState = ModelValidationState.Valid;
-            if (ModelState.IsValid)
-            {
-                if(photo != null)
-                {
-                    string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Station");
-                    string filePath = Path.Combine(serverFolder, fileName);
-                    using(var filestream= new FileStream(filePath,FileMode.Create))
-                    {
-                        photo.CopyTo(filestream);
-                    }
-                    station.PhotoUrl = "/Station/"+fileName;
-
-                }
-                _stationService.Add(station);
-                return  RedirectToAction("Admin", "User");
-                // return PartialView("_PartialviewStation", station);
-            }
-            else
-            {
-                return View("AddStation", station);
-            }
-        }
-        [HttpPost]
-        public IActionResult Update( int id)
-        {
-           var station= _stationService.GetById(id);
-            return View(station);
-        }
-        [HttpPost]
-        public IActionResult Update_Valid(Station station, IFormFile photo, int id)
-        {
-            ModelState["PhotoUrl"].ValidationState = ModelValidationState.Valid;
             if (ModelState.IsValid)
             {
 
                 if (photo != null)
                 {
-                    string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
-                    string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Station");
-                    string filePath = Path.Combine(serverFolder, fileName);
-                    using (var filestream = new FileStream(filePath, FileMode.Create))
+                    if (photo.ContentType.StartsWith("image/"))
                     {
-                        photo.CopyTo(filestream);
+                        string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Station");
+                        string filePath = Path.Combine(serverFolder, fileName);
+                        using (var filestream = new FileStream(filePath, FileMode.Create))
+                        {
+                            photo.CopyTo(filestream);
+                        }
+                        station.PhotoUrl = "/Station/" + fileName;
+                        _stationService.Add(station);
+                        return RedirectToAction("Admin", "User", new { id = 3 });
                     }
-                    station.PhotoUrl = "/Station/" + fileName;
-
+                    ModelState.AddModelError("PhotoUrl", "Upload A photo");
+                    return View("AddStation", station);
                 }
-               
-                _stationService.Update(id, station);
-                return RedirectToAction("Admin", "User");
-                // return PartialView("_PartialviewStation", station);
 
+                ModelState.AddModelError("PhotoUrl", "Upload A photo");
+                return View("AddStation", station);
             }
             else
             {
                 return View("AddStation", station);
+            }
+
+
+        }
+     
+        public IActionResult Update( int id)
+        {
+           var station= _stationService.GetById(id);
+            return View(station);
+        }
+       
+        public IActionResult Update_Valid(Station station, IFormFile photo, int id)
+        {
+           // ModelState["PhotoUrl"].ValidationState = ModelValidationState.Valid;
+            if (ModelState.IsValid)
+            {
+
+                if (photo != null)
+                {
+                    if (photo.ContentType.StartsWith("image/"))
+                    {
+                        string fileName = Guid.NewGuid().ToString() + "-" + photo.FileName;
+                        string serverFolder = Path.Combine(_webHostEnvironment.WebRootPath, "Station");
+                        string filePath = Path.Combine(serverFolder, fileName);
+                        using (var filestream = new FileStream(filePath, FileMode.Create))
+                        {
+                            photo.CopyTo(filestream);
+                        }
+                        station.PhotoUrl = "/Station/" + fileName;
+                        _stationService.Update(id, station);
+                        return RedirectToAction("Admin", "User", new { id = 3 });
+                    }
+                    ModelState.AddModelError("PhotoUrl", "Upload A photo");
+                    return View("Update", station);
+                }
+             
+               ModelState.AddModelError("PhotoUrl", "Upload A photo");
+                return View("Update", station);
+            }
+            else
+            {
+                return View("Update", station);
             }
 
 

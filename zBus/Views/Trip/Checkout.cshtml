@@ -1,0 +1,276 @@
+﻿@model TripDetails
+@using zBus.Data.Enums
+@{
+
+    Layout = null;
+    var price = ViewBag.price ?? " ";
+}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Seat Layout</title>
+
+    <link href="/assets2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="/assets2/css/tiny-slider.css" rel="stylesheet">
+    <link href="/assets2/css/style.css" rel="stylesheet">
+    <link href="/css/site.css" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+
+    <style>
+        /* Seat styles */
+        .seat {
+            width: 100px;
+            height: 50px;
+            background-color: #3498db; /* Blue color */
+            margin: 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff; /* White text color */
+            cursor: pointer; /* Change cursor to pointer */
+            border-radius: 5px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth color transition */
+        }
+
+            /* Hover effect */
+
+
+            /* Occupied seat style */
+            .seat.occupied {
+                background-color: darkblue; /* Red color for occupied seats */
+            }
+
+            .seat.Booked {
+                background-color: #e74c3c; /* Red color for occupied seats */
+            }
+
+            .seat.Available {
+                background-color: green; /* Red color for occupied seats */
+            }
+
+
+
+
+        /* Ticket quantity button */
+        .ticket-btn {
+            background-color: #27ae60; /* Green color */
+            color: #fff; /* White text color */
+            border: none;
+            padding: 5px 10px;
+            cursor: pointer; /* Change cursor to pointer */
+            border-radius: 3px; /* Rounded corners */
+            transition: background-color 0.3s ease; /* Smooth color transition */
+        }
+
+            /* Ticket quantity button hover effect */
+            .ticket-btn:hover {
+                background-color: #2ecc71; /* Darker green on hover */
+            }
+
+    </style>
+</head>
+<body>
+
+
+    <main class="popup" id="popup" style="justify-content:center; align-items: center;">
+        <h2>Hello!</h2>
+        <p style="font-size:15px">The bus is already in Trip Try later!</p>
+        <button type="button" onclick="closePopup()">OK</button>
+    </main>
+    <div class="untree_co-section">
+        <div class="container">
+
+            <div class="row">
+                <div class="col-md-6 mb-5 mb-md-0">
+                    <h2 class="h3 mb-3 text-black">Billing Details</h2>
+                    <div class="p-3 p-lg-5 border bg-white">
+
+                        <div style="display:flex;">
+
+                            @{
+                                int i = 0;
+
+                                foreach (var seat in Model.Seats)
+                                {
+
+
+                                    if (seat.Status == SeatStatus.Available)
+                                    {
+                                        <div class="seat available" id="@seat.SeatId" onclick="bookSeat(this)"><br><span> Seat @(i + 1)</span></div>
+                                    }
+                                    else if (seat.Status == SeatStatus.Booked)
+                                    {
+                                        <div class="seat Booked"><br><span>Seat @(i + 1)</span></div>
+                                    }
+                                    else if (seat.Status == SeatStatus.Occupied)
+                                    {
+                                        <div class="seat Occupied"><br><span>  Seat @(i + 1)</span></div>
+                                    }
+
+
+                                    i++;
+                                    if (i % 2 == 0 && i % 4 != 0)
+                                    {
+                                        <span style="white-space;width:20%"></span>
+                                    }
+                                    if (i % 4 == 0)
+                                    {
+
+                                        @Html.Raw("</div>")
+                                        @Html.Raw("<div style=\"display: flex;\">")
+
+
+                                    }
+
+
+                                }
+
+                            }
+                        </div>
+
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h2 class="h3 mb-3 text-black">Coupon Code</h2>
+                            <div class="p-3 p-lg-5 border bg-white">
+
+                                <label for="c_code" class="text-black mb-3">Enter your coupon code if you have one</label>
+                                <div class="input-group w-75 couponcode-wrap">
+                                    <input type="text" class="form-control me-2" id="c_code" placeholder="Coupon Code" aria-label="Coupon Code" aria-describedby="button-addon2">
+                                    <div class="input-group-append">
+                                        <button class="btn btn-black btn-sm" type="button" id="button-addon2">Apply</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mb-5">
+                        <div class="col-md-12">
+                            <h2 class="h3 mb-3 text-black">Your Order</h2>
+                            <div class="p-3 p-lg-5 border bg-white">
+                                <table class="table site-block-order-table mb-5">
+                                    <thead>
+                                    <th>Details</th>
+                                    <th>Total</th>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Ticket Price</td>
+                                            <td id="price">@price EGP</td>
+                                        </tr>
+                                        <tr>
+                                            <td>Number Of Tickets</td>
+                                            <td id="NOT">0</td>
+                                        </tr>
+
+                                        <tr>
+                                            <td class="text-black font-weight-bold"><strong> Total Price</strong></td>
+                                            <td id="Total">0</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+
+
+                                <div class="form-group">
+                                    <button class="btn btn-black btn-lg py-3 btn-block" onclick="bookSelectedSeats()">Place Tickets</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- </form> -->
+        </div>
+    </div>
+
+    <script src="~/assets2/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets2/js/tiny-slider.js"></script>
+    <script src="~/assets2/js/custom.js"></script>
+
+
+    <script>
+        var trip = @Model.Id;
+        // Function to book a seat
+        function bookSeat(seat) {
+
+            var numberOfSeats = parseInt(document.getElementById("NOT").innerHTML);
+            var price = parseFloat(document.getElementById("price").innerHTML.split(' ')[0]); // Convert to float
+            var total = parseFloat(document.getElementById("Total").innerHTML);
+
+            console.log(numberOfSeats);
+            console.log(price);
+            console.log(total);
+
+            if (!seat.classList.contains('occupied')) {
+                seat.classList.remove('available');
+                seat.classList.add('occupied');
+                numberOfSeats++;
+                total += price;
+            } else {
+                seat.classList.remove('occupied');
+                seat.classList.add('available');
+                numberOfSeats--;
+                total -= price;
+            }
+
+
+            document.getElementById("NOT").innerHTML = numberOfSeats;
+
+            if (numberOfSeats > 0) {
+                document.getElementById("Total").innerHTML = total.toFixed(2);
+            } else {
+                document.getElementById("Total").innerHTML = "0.00"; // Reset total if no seats are booked
+            }
+
+        }
+
+        function getSelectedSeats() {
+            var selectedSeats = [];
+            $('.occupied').each(function () {
+                selectedSeats.push(this.id);
+            });
+            return selectedSeats;
+        }
+
+        // Function to pass the list of selected seats to the controller
+        function bookSelectedSeats() {
+            var selectedSeats = getSelectedSeats();
+            console.log(selectedSeats);
+            // AJAX call to send the list of selected seat IDs to the controller
+            $.ajax({
+                url: '/Trip/Checkout_pay',
+                type: 'POST',
+                data: { selectedSeats: selectedSeats, trip: trip },
+                success: function (response) {
+                    if (response.staus === true) {
+                        window.location.href = "/Home/index";
+                    }
+                    else {
+                        let popup = document.getElementById("popup");
+                        popup.classList.add("open-popup");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    // Handle errors if any
+                }
+            });
+        }
+
+
+        function closePopup() {
+            let popup = document.getElementById("popup");
+            popup.classList.remove("open-popup");
+        }
+    </script>
+
+
+</body>
+</html>

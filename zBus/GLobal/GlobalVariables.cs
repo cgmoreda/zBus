@@ -2,7 +2,7 @@
 {
     public class GlobalVariables
     {
-         public static bool Login_Status;
+         public static bool Login_Status=false;
          public static String? User;
     }
 }

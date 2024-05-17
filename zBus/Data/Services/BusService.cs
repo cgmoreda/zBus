@@ -17,11 +17,20 @@ namespace zBus.Data.Services
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+        public bool Delete(int id)
         {
-            var _bus = GetById(id);
-            _context.Buses.Remove(_bus!);
-            _context.SaveChanges();
+            try
+            {
+                var _bus = _context.Buses.FirstOrDefault(x => x.BusId == id)!;
+
+                _context.Buses.Remove(_bus!);
+                _context.SaveChanges();
+                return true;
+            }
+            catch (Exception ex) {
+
+                return false;
+            }
         }
 
         public async Task<IEnumerable<Bus>> GetAll()
@@ -37,8 +46,15 @@ namespace zBus.Data.Services
 
         public void Update(int id, Bus _bus)
         {
-            _bus.BusId = id;
-            _context.Buses.Update(_bus);
+            var old= _context.Buses.FirstOrDefault(x => x.BusId == id)!;
+            old.BusModel=_bus.BusModel;
+            old.WifiAvailable = _bus.WifiAvailable;
+            old.BusPicture= _bus.BusPicture;
+            old.NumberOfSeats= _bus.NumberOfSeats;
+            old.DriverId= _bus.DriverId;
+            old.AirConditioningAvailable= _bus.AirConditioningAvailable;
+            old.RestroomAvailable= _bus.RestroomAvailable;
+            _context.Buses.Update(old);
             _context.SaveChanges();
         }
     }

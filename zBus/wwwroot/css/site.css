@@ -16,3 +16,65 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+.popup {
+    width: 300px;
+    background: #fff;
+    justify-content: center;
+    align-items: center;
+    border-radius: 6px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate ( -50%, -50%) scale(.1);
+    text-align: center;
+    padding: 0 30px 30px;
+    color: #333;
+    visibility: hidden;
+    transition: transform 0.4s, top 0.4s;
+}
+
+.open-popup {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    visibility: visible;
+    top: 40%;
+    transform: translate(-50%, -50%) scale(1);
+    transition: transform 0.4s, top 0.4s, visibility 0.4s;
+}
+
+}
+
+.popup img {
+    width: 100px;
+    margin-top: 2px;
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.popup h2 {
+    font-size: 38px;
+    font-weight: 500;
+    margin: 10px 0 10px;
+}
+
+
+.popup button {
+    width: 100%;
+    padding: 10px 0;
+    //background: #6fd649;
+    background-color: darkred;
+    color: #fff;
+    border: 0;
+    outline: none;
+    font-size: 18px;
+    border-radius: 4px;
+    cursor: pointer;
+}

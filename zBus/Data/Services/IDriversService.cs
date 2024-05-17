@@ -8,6 +8,6 @@ namespace zBus.Data.Services
         Driver GetById(int id);
         void Add(Driver driver);
         void Update(int id, Driver driver);
-        void Delete(int id);
+        bool Delete(int id);
     }
 }
