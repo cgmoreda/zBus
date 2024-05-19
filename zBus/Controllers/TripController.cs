@@ -8,6 +8,8 @@ using zBus.Data.Enums;
 using zBus.Data.Services;
 using zBus.GLobal;
 using zBus.Models;
+using Microsoft.AspNetCore.Authorization;
+using zBus.Filters;
 
 namespace zBus.Controllers
 {
@@ -29,6 +31,8 @@ namespace zBus.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(LoginAuthorizationFilter))]
+        [ServiceFilter(typeof(RoleAuthorizationFilter))]
         public async Task<IActionResult> Index()
         {
             var trips = await _TripService.GetAll();
@@ -49,14 +53,9 @@ namespace zBus.Controllers
             //return View(ViewModel);
             return View("_PartialviewTrip", ViewModel);
         }
-
-    public IActionResult Details()
-        {
-           
-            return View();
-
-        }
-
+       
+        [ServiceFilter(typeof(LoginAuthorizationFilter))]
+        [ServiceFilter(typeof(RoleAuthorizationFilter))]
         public async Task<IActionResult> AddTrip()
         {
             var selected = await _stationService.GetAll();
@@ -99,7 +98,8 @@ namespace zBus.Controllers
             ModelState["Bus"]!.ValidationState = ModelValidationState.Valid;
             return trip;
         }
-   
+        [ServiceFilter(typeof(LoginAuthorizationFilter))]
+        [ServiceFilter(typeof(RoleAuthorizationFilter))]
         public IActionResult Valid_Add(Trip trip)
         {
             trip=Modlestate(trip);
@@ -113,6 +113,8 @@ namespace zBus.Controllers
         }
 
         [HttpGet]
+        [ServiceFilter(typeof(LoginAuthorizationFilter))]
+        [ServiceFilter(typeof(RoleAuthorizationFilter))]
         public async Task< IActionResult> Update(int id)
         {
             var selected = await _stationService.GetAll();
@@ -124,6 +126,8 @@ namespace zBus.Controllers
             return View(trip);
         }
         [HttpPost]
+        [ServiceFilter(typeof(LoginAuthorizationFilter))]
+        [ServiceFilter(typeof(RoleAuthorizationFilter))]
         public IActionResult Valid_Update(Trip trip)
         {
             Modlestate(trip);
@@ -134,7 +138,9 @@ namespace zBus.Controllers
             }
             return RedirectToAction("AddTrip", trip);
         }
-       
+
+        [ServiceFilter(typeof(LoginAuthorizationFilter))]
+        [ServiceFilter(typeof(RoleAuthorizationFilter))]
         public IActionResult Delete(int id)
         {
             _TripService.Delete(id);
@@ -153,6 +159,7 @@ namespace zBus.Controllers
 				return Json(new { loggedIn = false });
 			}
 		}
+        [ServiceFilter(typeof(LoginAuthorizationFilter))]
         [HttpGet]
         public async Task <IActionResult> Book()
 		{

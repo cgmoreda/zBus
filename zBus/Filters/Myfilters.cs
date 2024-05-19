@@ -15,10 +15,10 @@ namespace zBus.Filters
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            var userEmail = context.HttpContext.Session.GetString("UserRole");
-            if (string.IsNullOrEmpty(userEmail))
+            var role = context.HttpContext.Session.GetString("UserRole");
+            if (_role != role)
             {
-                context.Result = new RedirectToActionResult("LoginReminder", "Shared", null);
+                context.Result = new RedirectToActionResult("AccessDenied", "Home", null);
                 return;
             }
         }
@@ -31,7 +31,7 @@ namespace zBus.Filters
             var userEmail = context.HttpContext.Session.GetString("UserEmail");
             if (string.IsNullOrEmpty(userEmail))
             {
-                context.Result = new RedirectToActionResult("LoginReminder", "Shared", null);
+                context.Result = new RedirectToActionResult("LoginReminder", "Home", null);
             }
         }
     }

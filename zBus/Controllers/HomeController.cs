@@ -19,6 +19,16 @@ namespace zBus.Controllers
             return View();
         }
 
+        public IActionResult LoginReminder()
+        {
+            return View("LoginReminder");
+        }
+
+        public IActionResult AccessDenied()
+        {
+            return View();
+        }
+
         public IActionResult Privacy()
         {
             return View();

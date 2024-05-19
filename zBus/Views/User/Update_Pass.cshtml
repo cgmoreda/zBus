@@ -1,0 +1,181 @@
+﻿@model User
+@using zBus.GLobal
+@{
+    Layout = null;
+}
+
+<head>
+    <link rel="stylesheet" href="/assets3/css/style.min.css">
+    <link rel="stylesheet" href="/css/site.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .formwarn {
+            color: red;
+            font-size: 13px;
+        }
+
+        img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            justify-content: center !important;
+            display: flex;
+        }
+
+        .upload {
+            width: 150px;
+            background: #e3362c;
+            color: #fff;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            justify-content: center !important;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-container {
+            width: 50%;
+        }
+
+        .photo-container {
+            justify-content: center;
+        }
+
+        .layer video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+    <div class="layer">
+    </div>
+    <main class="page-center">
+        <main class="popup" id="popup" style="justify-content:center; align-items: center;">
+            <h4>Enter Authentication!</h4> 
+            <p>Enter Code recieved in Mail</p>
+           
+            <input id="code" style="font-size:15px">
+            <br />
+            <button type="button" onclick="closePopup()">OK</button>
+        </main>
+        <form id="submitpass"  class="sign-up-form form" asp-action="UpdatePass" asp-controller="User" method="post" enctype="multipart/form-data">
+            <div class="form-label-wrapper">
+                <label asp-for="Password" style="margin:5px; color:white" class="text-black">Old Password<span class="formwarn">*</span></label>
+                <input id="oldpassword" name="oldpassword" onchange="clearOldPasswordError()" style="margin:5px; color:white" class="form-input" oninput="this.value = this.value.trim()" required />
+                <span id="oldpassword_error"  class="formwarn"></span>
+
+            </div>
+            <div class="form-label-wrapper">
+                <label asp-for="Password" style="margin:5px; color:white" class="text-black">New Password<span class="formwarn">*</span></label>
+                <input asp-for="Password" style="margin:5px; color:white" id="password"class="form-input" oninput="this.value = this.value.trim()"  required/>
+                <span asp-validation-for="Password" class="formwarn"></span>
+            </div>
+            <div class="form-label-wrapper">
+                <label class="text-black" style="margin:5px; color:white">Confirm Password<span class="formwarn">*</span></label>
+                <input id="confirmPassword" style="margin:5px; color:white" class="form-input" onchange="ConfirmPassword()" type="password" oninput="this.value = this.value.trim()" required/>
+                <span id="confirmPassword_error" class="formwarn"></span>
+            </div>
+            <br />
+            <div class="form-label-wrapper">
+                <a  onclick="Update_pass()"  class="form-btn primary-default-btn transparent-btn">Update Password</a>
+            </div>
+        </form>
+    </main>
+
+    <!-- Chart library -->
+    <script src="~/assets3/plugins/chart.min.js"></script>
+    <!-- Icons library -->
+    <script src="~/assets3/plugins/feather.min.js"></script>
+    <!-- Custom scripts -->
+    <script src="~/assets3/js/script.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script>
+
+        function clearOldPasswordError() {
+    document.getElementById("oldpassword_error").innerText = "";
+}
+        function ConfirmPassword() {
+            var pass1 = document.getElementById("password").value;
+            var pass2 = document.getElementById("confirmPassword").value;
+
+            if (pass1 !== pass2) {
+                document.getElementById("confirmPassword_error").innerHTML = "Passwords do not match";
+                console.log("Passwords do not match");
+            } else {
+                document.getElementById("confirmPassword_error").innerHTML = "";
+            }
+        }
+
+        function Update_pass() {
+
+            let old = document.getElementById("oldpassword").value;
+            let serverPassword = "@Model.Password";
+
+            if (old === serverPassword) {
+                let pass = document.getElementById("password").value;
+                let confirmPass = document.getElementById("confirmPassword").value;
+
+                if (pass !== "" && pass === confirmPass) {
+                    $.ajax({
+                        url: "/User/SendAuthentication",
+                        type: "POST", // Change to POST
+                        success: function () {
+                            let popup = document.getElementById("popup");
+                            popup.classList.add("open-popup");
+                        },
+                        error: function () {
+                            alert("Failed to send authentication code.");
+                        }
+                    });
+                } else {
+                    // Display error message next to confirmPassword field
+                    document.getElementById("confirmPassword_error").innerText = "Passwords do not match";
+                }
+            } else {
+                // Display error message next to oldpassword field
+                document.getElementById("oldpassword_error").innerText = "Old password is incorrect";
+            }
+        }
+
+
+        function closePopup() {
+            let code = document.getElementById("code").value;
+            $.ajax({
+                url: "/User/AuthenticationCheck",
+                type: "POST",
+                data: { code: code },
+                success: function (res) {
+                    if (res.flag === true) {
+                        document.getElementById("code").value = "";
+                        let popup = document.getElementById("popup");
+                        popup.classList.remove("open-popup");
+                        document.getElementById("submitpass").submit();
+                    } else {
+                        alert("Authentication code is incorrect.");
+                    }
+                },
+                error: function () {
+                    alert("Failed to verify authentication code.");
+                }
+            });
+        }
+
+    </script>
+</body>

@@ -3,10 +3,13 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using zBus.Data;
 using zBus.Data.Services;
+using zBus.Filters;
 using zBus.Models;
 
 namespace zBus.Controllers
 {
+    [ServiceFilter(typeof(LoginAuthorizationFilter))]
+    [ServiceFilter(typeof(RoleAuthorizationFilter))]
     public class DriverController : Controller
     {
         private readonly IDriversService _service;

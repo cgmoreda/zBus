@@ -10,6 +10,6 @@ namespace zBus.Data.Services
         void Update(string email, User user);
         void Delete(string name);
         bool Exist(string email);
-        void Update_Pass(string password );
+        void Update_Pass(string password ,string email);
     }
 }

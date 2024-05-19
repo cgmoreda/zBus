@@ -18,7 +18,6 @@ namespace zBus.Data.Services
             _context.Users.Add(user);
             _context.SaveChanges();
         }
-
         public void Delete(string email)
         {
             var user= _context.Users.FirstOrDefault(x => x.Email == email);
@@ -27,19 +26,16 @@ namespace zBus.Data.Services
             GlobalVariables.Login_Status = false;
             GlobalVariables.User = String.Empty;
         }
-
         public async Task<IEnumerable<User>> GetAll()
         {
             var users = await _context.Users.ToListAsync();
             return users;
         }
-
         public User GetById(string email)
         {
             var user = _context.Users.FirstOrDefault(user => user.Email == email);
             return user!;
         }
-
         public void Update(string email, User user)
         {
             var old_user = _context.Users.FirstOrDefault(user => user.Email == email);
@@ -53,20 +49,17 @@ namespace zBus.Data.Services
             _context.SaveChanges();
 
         }
-        public void Update_Pass(string password)
+        public void Update_Pass(string password,string email)
         {
-            var old_user = _context.Users.FirstOrDefault(user => user.Email == GlobalVariables.User);
+            var old_user = _context.Users.FirstOrDefault(user => user.Email == email);
             old_user.Password = password;
       
             _context.Users.Update(old_user);
             _context.SaveChanges();
 
         }
-
-
         public bool Exist(string mail)
         {
-
             bool test = _context.Users.Any(u => u.Email == mail);
             if (test)
                 return true;

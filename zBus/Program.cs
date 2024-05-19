@@ -6,13 +6,23 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.EntityFrameworkCore;
 using zBus.Data;
 using zBus.Data.Services;
+using Microsoft.Extensions.Options;
+using Microsoft.CodeAnalysis.Options;
+using zBus.Filters;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddSession();
-// DbContext configuration
+builder.Services.AddScoped<LoginAuthorizationFilter>();
+builder.Services.AddScoped<RoleAuthorizationFilter>(provider => new RoleAuthorizationFilter("Admin"));
+
+builder.Services.AddSession(options =>
+{
+    options.Cookie.IsEssential = true; // Make the session cookie essential
+    options.IdleTimeout = TimeSpan.FromMinutes(3330); // Set session timeout to 20 minutes
+});
+
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnectionString");
 if (string.IsNullOrEmpty(connectionString))
 {

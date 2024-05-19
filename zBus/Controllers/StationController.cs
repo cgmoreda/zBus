@@ -5,9 +5,12 @@ using Microsoft.AspNetCore.Routing.Constraints;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using zBus.Data;
 using zBus.Data.Services;
+using zBus.Filters;
 using zBus.Models;
 namespace zBus.Controllers
 {
+    [ServiceFilter(typeof(LoginAuthorizationFilter))]
+    [ServiceFilter(typeof(RoleAuthorizationFilter))]
     public class StationController :Controller
     { 
         private readonly IStationService _stationService;

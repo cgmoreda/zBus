@@ -25,6 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Filters\" />
     <Folder Include="Migrations\" />
     <Folder Include="wwwroot\User\" />
     <Folder Include="wwwroot\Trip\" />

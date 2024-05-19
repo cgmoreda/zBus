@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Elegant Dashboard | Dashboard</title>
+    <title>Dashboard</title>
     <!-- Favicon -->
     <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
     <!-- Custom styles -->
@@ -66,19 +66,50 @@
                         </li>
 
                     </ul>
+
                     <span class="system-menu__title">system</span>
                     <ul class="sidebar-body-menu">
 
                         <li>
                             <a class="show-cat-btn" href="##">
                                 <span class="icon user-3" aria-hidden="true"></span>Users
-
+                                <span class="category__btn transparent-btn" title="Open list">
+                                    <span class="sr-only">Open list</span>
+                                    <span class="icon arrow-down" aria-hidden="true"></span>
+                                </span>
                             </a>
+                            <ul class="cat-sub-menu">
+                                <li>
+                                    <a href="users-01.html">Users-01</a>
+                                </li>
+                                <li>
+                                    <a href="users-02.html">Users-02</a>
+                                </li>
+                            </ul>
 
+
+                        </li>
+
+                        <li>
+                            <a onclick="Profile(5)">
+                                <span class="icon setting" aria-hidden="true"></span>
+                                Personal Data
+                            </a>
                         </li>
                         <li>
-                            <a href="##"><span class="icon setting" aria-hidden="true"></span>Settings</a>
+                            <a onclick="Profile(6)">
+                                <span class="icon setting" aria-hidden="true"></span>
+                                Password
+                            </a>
                         </li>
+
+                        <li>
+                            <a asp-action="Logout">
+                                <span aria-hidden="true"> <img src="/imgs/logout.png" style="margin-right:10px" /> </span>
+                                  Logout
+                            </a>
+                        </li>
+
                     </ul>
                 </div>
             </div>
@@ -131,13 +162,24 @@
                     @Html.Partial("_PartialviewTrip", Model.Trips)
 
                 }
+
+                else if (Model.Id == 5)
+                {
+                    @Html.Partial("Update_Data", Model.Trips)
+
+                }
+
+                else if (Model.Id == 6)
+                {
+                    @Html.Partial("Update_Pass", Model.Trips)
+                }
             </div>
             <!-- ! Footer -->
             <footer class="footer">
                 <div class="container footer--flex">
                     <div class="footer-start">
                         <p>
-                            2021 © Elegant Dashboard - <a href="elegant-dashboard.com" target="_blank"
+                            2021 Dashboard <a href="elegant-dashboard.com" target="_blank"
                                                           rel="noopener noreferrer">elegant-dashboard.com</a>
                         </p>
                     </div>
@@ -162,6 +204,10 @@
     <script src="~/assets3/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets3/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script src="~/lib/jquery/dist/jquery.js">  </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
 
     <script>
@@ -225,6 +271,32 @@
 
 
         }
+
+
+
+
+        function Profile(type) {
+            let path = "";
+
+            if (type == 5) {
+                path = "/User/Update_Data";
+            } else if (type == 6) {
+                path = "/User/Update_Pass";
+            }
+
+            $.ajax({
+                url: path,
+                type: "GET",
+                success: function (response) {
+                    $("#partialViewContainer").html(response); // Update the container with the partial view
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+
+        
     </script>
 
 </body>

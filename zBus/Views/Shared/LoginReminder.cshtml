@@ -1,0 +1,26 @@
+﻿@{
+    ViewData["Title"] = "Login Required";
+    Layout = null;
+}
+
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <p>Your session has expired or you need to log in to access this page.</p>
+    <a asp-action="Login_Page" asp-controller="User" class="btn btn-primary">Login</a>
+</div>
+
+<style>
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+
+    .btn {
+        margin-top: 20px;
+    }
+</style>
