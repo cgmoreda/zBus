@@ -1,4 +1,4 @@
-﻿@model List<TripDetails>
+﻿@model List<Trip>
 @using Newtonsoft.Json;
 @{
     Layout = null;
@@ -125,47 +125,42 @@
 
                     <div class="trip-detail">
                         <label for="departureTime">Avalible Seats: </label>
-                        <span>@trip.AvailableSeatsCount</span>
+                        <span>@trip.Seats.Count(c=>c.Status==zBus.Data.Enums.SeatStatus.Available)</span>
                     </div>
                     <div class="trip-detail">
                         <label for="departureTime">Departure Date:</label>
-                        <span>@trip.trip.DepartureTime.ToString("dd/MM//yyyy")</span>
-                        <span> On @trip.trip.DepartureTime.DayOfWeek</span>
+                        <span>@trip.DepartureTime.ToString("dd/MM//yyyy")</span>
+                        <span> On @trip.DepartureTime.DayOfWeek</span>
                     </div>
                     <div class="trip-detail">
                         <label for="departureTime">Departure Time:</label>
-                        <span>@trip.trip.DepartureTime.ToString("h:mm tt")</span>
+                        <span>@trip.DepartureTime.ToString("h:mm tt")</span>
                     </div>
                     <div class="trip-detail">
                         <label for="arrivalTime">Arrival Date:</label>
-                        <span>@trip.trip.ArrivalTime.ToString("dd/MM/yyyy")</span>
-                        <span> On @trip.trip.ArrivalTime.DayOfWeek</span>
+                        <span>@trip.ArrivalTime.ToString("dd/MM/yyyy")</span>
+                        <span> On @trip.ArrivalTime.DayOfWeek</span>
                     </div>
                     <div class="trip-detail">
                         <label for="arrivalTime">Arrival Time:</label>
-                        <span>@trip.trip.ArrivalTime.ToString("h:mm tt")</span>
+                        <span>@trip.ArrivalTime.ToString("h:mm tt")</span>
                     </div>
                     <div class="trip-detail">
                         <label for="tripPrice">Trip Price:</label>
-                        <span>@trip.trip.TripPrice</span>
+                        <span>@trip.TripPrice</span>
                     </div>
                     <div class="trip-detail">
                         <label for="departureStation">Departure Station:</label>
-                        <span>@trip.depturestation</span>
+                        <span>@trip.DepartureStation.StationName</span>
                     </div>
                     <div class="trip-detail">
                         <label for="arrivalStation">Arrival Station:</label>
-                        <span>@trip.arrivalstation</span>
+                        <span>@trip.ArrivalStation.StationName</span>
                     </div>
                     <div class="row" style="justify-content:center">
                         <div class="col-4">
 
-                            <input type="hidden" asp-for="@trip.AvailableSeatsCount" />
-
-                            <input type="hidden" asp-for="@trip.Allseatscount" />
-                            <input type="hidden" asp-for="@trip.Id" />
-
-                            <button class="book_now_btn button_hover" asp-controller="Trip" asp-action="Checkout" method="post" type="submit">Book </button>
+                            <button class="book_now_btn button_hover" asp-controller="Trip" asp-action="Checkout" asp-route-id="@trip.TripId" method="post" type="submit">Book </button>
                         </div>
 
                     </div>

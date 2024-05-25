@@ -1,13 +1,14 @@
-﻿@model List<TripDetails>
+﻿@model List<Trip>
 @using Newtonsoft.Json;
 
 @{
     Layout = null;
     var st = TempData["Stations"]?.ToString();
     var Stations = JsonConvert.DeserializeObject<List<Station>>(st);
-
 }
+
 <head>
+
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
     <link rel="stylesheet" href="/assets/vendors/linericon/style.css">
     <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
@@ -114,10 +115,6 @@
     </style>
 </head>
 <body>
-
-
-
-    <!-- Banner Section -->
     <div class="banner_area" style="position:page !important">
         <div class="booking_table d-flex align-items-center">
             <div class="overlay bg-parallax" style="height:" " data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
@@ -165,9 +162,7 @@
                                         <div class="book_tabel_item">
                                             <div class="form-group">
                                                 <input type="date" class="input-field" id="date" name="date">
-
                                             </div>
-
                                             <a class="book_now_btn button_hover" onclick="loadPartialViewBtn()">Search Now</a>
                                         </div>
                                     </div>
@@ -176,144 +171,79 @@
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>
 
-    <!-- Booking Section -->
 
     <div id="partialViewContainer">
-        <!-- Trip Details Section -->
-            @foreach (var trip in Model)
-            {
-            <div class="card">
+            @Html.Partial("Searshresultfind", Model);
+     </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="~/assets/plugins/feather.min.js"></script>
+    <script src="~/assets/js/script.js"></script>
+    <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
+    <script src="~/assets/plugins/chart.min.js"></script>
+    <script src="~/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/assets/js/popper.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/assets/vendors/nice-select/js/jquery.nice-select.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/js/stellar.js"></script>
+    <script src="~/assets/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/assets/js/custom.js"></script>
 
-                <h1 class="col">Trip Details</h1>
+    <script>
+        'use strict'
 
-                <div class="trip-detail">
-                    <label for="departureTime">Avalible Seats: </label>
-                    <span>@trip.AvailableSeatsCount</span>
-                </div>
-                <div class="trip-detail">
-                    <label for="departureTime">Departure Date:</label>
-                    <span>@trip.trip.DepartureTime.ToString("dd/MM//yyyy")</span>
-                    <span> On @trip.trip.DepartureTime.DayOfWeek</span>
-                </div>
-                <div class="trip-detail">
-                    <label for="departureTime">Departure Time:</label>
-                    <span>@trip.trip.DepartureTime.ToString("h:mm tt")</span>
-                </div>
-                <div class="trip-detail">
-                    <label for="arrivalTime">Arrival Date:</label>
-                    <span>@trip.trip.ArrivalTime.ToString("dd/MM/yyyy")</span>
-                    <span> On @trip.trip.ArrivalTime.DayOfWeek</span>
-                </div>
-                <div class="trip-detail">
-                    <label for="arrivalTime">Arrival Time:</label>
-                    <span>@trip.trip.ArrivalTime.ToString("h:mm tt")</span>
+        function loadPartialViewBtn() {
+            let path = "/Trip/Searchtrip";
+            let id1 = $("#id1").val();
+            let id2 = $("#id2").val();
+            let date = $("#date").val();
+            console.log(id1);
+            console.log(id2);
+            console.log(date);
 
-                </div>
-                <div class="trip-detail">
-                    <label for="tripPrice">Trip Price:</label>
-                    <span>@trip.trip.TripPrice</span>
-                </div>
-                <div class="trip-detail">
-                    <label for="departureStation">Departure Station:</label>
-                    <span>@trip.depturestation</span>
-                </div>
-                <div class="trip-detail">
-                    <label for="arrivalStation">Arrival Station:</label>
-                    <span>@trip.arrivalstation</span>
-                </div>
-                <div class="row" style="justify-content:center">
-                    <div class="col-4">
-                        <a class="book_now_btn button_hover" asp-controller="Trip" asp-action="Update" asp-route-id="@trip.trip.TripId">Book </a>
-                    </div>
-
-                </div>
-
-            </div>
-
-
-            }
-        <div>
-
-            <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-            <script src="~/assets/plugins/feather.min.js"></script>
-            <script src="~/assets/js/script.js"></script>
-            <script src="~/assets/bootstrap/js/bootstrap.min.js"></script>
-            <!-- Chart library -->
-            <script src="~/assets/plugins/chart.min.js"></script>
-            <!-- Icons library -->
-            <
-            <script src="~/assets/js/jquery-3.2.1.min.js"></script>
-            <script src="~/assets/js/popper.js"></script>
-            <script src="~/assets/js/bootstrap.min.js"></script>
-            <script src="~/assets/vendors/owl-carousel/owl.carousel.min.js"></script>
-            <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
-            <script src="~/assets/js/mail-script.js"></script>
-            <script src="~/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
-            <script src="~/assets/vendors/nice-select/js/jquery.nice-select.js"></script>
-            <script src="~/assets/js/mail-script.js"></script>
-            <script src="~/assets/js/stellar.js"></script>
-            <script src="~/assets/vendors/lightbox/simpleLightbox.min.js"></script>
-            <script src="~/assets/js/custom.js"></script>
-
-
-            <script>
-                'use strict'
-
-                function loadPartialViewBtn() {
-                    let path = "/Trip/Searchtrip";
-                    let id1 = $("#id1").val();
-                    let id2 = $("#id2").val();
-                    let date = $("#date").val();
-                    console.log(id1);
-                    console.log(id2);
-                    console.log(date);
-
-                    $.ajax({
-                        url: path,
-                        type: "post",
-                        data: { Departure: id1, Arrival: id2, departuredate: date },
-                        success: function (response) {
-                            $("#partialViewContainer").html(response); // Update the container with the partial view
-                        },
-                        error: function (error) {
-                            console.error("Error:", error);
-                        }
-                    });
+            $.ajax({
+                url: path,
+                type: "post",
+                data: { Departure: id1, Arrival: id2, departuredate: date },
+                success: function (response) {
+                    $("#partialViewContainer").html(response); // Update the container with the partial view
+                },
+                error: function (error) {
+                    console.error("Error:", error);
                 }
+            });
+        }
 
-                $(function () {
-                    $('#datetimepicker1').datetimepicker({
-                        defaultDate: new Date() // Set a default date, e.g., today's date
-                    });
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                defaultDate: new Date() // Set a default date, e.g., today's date
+            });
 
-                    // Listen for change event on the input field
-                    $('#datetimepicker1 input').on('change', function () {
-                        // Check if the input field is empty
-                        if (!$(this).val()) {
-                            // If empty, set the input field value to null
-                            $(this).val('');
-                        }
-                    });
-                });
-
-                $(function () {
-                    $('#datetimepicker1').datetimepicker({
-                        format: 'YYYY-MM-DD', // Set the format to display only date without time
-                        useCurrent: false // Prevent the plugin from auto-updating the value when clicking
-                    });
-                });
-
-                function closePopup() {
-                    let popup = document.getElementById("popup");
-                    popup.classList.remove("open-popup");
+            $('#datetimepicker1 input').on('change', function () {
+                if (!$(this).val()) {
+                    $(this).val('');
                 }
+            });
+        });
 
-            </script>
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                format: 'YYYY-MM-DD', // Set the format to display only date without time
+                useCurrent: false // Prevent the plugin from auto-updating the value when clicking
+            });
+        });
 
+        function closePopup() {
+            let popup = document.getElementById("popup");
+            popup.classList.remove("open-popup");
+        }
+    </script>
 </body>

@@ -6,6 +6,6 @@ namespace zBus.GLobal
     {
          public static bool Login_Status=false;
          public static String? User;
-        public static String? Code;
+         public static String? Code;
     }
 }

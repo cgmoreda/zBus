@@ -21,7 +21,7 @@ namespace zBus.Controllers
 
         public IActionResult LoginReminder()
         {
-            return View("LoginReminder");
+            return PartialView("LoginReminder");
         }
 
         public IActionResult AccessDenied()
@@ -29,7 +29,18 @@ namespace zBus.Controllers
             return View();
         }
 
-        public IActionResult Privacy()
+        public IActionResult About()
+        {
+            return View();
+        }
+
+
+        public IActionResult Contact()
+        {
+            return View();
+        }
+
+        public IActionResult Services()
         {
             return View();
         }

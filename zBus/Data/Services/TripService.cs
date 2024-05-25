@@ -32,7 +32,16 @@ namespace zBus.Data.Services
             _context.SaveChanges();
         }
 
-        public async Task<IEnumerable<Trip>> GetAll()=> await _context.Trips.ToListAsync();
+        public async Task<IEnumerable<Trip>> GetAll()
+        {
+            return await _context.Trips
+            .Include(s => s.Seats)
+            .Include(s => s.ArrivalStation)
+            .Include(s => s.DepartureStation)
+            .Include(b => b.Bus)
+            .Include(u => u.OrderItems)
+            .ToListAsync();
+        }
 
 
 
@@ -45,7 +54,12 @@ namespace zBus.Data.Services
             if (id1!=0)
             {
                 check1 = true;
-                trips = await _context.Trips.Where(t => t.DepartureStationID == id1).ToListAsync();
+                trips = await _context.Trips.Where(t => t.DepartureStationID == id1).Include(s => s.Seats)
+            .Include(s => s.ArrivalStation)
+            .Include(s => s.DepartureStation)
+            .Include(b => b.Bus)
+            .Include(u => u.OrderItems)
+            .ToListAsync();
             }
             if(id2!=0)
             {
@@ -56,7 +70,12 @@ namespace zBus.Data.Services
                 }
                 else
                 {
-                    trips = await _context.Trips.Where(t => t.ArrivalStationID == id2).ToListAsync();
+                    trips = await _context.Trips.Where(t => t.ArrivalStationID == id2).Include(s => s.Seats)
+            .Include(s => s.ArrivalStation)
+            .Include(s => s.DepartureStation)
+            .Include(b => b.Bus)
+            .Include(u => u.OrderItems)
+            .ToListAsync();
                 }
             }
 
@@ -65,13 +84,27 @@ namespace zBus.Data.Services
                 if (check1 || check2) {
                     trips = trips.Where(t => t.DepartureTime.Date == dt).ToList();
                 }
-                else  { trips = await _context.Trips.Where(t => t.DepartureTime.Date == dt).ToListAsync(); }   
+                else  { trips = await _context.Trips.Where(t => t.DepartureTime.Date == dt).Include(s => s.Seats)
+            .Include(s => s.ArrivalStation)
+            .Include(s => s.DepartureStation)
+            .Include(b => b.Bus)
+            .Include(u => u.OrderItems)
+            .ToListAsync();
+                }   
             }
 
             return trips;
         }
-        public Trip GetById(int id) => _context.Trips.FirstOrDefault(x => x.TripId == id)!;
-
+        public Trip GetById(int id)
+        {
+            return _context.Trips
+            .Include(s => s.Seats)
+            .Include(s => s.ArrivalStation)
+            .Include(s => s.DepartureStation)
+            .Include(b => b.Bus)
+            .Include(u => u.OrderItems)
+            .FirstOrDefault(t => t.TripId == id)?? new Trip();
+        }
         public void Update(int id, Trip _trip)
         {
             var old=GetById(id);

@@ -1,25 +1,31 @@
 ﻿@using zBus.GLobal
-@using Microsoft.AspNetCore.Http
-@{
-   
- }
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
 
+@{
+    var userEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
+    var userRole = HttpContextAccessor.HttpContext.Session.GetString("UserRole");
+    var showLoginReminder = string.IsNullOrEmpty(userEmail);
+ }
 <head>
    
 </head>
 <ul class="navbar-nav">
-    @if (GlobalVariables.Login_Status) // Removed unnecessary @ symbol and extra parenthesis
+    @if (!showLoginReminder) // Removed unnecessary @ symbol and extra parenthesis
     {
-
-        <a asp-action="Account" asp-controller="User" style="color:white!important; margin-right:20px">
-            <i data-feather="user" aria-hidden="true"></i>
-            <span>Profile</span>
-        </a>
-
-        <a asp-action="Admin" asp-controller="User" style="color:white!important">
-            <i data-feather="user" aria-hidden="true"></i>
-            <span>Admin</span>
-        </a>
+        if (userRole == "Customer")
+        {
+            <button asp-action="Account" asp-controller="User" style="color:white!important; margin-right:20px">
+                <i data-feather="user" aria-hidden="true"></i>
+            <h1 >Profile</h1>
+            </button>
+        }
+        else
+        {
+            <a asp-action="Admin" asp-controller="User" style="color:white!important">
+                <i data-feather="user" aria-hidden="true"></i>
+                <span>Admin</span>
+            </a>
+        }
     }
     else
     {

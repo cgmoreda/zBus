@@ -5,34 +5,34 @@
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
  */
 :root {
-  --blue: #007bff;
-  --indigo: #6610f2;
-  --purple: #6f42c1;
-  --pink: #e83e8c;
-  --red: #dc3545;
-  --orange: #fd7e14;
-  --yellow: #ffc107;
-  --green: #28a745;
-  --teal: #20c997;
-  --cyan: #17a2b8;
-  --white: #fff;
-  --gray: #868e96;
-  --gray-dark: #343a40;
-  --primary: #007bff;
-  --secondary: #868e96;
-  --success: #28a745;
-  --info: #17a2b8;
-  --warning: #ffc107;
-  --danger: #dc3545;
-  --light: #f8f9fa;
-  --dark: #343a40;
-  --breakpoint-xs: 0;
-  --breakpoint-sm: 576px;
-  --breakpoint-md: 768px;
-  --breakpoint-lg: 992px;
-  --breakpoint-xl: 1200px;
-  --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-  --font-family-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+    --blue: #198754;
+    --indigo: #6610f2;
+    --purple: #6f42c1;
+    --pink: #e83e8c;
+    --red: #dc3545;
+    --orange: #fd7e14;
+    --yellow: #ffc107;
+    --green: #28a745;
+    --teal: #20c997;
+    --cyan: #17a2b8;
+    --white: #fff;
+    --gray: #868e96;
+    --gray-dark: #343a40;
+    --primary: #198754;
+    --secondary: #868e96;
+    --success: #28a745;
+    --info: #17a2b8;
+    --warning: #ffc107;
+    --danger: #dc3545;
+    --light: #f8f9fa;
+    --dark: #343a40;
+    --breakpoint-xs: 0;
+    --breakpoint-sm: 576px;
+    --breakpoint-md: 768px;
+    --breakpoint-lg: 992px;
+    --breakpoint-xl: 1200px;
+    --font-family-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-family-monospace: "SFMono-Regular", Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
 @media print {
@@ -2951,11 +2951,11 @@ tbody.collapse.show {
   background-color: #f8f9fa;
 }
 
-.dropdown-item.active, .dropdown-item:active {
-  color: #fff;
-  text-decoration: none;
-  background-color: #007bff;
-}
+    .dropdown-item.active, .dropdown-item:active {
+        color: #fff;
+        text-decoration: none;
+        background-color: #198754;
+    }
 
 .dropdown-item.disabled, .dropdown-item:disabled {
   color: #868e96;
@@ -3311,10 +3311,10 @@ tbody.collapse.show {
   opacity: 0;
 }
 
-.custom-control-input:checked ~ .custom-control-indicator {
-  color: #fff;
-  background-color: #007bff;
-}
+    .custom-control-input:checked ~ .custom-control-indicator {
+        color: #fff;
+        background-color: #198754;
+    }
 
 .custom-control-input:focus ~ .custom-control-indicator {
   box-shadow: 0 0 0 1px #fff, 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
@@ -4322,10 +4322,10 @@ tbody.collapse.show {
 }
 
 .page-item.active .page-link {
-  z-index: 2;
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
+    z-index: 2;
+    color: #fff;
+    background-color: #198754;
+    border-color: #007bff;
 }
 
 .page-item.disabled .page-link {
@@ -4771,12 +4771,12 @@ tbody.collapse.show {
   background-color: #fff;
 }
 
-.list-group-item.active {
-  z-index: 2;
-  color: #fff;
-  background-color: #007bff;
-  border-color: #007bff;
-}
+    .list-group-item.active {
+        z-index: 2;
+        color: #fff;
+        background-color: #198754;
+        border-color: #007bff;
+    }
 
 .list-group-flush .list-group-item {
   border-right: 0;

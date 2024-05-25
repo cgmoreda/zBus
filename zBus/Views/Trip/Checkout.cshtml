@@ -1,15 +1,14 @@
-﻿@model TripDetails
+﻿@model Trip
 @using zBus.Data.Enums
 @{
-
     Layout = null;
-    var price = ViewBag.price ?? " ";
 }
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bus Seat Layout</title>
+    <link rel="icon" href="/assets/image/favicon.png" type="/assets/image/png">
+    <title>Bus Seats</title>
 
     <link href="/assets2/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
@@ -76,7 +75,7 @@
 
     <main class="popup" id="popup" style="justify-content:center; align-items: center;">
         <h2>Hello!</h2>
-        <p style="font-size:15px">The bus is already in Trip Try later!</p>
+        <p style="font-size:15px">You have to Select Seats First!</p>
         <button type="button" onclick="closePopup()">OK</button>
     </main>
     <div class="untree_co-section">
@@ -98,28 +97,28 @@
 
                                     if (seat.Status == SeatStatus.Available)
                                     {
-                                        <div class="seat available" id="@seat.SeatId" onclick="bookSeat(this)"><br><span> Seat @(i + 1)</span></div>
+                                            <div class="seat available" id="@seat.SeatId" onclick="bookSeat(this)"><br><span> Seat @(i + 1)</span></div>
                                     }
                                     else if (seat.Status == SeatStatus.Booked)
                                     {
-                                        <div class="seat Booked"><br><span>Seat @(i + 1)</span></div>
+                                            <div class="seat Booked"><br><span>Seat @(i + 1)</span></div>
                                     }
                                     else if (seat.Status == SeatStatus.Occupied)
                                     {
-                                        <div class="seat Occupied"><br><span>  Seat @(i + 1)</span></div>
+                                            <div class="seat Occupied"><br><span>  Seat @(i + 1)</span></div>
                                     }
 
 
                                     i++;
                                     if (i % 2 == 0 && i % 4 != 0)
                                     {
-                                        <span style="white-space;width:20%"></span>
+                                            <span style="white-space;width:20%"></span>
                                     }
                                     if (i % 4 == 0)
                                     {
 
-                                        @Html.Raw("</div>")
-                                        @Html.Raw("<div style=\"display: flex;\">")
+                                            @Html.Raw("</div>")
+                                            @Html.Raw("<div style=\"display: flex;\">")
 
 
                                     }
@@ -162,7 +161,7 @@
                                     <tbody>
                                         <tr>
                                             <td>Ticket Price</td>
-                                            <td id="price">@price EGP</td>
+                                            <td id="price">@Model.TripPrice EGP</td>
                                         </tr>
                                         <tr>
                                             <td>Number Of Tickets</td>
@@ -197,7 +196,6 @@
 
 
     <script>
-        var trip = @Model.Id;
         // Function to book a seat
         function bookSeat(seat) {
 
@@ -243,15 +241,15 @@
         // Function to pass the list of selected seats to the controller
         function bookSelectedSeats() {
             var selectedSeats = getSelectedSeats();
+            var tripid = @Model.TripId;
             console.log(selectedSeats);
-            // AJAX call to send the list of selected seat IDs to the controller
             $.ajax({
                 url: '/Trip/Checkout_pay',
                 type: 'POST',
-                data: { selectedSeats: selectedSeats, trip: trip },
+                data: { selectedSeats: selectedSeats, tripid: tripid },
                 success: function (response) {
                     if (response.staus === true) {
-                        window.location.href = "/Home/index";
+                        window.location.href = "/Trip/payment";
                     }
                     else {
                         let popup = document.getElementById("popup");

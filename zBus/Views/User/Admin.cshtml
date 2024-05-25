@@ -2,6 +2,8 @@
 @{
     Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,14 +13,19 @@
     <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
     <!-- Custom styles -->
     <link rel="stylesheet" href="/assets3/css/style.min.css">
-</head>
+    <style>
+        .sidebar.green-background {
+            background-color: #198754 !important;
+        }
 
+    </style>
+</head>
 <body>
     <div class="layer"></div>
     <!-- ! Body -->
     <div class="page-flex">
         <!-- ! Sidebar -->
-        <aside class="sidebar">
+        <aside class="sidebar" style="background-color:#11111d">
             <div class="sidebar-start">
                 <div class="sidebar-head">
                     <a href="##" class="logo-wrapper" title="Home">
@@ -28,7 +35,6 @@
                             <span class="logo-title">ZBUS</span>
                             <span class="logo-subtitle">Dashboard</span>
                         </div>
-
                     </a>
                     <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
                         <span class="sr-only">Toggle menu</span>
@@ -43,73 +49,51 @@
                         <li>
                             <a class="show-cat-btn" onclick="loadPartialViewBtn(1)">
                                 <span class="icon document" aria-hidden="true"></span>Bus
-
                             </a>
                         </li>
                         <li>
                             <a class="show-cat-btn" onclick="loadPartialViewBtn(2)">
                                 <span class="icon document" aria-hidden="true"></span>Driver
-
                             </a>
                         </li>
                         <li>
                             <a class="show-cat-btn" onclick="loadPartialViewBtn(3)">
                                 <span class="icon document" aria-hidden="true"></span>Station
-
                             </a>
                         </li>
                         <li>
                             <a class="show-cat-btn" onclick="loadPartialViewBtn(4)">
                                 <span class="icon document" aria-hidden="true"></span>Trip
-
                             </a>
                         </li>
-
                     </ul>
 
-                    <span class="system-menu__title">system</span>
+                    <span class="system-menu__title">System</span>
                     <ul class="sidebar-body-menu">
-
                         <li>
-                            <a class="show-cat-btn" href="##">
+                            <a class="show-cat-btn" onclick="change()">
                                 <span class="icon user-3" aria-hidden="true"></span>Users
                                 <span class="category__btn transparent-btn" title="Open list">
                                     <span class="sr-only">Open list</span>
                                     <span class="icon arrow-down" aria-hidden="true"></span>
                                 </span>
                             </a>
-                            <ul class="cat-sub-menu">
-                                <li>
-                                    <a href="users-01.html">Users-01</a>
-                                </li>
-                                <li>
-                                    <a href="users-02.html">Users-02</a>
-                                </li>
-                            </ul>
-
-
                         </li>
-
                         <li>
                             <a onclick="Profile(5)">
-                                <span class="icon setting" aria-hidden="true"></span>
-                                Personal Data
+                                <span class="icon setting" aria-hidden="true"></span>Personal Data
                             </a>
                         </li>
                         <li>
                             <a onclick="Profile(6)">
-                                <span class="icon setting" aria-hidden="true"></span>
-                                Password
+                                <span class="icon setting" aria-hidden="true"></span>Password
                             </a>
                         </li>
-
                         <li>
                             <a asp-action="Logout">
-                                <span aria-hidden="true"> <img src="/imgs/logout.png" style="margin-right:10px" /> </span>
-                                  Logout
+                                <span src="/imgs/logout.png" aria-hidden="true"></span>Logout
                             </a>
                         </li>
-
                     </ul>
                 </div>
             </div>
@@ -126,24 +110,18 @@
                         </div>
                     </div>
                     <div class="main-nav-end" style="display:flex !important">
-                        <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
-                            <span class="sr-only">Toggle menu</span>
-                            <span class="icon menu-toggle--gray" aria-hidden="true"></span>
-                        </button>
-
-                        <button class="theme-switcher gray-circle-btn" type="button" title="Switch theme">
+                        <button onclick="change()" type="button">
                             <span class="sr-only">Switch theme</span>
                             <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
                             <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
                         </button>
-
                     </div>
                 </div>
             </nav>
             <div id="partialViewContainer">
                 @if (Model.Id == 0)
                 {
-                    @Html.Partial("_PartialviewDashbord")
+                    @Html.Partial("_PartialviewDashbord",Model)
                 }
                 else if (Model.Id == 1)
                 {
@@ -160,38 +138,17 @@
                 else if (Model.Id == 4)
                 {
                     @Html.Partial("_PartialviewTrip", Model.Trips)
-
                 }
-
                 else if (Model.Id == 5)
                 {
                     @Html.Partial("Update_Data", Model.Trips)
-
                 }
-
                 else if (Model.Id == 6)
                 {
                     @Html.Partial("Update_Pass", Model.Trips)
                 }
             </div>
-            <!-- ! Footer -->
-            <footer class="footer">
-                <div class="container footer--flex">
-                    <div class="footer-start">
-                        <p>
-                            2021 Dashboard <a href="elegant-dashboard.com" target="_blank"
-                                                          rel="noopener noreferrer">elegant-dashboard.com</a>
-                        </p>
-                    </div>
-                    <ul class="footer-end">
-                        <li><a href="##">About</a></li>
-                        <li><a href="##">Support</a></li>
-                        <li><a href="##">Puchase</a></li>
-                    </ul>
-                </div>
-            </footer>
         </div>
-
     </div>
 
     <!-- Chart library -->
@@ -204,34 +161,64 @@
     <script src="~/assets3/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/assets3/js/site.js" asp-append-version="true"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-
-    <script src="~/lib/jquery/dist/jquery.js">  </script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
-
     <script>
+        // Function to enable dark mode
+        function enableDarkMode() {
+        //    document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754");
 
-        var chartData = {
-            labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-            datasets: [{
-                label: 'Site Users',
-                data: [100, 150, 200, 250, 300, 350, 400],
+            document.body.classList.add('darkmode');
+            localStorage.setItem('darkMode', 'enabled');
+          
+        }
 
+        // Function to disable dark mode
+        function disableDarkMode() {
+             document.body.classList.remove('darkmode');
+            localStorage.setItem('darkMode', null);
+          //  document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754 !important;");
 
-            }]
-        };
+              }
 
-        // Get the canvas element
-        var ctx = document.getElementById('myChart').getContext('2d');
+        // Function to toggle dark mode
+        function change() {
+        //    preventdefault();
+            let darkMode = localStorage.getItem('darkMode');
+            if (darkMode !== 'enabled') {
+                enableDarkMode();
+            } else {
+                disableDarkMode();
+            }
+        }
 
-        // Create the chart
-        var myChart = new Chart(ctx, {
-            type: 'line',
-            data: chartData
+        // Apply dark mode on page load based on the value in localStorage
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let darkMode = localStorage.getItem('darkMode');
+            if (darkMode !== 'enabled') {
+                enableDarkMode();
+            }
         });
 
 
+       
+        // Get the canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var ctx2 = document.getElementById('myChart2').getContext('2d');
+
+
+
+        // Create the chart
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: chartData
+        });
+        var myChart2 = new Chart(ctx2, {
+            type: 'polarArea',
+            data: chartData
+        });
         function loadPartialViewBtn(id) {
             let path = "/User/Dashboard";
             if (id == 0) {

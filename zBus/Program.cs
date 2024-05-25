@@ -9,6 +9,7 @@ using zBus.Data.Services;
 using Microsoft.Extensions.Options;
 using Microsoft.CodeAnalysis.Options;
 using zBus.Filters;
+using zBus.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -16,7 +17,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 builder.Services.AddScoped<LoginAuthorizationFilter>();
 builder.Services.AddScoped<RoleAuthorizationFilter>(provider => new RoleAuthorizationFilter("Admin"));
-
+builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options =>
 {
     options.Cookie.IsEssential = true; // Make the session cookie essential
@@ -38,6 +39,8 @@ builder.Services.AddScoped<IStationService, StationService>();
 builder.Services.AddScoped<IBusService, BusService>();
 builder.Services.AddScoped<ITripService, TripService>();
 builder.Services.AddScoped<ISeatsService, SeatService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
+builder.Services.AddScoped<IOrderItemService, OrderItemService>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

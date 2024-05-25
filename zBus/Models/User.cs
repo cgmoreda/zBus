@@ -57,7 +57,6 @@ namespace zBus.Models
         [MaxLength(100, ErrorMessage = "Maximam 100 charachters")]
         [Required( ErrorMessage="Enter Password")]
         public string? Password { get; set; }
-
         public virtual ICollection<Trip>? Trips { get; set; }
     }
 

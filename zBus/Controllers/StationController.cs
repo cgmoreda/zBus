@@ -47,6 +47,10 @@ namespace zBus.Controllers
        
         public IActionResult Valid_Add(Station station, IFormFile photo)
             {
+            ModelState["DepartureTrips"].ValidationState = ModelValidationState.Valid;
+            ModelState["ArrivalTrips"].ValidationState = ModelValidationState.Valid;
+
+
             if (ModelState.IsValid)
             {
 

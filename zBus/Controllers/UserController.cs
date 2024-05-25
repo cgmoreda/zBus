@@ -36,14 +36,11 @@ namespace zBus.Controllers
             _busService = busService;
             _stationService = stationService;
             _driversService = driversService;
-            _seatsService = seatsService;
-           
-           
+            _seatsService = seatsService;      
         }
 
         public IActionResult Login_Page()
         {
-
             return View("Login_Page");
         }
 
@@ -190,9 +187,6 @@ namespace zBus.Controllers
            
         }
 
-
-
-
         public void SendAuthentication()
         {
             var UserEmail = HttpContext.Session.GetString("UserEmail");
@@ -209,7 +203,6 @@ namespace zBus.Controllers
             return Json(new { flag = false });
         }
         [ServiceFilter(typeof(LoginAuthorizationFilter))]
-
         public IActionResult UpdateData(User user, IFormFile photo)
         {
             ModelState["Password"].ValidationState = ModelValidationState.Valid;
@@ -248,12 +241,9 @@ namespace zBus.Controllers
             }
             return View("Update_Data", user);
         }
-
-
         [ServiceFilter(typeof(LoginAuthorizationFilter))]
         public IActionResult Book()
         {
-
             return View();
         }
         [ServiceFilter(typeof(LoginAuthorizationFilter))]
@@ -261,37 +251,18 @@ namespace zBus.Controllers
         public async Task<IActionResult> Admin(int id = 0)
         {
             var UserEmail = HttpContext.Session.GetString("UserEmail");
-            if (UserEmail == null)
-            {
-
-            }
             var buses = await _busService.GetAll();
             var drivers = await _driversService.GetAll();
             var stations = await _stationService.GetAll();
             var trips = await _TripService.GetAll();
-            List<TripDetails> tripdetails = new List<TripDetails>();
-            foreach (var trip in trips)
-            {
-                var TripDetails = new TripDetails();
-                TripDetails.Seats = _seatsService.GetById(trip.TripId);
-                TripDetails.AvailableSeatsCount = TripDetails.Seats.Count(s => s.Status == SeatStatus.Available);
-                TripDetails.arrivalstation = _stationService.GetById(trip.ArrivalStationID).StationName;
-                TripDetails.depturestation = _stationService.GetById(trip.DepartureStationID).StationName;
-                TripDetails.trip = trip;
-                TripDetails.Id = trip.TripId;
-                TripDetails.Allseatscount = _busService.GetById(trip.BusId).NumberOfSeats;
-                tripdetails.Add(TripDetails);
-
-            }
             var viewModel = new AdminViewModel
             {
                 Id = id,
                 Buses = buses,
                 Drivers = drivers,
                 Stations = stations,
-                Trips = tripdetails,
+                Trips = trips,
                 Email = UserEmail
-
             };
 
             return View("Admin", viewModel);
