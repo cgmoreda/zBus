@@ -1,5 +1,12 @@
 ﻿@model User;
 @{
+    var trips = @Model.orders.SelectMany(order => order.Items)
+                                 .Select(item => item.TripId)
+                            .Distinct()
+                            .Count();
+    var tickets = @Model.orders.SelectMany(order => order.Items)
+             .Sum(item => item.quantity);
+
     Layout = null;
 }
 <!DOCTYPE html>
@@ -44,14 +51,14 @@
                 <div class="sidebar-body">
                     <ul class="sidebar-body-menu">
                         <li>
-                            <a class="active" href=""><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                            <a class="active" onclick="Profile(1)"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
                         </li>
-                        <a onclick="Profile(5)">
+                        <a onclick="Profile(2)">
                             <span class="icon setting" aria-hidden="true"></span>Personal Data
                         </a>
                         </li>
                         <li>
-                            <a onclick="Profile(6)">
+                            <a onclick="Profile(3)">
                                 <span class="icon setting" aria-hidden="true"></span>Password
                             </a>
                         </li>
@@ -60,8 +67,6 @@
                                 <span src="/imgs/logout.png" aria-hidden="true"></span>Logout
                             </a>
                         </li>
-                        
-                   
                 </div>
             </div>
         </aside>
@@ -80,145 +85,297 @@
                 </div>
             </nav>
             <div id="partialViewContainer">
-                  @Html.Partial("_PartialviewDashbord", Model)    
-            </div>
-        </div>
-    </div>
+                <div>
+                    <div class="col-md-6 col-xl-3">
+                        <article class="stat-cards-item">
+                            <div class="stat-cards-icon warning">
+                                <i data-feather="file" aria-hidden="true"></i>
+                            </div>
+                            <div class="stat-cards-info">
+                                <p class="stat-cards-info__num">@Model.orders.Count()</p>
+                                <p class="stat-cards-info__title">Total Payment Number</p>
+                                <p class="stat-cards-info__progress">
+                                    <span class="stat-cards-info__profit success">
+                                        <i data-feather="trending-up" aria-hidden="true"></i>0.24%
+                                    </span>
 
-    <!-- Chart library -->
-    <script src="~/assets3/plugins/chart.min.js"></script>
-    <!-- Icons library -->
-    <script src="~/assets3/plugins/feather.min.js"></script>
-    <!-- Custom scripts -->
-    <script src="~/assets3/js/script.js"></script>
-    <script src="~/assets3/lib/jquery/dist/jquery.min.js"></script>
-    <script src="~/assets3/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="~/assets3/js/site.js" asp-append-version="true"></script>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="~/lib/jquery/dist/jquery.js"></script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
-    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <article class="stat-cards-item">
+                            <div class="stat-cards-icon purple">
+                                <i data-feather="file" aria-hidden="true"></i>
+                            </div>
+                            <div class="stat-cards-info">
+                                <p class="stat-cards-info__num">@tickets</p>
+                                <p class="stat-cards-info__title">Total Tickets</p>
+                                <p class="stat-cards-info__progress">
+                                    <span class="stat-cards-info__profit danger">
+                                        <i data-feather="trending-down" aria-hidden="true"></i>1.64%
+                                    </span>
 
-    <script>
-        // Function to enable dark mode
-        function enableDarkMode() {
-            //    document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754");
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                    <div class="col-md-6 col-xl-3">
+                        <article class="stat-cards-item">
+                            <div class="stat-cards-icon success">
+                                <i data-feather="feather" aria-hidden="true"></i>
+                            </div>
+                            <div class="stat-cards-info">
+                                <p class="stat-cards-info__num">@trips</p>
+                                <p class="stat-cards-info__title">Total Trips</p>
+                                <p class="stat-cards-info__progress">
+                                    <span class="stat-cards-info__profit warning">
+                                        <i data-feather="trending-up" aria-hidden="true"></i>0.00%
+                                    </span>
 
-            document.body.classList.add('darkmode');
-            localStorage.setItem('darkMode', 'enabled');
+                                </p>
+                            </div>
+                        </article>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-9">
+                        <div class="chart">
+                            <canvas id="myChart" aria-label="Site statistics" role="img"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <article class="customers-wrapper" style="background-color:white">
+                            <canvas id="myChart2" aria-label="Site statistics" role="img"></canvas>
+                        </article>
+                        <article class="white-block">
+                            <div class="top-cat-title">
+                                <h3>Top categories</h3>
+                                <p>28 Categories, 1400 Posts</p>
+                            </div>
+                            <ul class="top-cat-list">
+                                <li>
+                                    <a href="##">
+                                        <div class="top-cat-list__title">
+                                            Lifestyle <span>8.2k</span>
+                                        </div>
+                                        <div class="top-cat-list__subtitle">
+                                            Dailiy lifestyle articles <span class="purple">+472</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="##">
+                                        <div class="top-cat-list__title">
+                                            Tutorials <span>8.2k</span>
+                                        </div>
+                                        <div class="top-cat-list__subtitle">
+                                            Coding tutorials <span class="blue">+472</span>
+                                        </div>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="##">
+                                        <div class="top-cat-list__title">
+                                            Technology <span>8.2k</span>
+                                        </div>
+                                        <div class="top-cat-list__subtitle">
+                                            Dailiy technology articles <span class="danger">+472</span>
+                                        </div>
+                                    </a>
+                                </li>
 
-        }
-
-        // Function to disable dark mode
-        function disableDarkMode() {
-            document.body.classList.remove('darkmode');
-            localStorage.setItem('darkMode', null);
-            //  document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754 !important;");
-
-        }
-
-        // Function to toggle dark mode
-        function change() {
-            //    preventdefault();
-            let darkMode = localStorage.getItem('darkMode');
-            if (darkMode !== 'enabled') {
-                enableDarkMode();
-            } else {
-                disableDarkMode();
-            }
-        }
-
-        // Apply dark mode on page load based on the value in localStorage
-        document.addEventListener('DOMContentLoaded', (event) => {
-            let darkMode = localStorage.getItem('darkMode');
-            if (darkMode !== 'enabled') {
-                enableDarkMode();
-            }
-        });
-
-
-
-        // Get the canvas element
-        var ctx = document.getElementById('myChart').getContext('2d');
-        var ctx2 = document.getElementById('myChart2').getContext('2d');
-
-
-
-        // Create the chart
-        var myChart = new Chart(ctx, {
-            type: 'pie',
-            data: chartData
-        });
-        var myChart2 = new Chart(ctx2, {
-            type: 'polarArea',
-            data: chartData
-        });
-        function loadPartialViewBtn(id) {
-            let path = "/User/Dashboard";
-            if (id == 0) {
-
-                path = "/User/Dashboard";
-            }
-            else if (id == 1) { path = "/Bus/Details"; }
-            else if (id == 2) { path = "/Driver/Index"; }
-            else if (id == 3) { path = "/Station/Index"; }
-            else if (id == 4) { path = "/Trip/Index"; }
-            $.ajax({
-                url: path,
-                type: "Get",
-                success: function (response) {
-                    $("#partialViewContainer").html(response); // Update the container with the partial view
-                },
-                error: function (error) {
-                    console.error("Error:", error);
-                }
-            });
-        }
-
-        function search() {
-
-            var query = $('#search').val();
-            $.ajax({
-                url: "/Bus/search",
-                type: "Get",
-                data: { query: query },
-                success: function (response) {
-                    $("#partialViewContainer").html(response); // Update the container with the partial view
-                },
-                error: function (error) {
-                    console.error("Error:", error);
-                }
-            });
+                            </ul>
+                        </article>
+                    </div>
+                </div>
 
 
-        }
+                <div class="row">
+
+                    <div>
+
+                        @foreach (var trip in Model.orders)
+                        {
+                            <div class="card">
+                                <h1 class="col">Order Details</h1>
+
+                                <div class="trip-detail">
+                                    <label for="departureTime">Tickets :  </label>
+                                    <span>@trip.Items.Sum(q => q.quantity)</span>
+                                </div>
+
+                                @foreach (var item in trip.Items)
+                                {
+                                    <div class="trip-detail">
+                                        <label for="departureTime">Departure Date:</label>
+                                        <span>@item.Trip.DepartureTime.ToString("dd/MM/yyyy")</span>
+                                        <span> On @item.Trip.DepartureTime.DayOfWeek</span>
+                                    </div>
+                                    <div class="trip-detail">
+                                        <label for="departureTime">Departure Time:</label>
+                                        <span>@item.Trip.DepartureTime.ToString("h:mm tt")</span>
+                                    </div>
+                                    <div class="trip-detail">
+                                        <label for="arrivalTime">Arrival Date:</label>
+                                        <span>@item.Trip.ArrivalTime.ToString("dd/MM/yyyy")</span>
+                                        <span> On @item.Trip.ArrivalTime.DayOfWeek</span>
+                                    </div>
+                                    <div class="trip-detail">
+                                        <label for="arrivalTime">Arrival Time:</label>
+                                        <span>@item.Trip.ArrivalTime.ToString("h:mm tt")</span>
+                                    </div>
+                                    <div class="trip-detail">
+                                        <label for="tripPrice">Trip Price:</label>
+                                        <span>@(item.Trip.TripPrice * @item.quantity)</span>
+                                    </div>
+                                    <div class="trip-detail">
+                                        <label for="departureStation">Departure Station:</label>
+                                        <span>@item.Trip.DepartureStation.StationName</span>
+                                    </div>
+                                    <div class="trip-detail">
+                                        <label for="arrivalStation">Arrival Station:</label>
+                                        <span>@item.Trip.ArrivalStation.StationName</span>
+                                    </div>
+                                }
+                            </div>
+                        }
+
+
+                    </div>
+                </div>
+                <!-- dash --!>
+
+                    </div>
+                </div>
+           </div>
+
+
+                <!-- Chart library -->
+                <script src="~/assets3/plugins/chart.min.js"></script>
+                <!-- Icons library -->
+                <script src="~/assets3/plugins/feather.min.js"></script>
+                <!-- Custom scripts -->
+                <script src="~/assets3/js/script.js"></script>
+                <script src="~/assets3/lib/jquery/dist/jquery.min.js"></script>
+                <script src="~/assets3/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+                <script src="~/assets3/js/site.js" asp-append-version="true"></script>
+                <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+                <script src="~/lib/jquery/dist/jquery.js"></script>
+                <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
+                <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+                <script>
+
+
+                    var chartData = {
+                        labels: ['Payment Number', 'Tickets', 'Trips',],
+                        datasets: [{
+                            label: 'Differences',
+                            data: [@Model.orders.Count(), @tickets, @trips]
+                        }]
+                    };
+                    // Function to enable dark mode
+                    function enableDarkMode() {
+                        //    document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754");
+
+                        document.body.classList.add('darkmode');
+                        localStorage.setItem('darkMode', 'enabled');
+
+                    }
+
+                    // Function to disable dark mode
+                    function disableDarkMode() {
+                        document.body.classList.remove('darkmode');
+                        localStorage.setItem('darkMode', null);
+                        //  document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754 !important;");
+
+                    }
+
+                    // Function to toggle dark mode
+                    function change() {
+                        //    preventdefault();
+                        let darkMode = localStorage.getItem('darkMode');
+                        if (darkMode !== 'enabled') {
+                            enableDarkMode();
+                        } else {
+                            disableDarkMode();
+                        }
+                    }
+
+                    // Apply dark mode on page load based on the value in localStorage
+                    document.addEventListener('DOMContentLoaded', (event) => {
+                        let darkMode = localStorage.getItem('darkMode');
+                        if (darkMode !== 'enabled') {
+                            enableDarkMode();
+                        }
+                    });
+
+
+
+                    // Get the canvas element
+                    var ctx = document.getElementById('myChart').getContext('2d');
+                    var ctx2 = document.getElementById('myChart2').getContext('2d');
+
+
+
+                    // Create the chart
+                    var myChart = new Chart(ctx, {
+                        type: 'pie',
+                        data: chartData
+                    });
+                    var myChart2 = new Chart(ctx2, {
+                        type: 'polarArea',
+                        data: chartData
+                    });
+
+
+                    function search() {
+
+                        var query = $('#search').val();
+                        $.ajax({
+                            url: "/Bus/search",
+                            type: "Get",
+                            data: { query: query },
+                            success: function (response) {
+                                $("#partialViewContainer").html(response); // Update the container with the partial view
+                            },
+                            error: function (error) {
+                                console.error("Error:", error);
+                            }
+                        });
+
+
+                    }
 
 
 
 
-        function Profile(type) {
-            let path = "";
+                    function Profile(type) {
+                        let path = "";
 
-            if (type == 5) {
-                path = "/User/Update_Data";
-            } else if (type == 6) {
-                path = "/User/Update_Pass";
-            }
+                        if (type == 2) {
+                            path = "/User/Update_Data";
+                        } else if (type == 3) {
+                            path = "/User/Update_Pass";
+                        }
+                        else if (type == 1) {
+                            window.location.href = "/User/Account";
+                            return;
+                        }
 
-            $.ajax({
-                url: path,
-                type: "GET",
-                success: function (response) {
-                    $("#partialViewContainer").html(response); // Update the container with the partial view
-                },
-                error: function (error) {
-                    console.error("Error:", error);
-                }
-            });
-        }
-
-
-    </script>
+                        $.ajax({
+                            url: path,
+                            type: "GET",
+                            success: function (response) {
+                                $("#partialViewContainer").html(response); // Update the container with the partial view
+                            },
+                            error: function (error) {
+                                console.error("Error:", error);
+                            }
+                        });
+                    }
+                </script>
 
 </body>
 
