@@ -28,7 +28,7 @@
         <aside class="sidebar" style="background-color:#11111d">
             <div class="sidebar-start">
                 <div class="sidebar-head">
-                    <a href="##" class="logo-wrapper" title="Home">
+                    <a asp-action="Index" asp-controller="Home" class="logo-wrapper" title="Home">
                         <span class="sr-only">Home</span>
                         <span class="icon logo" aria-hidden="true"></span>
                         <div class="logo-text">
@@ -44,7 +44,9 @@
                 <div class="sidebar-body">
                     <ul class="sidebar-body-menu">
                         <li>
-                            <a class="active" href="/"><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                            <a class="active" asp-action="Admin" asp-controller="User" id ="Dashboard" >
+                                <span class="icon home" aria-hidden="true"></span>Dashboard
+                            </a>
                         </li>
                         <li>
                             <a class="show-cat-btn" onclick="loadPartialViewBtn(1)">
@@ -220,12 +222,8 @@
             data: chartData
         });
         function loadPartialViewBtn(id) {
-            let path = "/User/Dashboard";
-            if (id == 0) {
-
-                path = "/User/Dashboard";
-            }
-            else if (id == 1) { path = "/Bus/Details"; }
+            var path = " ";
+            if (id == 1) { path = "/Bus/Details"; }
             else if (id == 2) { path = "/Driver/Index"; }
             else if (id == 3) { path = "/Station/Index"; }
             else if (id == 4) { path = "/Trip/Index"; }

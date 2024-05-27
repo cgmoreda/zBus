@@ -131,7 +131,7 @@
             if (old === serverPassword) {
                 let pass = document.getElementById("password").value;
                 let confirmPass = document.getElementById("confirmPassword").value;
-
+                console.log("sdss");
                 if (pass !== "" && pass === confirmPass) {
                     $.ajax({
                         url: "/User/SendAuthentication",
@@ -157,6 +157,7 @@
 
         function closePopup() {
             let code = document.getElementById("code").value;
+            console.log("sdss");
             $.ajax({
                 url: "/User/AuthenticationCheck",
                 type: "POST",

@@ -8,6 +8,12 @@ using zBus.GLobal;
 
 public class EmailService
 {
+    private readonly IWebHostEnvironment _hostingEnvironment;
+    
+    public EmailService(IWebHostEnvironment hostingEnvironment)
+    {
+        _hostingEnvironment = hostingEnvironment;
+    }
     public async Task SendRegistrationEmailAsync(string to, string username)
     {
         string GmailAddress = "winformapp010@gmail.com";
@@ -35,7 +41,9 @@ public class EmailService
                 message.IsBodyHtml = true;
 
                 // Attach the image as a linked resource
-                LinkedResource imageResource = new LinkedResource("C:/Users/sheri/OneDrive/سطح المكتب/ZBUS/zBus/wwwroot/imgs/bus.png", "image/png");
+
+                string relativePath = Path.Combine(_hostingEnvironment.WebRootPath, "imgs", "bus.png");
+                LinkedResource imageResource = new LinkedResource(relativePath, "image/png");
                 imageResource.ContentId = "photo";
                 AlternateView htmlView = AlternateView.CreateAlternateViewFromString(body, null, "text/html");
                 htmlView.LinkedResources.Add(imageResource);
@@ -61,7 +69,8 @@ public class EmailService
         string subject = "Password Change Confirmation";
 
         // Create the linked resource
-        LinkedResource busImage = new LinkedResource("C:/Users/sheri/OneDrive/سطح المكتب/ZBUS/zBus/wwwroot/imgs/bus.png", "image/png");
+        string relativePath = Path.Combine(_hostingEnvironment.WebRootPath, "imgs", "bus.png");
+        LinkedResource busImage = new LinkedResource(relativePath, "image/png");
         busImage.ContentId = "photo"; // Content-ID reference used in the HTML body
 
         // Create the HTML body

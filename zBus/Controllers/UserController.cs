@@ -70,7 +70,7 @@ namespace zBus.Controllers
                             }
                             user.PhotoPhath = "/User/" + fileName;
                             _userService.Add(user);
-                            EmailService _emailService = new EmailService();
+                            EmailService _emailService = new EmailService(_webHostEnvironment);
                              _emailService.SendRegistrationEmailAsync(user.Email, user.Fisrt_name);
                             return View("Login_Page");
                         }
@@ -193,7 +193,7 @@ namespace zBus.Controllers
         {
             var UserEmail = HttpContext.Session.GetString("UserEmail");
             string username = _userService.GetById(UserEmail).Fisrt_name;
-            EmailService emailService = new EmailService();
+            EmailService emailService = new EmailService(_webHostEnvironment);
             emailService.SendPasswordChangeEmailAsync(UserEmail, username);
         }
         public IActionResult AuthenticationCheck(string code)
@@ -274,7 +274,7 @@ namespace zBus.Controllers
         public IActionResult Dashboard()
         {
 
-            return View();
+            return View("_PartialviewDashbord");
         }
 
 
