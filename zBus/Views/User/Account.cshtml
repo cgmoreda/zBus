@@ -1,111 +1,89 @@
 ﻿@model User;
 @{
-    Layout = "_MyLayout";
-
+    Layout = null;
 }
+<!DOCTYPE html>
+<html lang="en">
 <head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="./img/svg/logo.svg" type="image/x-icon">
+    <!-- Custom styles -->
     <link rel="stylesheet" href="/assets3/css/style.min.css">
-     <style>
-        .formwarn {
-            color: red;
-            font-size: 13px;
+    <style>
+        .sidebar.green-background {
+            background-color: #198754 !important;
         }
 
-        .text-black
-        {
-            color:black!important;
-        }
     </style>
 </head>
 <body>
-
-
     <div class="layer"></div>
-    <main class="page-center ">
-        <article class="sign-up ">
-            <h1 class="sign-up__title">Get started</h1>
-            <form class="sign-up-form form" asp-action="Register_Save" asp-controller="User" method="post">
-
-                <div class="form-label-wrapper" style=" display: block; text-align: center">
-                    <label class="text-black">Photo</label>
-                    <div class="avatar-container" style=" display: block; text-align: center">
-
-                        <input type="file" accept=".png, .jpg, .jpeg" name="photo" class="form-input" onchange="previewAvatar(event)" style=" display: block; text-align: center" required />
-
-                    </div>
-
+    <!-- ! Body -->
+    <div class="page-flex">
+        <!-- ! Sidebar -->
+        <aside class="sidebar" style="background-color:#11111d">
+            <div class="sidebar-start">
+                <div class="sidebar-head">
+                    <a href="##" class="logo-wrapper" title="Home">
+                        <span class="sr-only">Home</span>
+                        <span class="icon logo" aria-hidden="true"></span>
+                        <div class="logo-text">
+                            <span class="logo-title">ZBUS</span>
+                            <span class="logo-subtitle">Dashboard</span>
+                        </div>
+                    </a>
+                    <button class="sidebar-toggle transparent-btn" title="Menu" type="button">
+                        <span class="sr-only">Toggle menu</span>
+                        <span class="icon menu-toggle" aria-hidden="true"></span>
+                    </button>
                 </div>
-
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <label asp-for="Fisrt_name" class="text-black" >First Name<span class="formwarn">*</span></label>
-                        <br />
-
-                        <input asp-for="Fisrt_name"class="form-input" oninput="this.value = this.value.trim()" />
-                        <br />
-                        <span asp-validation-for="Fisrt_name" class="formwarn"></span>
-                    </div>
-                    <div class="col-md-6">
-                        <label asp-for="Last_name" class="text-black" >Last Name<span class="formwarn">*</span></label>
-
-                        <br />
-                        <input asp-for="Last_name"  class="form-input" oninput="this.value = this.value.trim()" />
-                        <br />
-                        <span asp-validation-for="Last_name" class="formwarn"></span>
-                    </div>
+                <div class="sidebar-body">
+                    <ul class="sidebar-body-menu">
+                        <li>
+                            <a class="active" href=""><span class="icon home" aria-hidden="true"></span>Dashboard</a>
+                        </li>
+                        <a onclick="Profile(5)">
+                            <span class="icon setting" aria-hidden="true"></span>Personal Data
+                        </a>
+                        </li>
+                        <li>
+                            <a onclick="Profile(6)">
+                                <span class="icon setting" aria-hidden="true"></span>Password
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-action="Logout">
+                                <span src="/imgs/logout.png" aria-hidden="true"></span>Logout
+                            </a>
+                        </li>
+                        
+                   
                 </div>
+            </div>
+        </aside>
 
-
-                <div class="form-label-wrapper">
-                    <label asp-for="Email"  class="text-black">Email<span class="formwarn">*</span></label>
-                    <input asp-for="Email"  class="form-input" oninput="this.value = this.value.trim()" />
-                    <span asp-validation-for="Email" class="formwarn"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label asp-for="Phone_number"  class="text-black">Phone Number<span class="formwarn">*</span></label>
-                    <input asp-for="Phone_number"  class="form-input" oninput="this.value = this.value.trim()" />
-                    <span asp-validation-for="Phone_number" class="formwarn"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label asp-for="Address"  class="text-black">Address</label>
-                    <input asp-for="Address"  class="form-input" oninput="this.value = this.value.trim()" />
-                    <span asp-validation-for="Address" class="formwarn"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label asp-for="Password"  class="text-black">Password<span class="formwarn">*</span></label>
-                    <input asp-for="Password"  id="password" class="form-input" oninput="this.value = this.value.trim()" />
-                    <span asp-validation-for="Password" class="formwarn"></span>
-                </div>
-
-                <div class="form-label-wrapper">
-                    <label class="text-black" >Confirm Password<span class="formwarn">*</span></label>
-                    <input id="confirmPassword"  class="form-input" onchange="ConfirmPassword()" type="password" oninput="this.value = this.value.trim()" />
-                    <span asp-validation-for="Password" class="formwarn"></span>
-                    <span id="confirmPassword_error" class="formwarn"></span>
-                </div>
-
-                <div>
-                    <span asp-validation-summary="User" class="formwarn"></span>
-                </div>
-                <br />
-
-                <div class="row">
-                    <div class="col-md-6">
-                        <button class="form-btn primary-default-btn transparent-btn">Updata Account</button>
-                    </div>
-                    <div class="col-md-6">
-                        <a asp-action="Delete" class="form-btn primary-default-btn transparent-btn" style="background-color:darkred">Delete Account</a>
+        <div class="main-wrapper">
+            <!-- ! Main nav -->
+            <nav class="main-nav--bg" style="display:flex !important">
+                <div class="container main-nav">
+                    <div class="main-nav-end" style="display:flex !important">
+                        <button onclick="change()" type="button">
+                            <span class="sr-only">Switch theme</span>
+                            <i class="sun-icon" data-feather="sun" aria-hidden="true"></i>
+                            <i class="moon-icon" data-feather="moon" aria-hidden="true"></i>
+                        </button>
                     </div>
                 </div>
-                
-            </form>
-
-        </article>
-    </main>
+            </nav>
+            <div id="partialViewContainer">
+                  @Html.Partial("_PartialviewDashbord", Model)    
+            </div>
+        </div>
+    </div>
 
     <!-- Chart library -->
     <script src="~/assets3/plugins/chart.min.js"></script>
@@ -113,26 +91,134 @@
     <script src="~/assets3/plugins/feather.min.js"></script>
     <!-- Custom scripts -->
     <script src="~/assets3/js/script.js"></script>
-
-
-    <script src="~/lib/jquery/dist/jquery.js">  </script>
-    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
+    <script src="~/assets3/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/assets3/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets3/js/site.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js"></script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js"></script>
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
     <script>
-        function ConfirmPassword() {
-            var pass1 = document.getElementById("password").value;
-            var pass2 = document.getElementById("confirmPassword").value;
+        // Function to enable dark mode
+        function enableDarkMode() {
+            //    document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754");
 
-            if (pass1 !== pass2) {
-                document.getElementById("confirmPassword_error").innerHTML = "Passwords do not match";
-                console.log("skcnsjc")
+            document.body.classList.add('darkmode');
+            localStorage.setItem('darkMode', 'enabled');
+
+        }
+
+        // Function to disable dark mode
+        function disableDarkMode() {
+            document.body.classList.remove('darkmode');
+            localStorage.setItem('darkMode', null);
+            //  document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754 !important;");
+
+        }
+
+        // Function to toggle dark mode
+        function change() {
+            //    preventdefault();
+            let darkMode = localStorage.getItem('darkMode');
+            if (darkMode !== 'enabled') {
+                enableDarkMode();
             } else {
-                document.getElementById("confirmPassword_error").innerHTML = "";
+                disableDarkMode();
             }
         }
+
+        // Apply dark mode on page load based on the value in localStorage
+        document.addEventListener('DOMContentLoaded', (event) => {
+            let darkMode = localStorage.getItem('darkMode');
+            if (darkMode !== 'enabled') {
+                enableDarkMode();
+            }
+        });
+
+
+
+        // Get the canvas element
+        var ctx = document.getElementById('myChart').getContext('2d');
+        var ctx2 = document.getElementById('myChart2').getContext('2d');
+
+
+
+        // Create the chart
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: chartData
+        });
+        var myChart2 = new Chart(ctx2, {
+            type: 'polarArea',
+            data: chartData
+        });
+        function loadPartialViewBtn(id) {
+            let path = "/User/Dashboard";
+            if (id == 0) {
+
+                path = "/User/Dashboard";
+            }
+            else if (id == 1) { path = "/Bus/Details"; }
+            else if (id == 2) { path = "/Driver/Index"; }
+            else if (id == 3) { path = "/Station/Index"; }
+            else if (id == 4) { path = "/Trip/Index"; }
+            $.ajax({
+                url: path,
+                type: "Get",
+                success: function (response) {
+                    $("#partialViewContainer").html(response); // Update the container with the partial view
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+
+        function search() {
+
+            var query = $('#search').val();
+            $.ajax({
+                url: "/Bus/search",
+                type: "Get",
+                data: { query: query },
+                success: function (response) {
+                    $("#partialViewContainer").html(response); // Update the container with the partial view
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
+
+
+        }
+
+
+
+
+        function Profile(type) {
+            let path = "";
+
+            if (type == 5) {
+                path = "/User/Update_Data";
+            } else if (type == 6) {
+                path = "/User/Update_Pass";
+            }
+
+            $.ajax({
+                url: path,
+                type: "GET",
+                success: function (response) {
+                    $("#partialViewContainer").html(response); // Update the container with the partial view
+                },
+                error: function (error) {
+                    console.error("Error:", error);
+                }
+            });
+        }
+
+
     </script>
 
-
-
 </body>
+

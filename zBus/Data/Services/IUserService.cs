@@ -6,10 +6,11 @@ namespace zBus.Data.Services
     {
         Task<IEnumerable<User>> GetAll();
         User GetById(string email);
+        Task<User> GetByIdCustomer(string email);
         void Add(User user);
         void Update(string email, User user);
         void Delete(string name);
         bool Exist(string email);
         void Update_Pass(string password ,string email);
-    }
+       }
 }

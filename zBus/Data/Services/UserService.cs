@@ -28,9 +28,23 @@ namespace zBus.Data.Services
         }
         public async Task<IEnumerable<User>> GetAll()
         {
-            var users = await _context.Users.ToListAsync();
-            return users;
+            return await _context.Users.ToListAsync();
         }
+
+        public async Task<User> GetByIdCustomer(string email)
+        {
+            return await _context.Users
+                .Include(u => u.orders)
+                .ThenInclude(o => o.Items)
+                .ThenInclude(i => i.Trip)
+                .ThenInclude(t => t.ArrivalStation)
+                .Include(u => u.orders)
+                .ThenInclude(o => o.Items)
+                .ThenInclude(i => i.Trip)
+                .ThenInclude(t => t.DepartureStation)
+                .FirstOrDefaultAsync(u => u.Email == email);
+        }
+
         public User GetById(string email)
         {
             var user = _context.Users.FirstOrDefault(user => user.Email == email);

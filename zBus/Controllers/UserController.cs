@@ -141,11 +141,13 @@ namespace zBus.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-
-        public IActionResult Account()
+        [ServiceFilter(typeof(LoginAuthorizationFilter))]
+        public async Task< IActionResult> Account()
         {
 
-            var user = _userService.GetById(GlobalVariables.User!);
+            var UserEmail = HttpContext.Session.GetString("UserEmail");
+
+            var user =await _userService.GetByIdCustomer(UserEmail);
             return View(user);
         }
 

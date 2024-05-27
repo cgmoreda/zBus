@@ -121,7 +121,7 @@
             <div id="partialViewContainer">
                 @if (Model.Id == 0)
                 {
-                    @Html.Partial("_PartialviewDashbord",Model)
+                    @Html.Partial("_PartialviewDashbord", Model)
                 }
                 else if (Model.Id == 1)
                 {
@@ -168,24 +168,24 @@
     <script>
         // Function to enable dark mode
         function enableDarkMode() {
-        //    document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754");
+            //    document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754");
 
             document.body.classList.add('darkmode');
             localStorage.setItem('darkMode', 'enabled');
-          
+
         }
 
         // Function to disable dark mode
         function disableDarkMode() {
-             document.body.classList.remove('darkmode');
+            document.body.classList.remove('darkmode');
             localStorage.setItem('darkMode', null);
-          //  document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754 !important;");
+            //  document.getElementsByClassName("sidebar")[0].setAttribute("style", "background-color: #198754 !important;");
 
-              }
+        }
 
         // Function to toggle dark mode
         function change() {
-        //    preventdefault();
+            //    preventdefault();
             let darkMode = localStorage.getItem('darkMode');
             if (darkMode !== 'enabled') {
                 enableDarkMode();
@@ -203,7 +203,7 @@
         });
 
 
-       
+
         // Get the canvas element
         var ctx = document.getElementById('myChart').getContext('2d');
         var ctx2 = document.getElementById('myChart2').getContext('2d');
@@ -283,7 +283,7 @@
             });
         }
 
-        
+
     </script>
 
 </body>
