@@ -156,6 +156,14 @@
 
     <script>
 
+        document.getElementById("Dashboard").classList.remove("active");
+        document.getElementById("Bus").classList.add("active");
+        document.getElementById("Trip").classList.remove('active');
+        document.getElementById("Driver").classList.remove("active");
+        document.getElementById("Station").classList.remove("active");
+        document.getElementById("PersonalData").classList.remove("active");
+        document.getElementById("Password").classList.remove("active");
+
         function openPopup(id) {
             $.ajax({
                 url: "/Bus/Delete",

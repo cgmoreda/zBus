@@ -1,7 +1,7 @@
 ﻿@model List<Trip>
 @{
-       Layout = null;
- }
+    Layout = null;
+}
 <head>
 
     <link rel="stylesheet" href="/assets/css/bootstrap.css">
@@ -190,7 +190,15 @@
         </div>
 
     </div>
-
+    <script>
+        document.getElementById("Dashboard").classList.remove("active");
+        document.getElementById("Bus").classList.remove("active");
+        document.getElementById("Trip").classList.add('active');
+        document.getElementById("Driver").classList.remove("active");
+        document.getElementById("Station").classList.remove("active");
+        document.getElementById("PersonalData").classList.remove("active");
+        document.getElementById("Password").classList.remove("active");
+    </script>
 
 
     <script src="~/assets3/plugins/feather.min.js"></script>

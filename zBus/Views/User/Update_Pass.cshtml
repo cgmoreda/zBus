@@ -63,33 +63,33 @@
     </div>
     <main class="page-center">
         <main class="popup" id="popup" style="justify-content:center; align-items: center;">
-            <h4>Enter Authentication!</h4> 
+            <h4>Enter Authentication!</h4>
             <p>Enter Code recieved in Mail</p>
-           
+
             <input id="code" style="font-size:15px">
             <br />
             <button type="button" onclick="closePopup()">OK</button>
         </main>
-        <form id="submitpass"  class="sign-up-form form" asp-action="UpdatePass" asp-controller="User" method="post" enctype="multipart/form-data">
+        <form id="submitpass" class="sign-up-form form" asp-action="UpdatePass" asp-controller="User" method="post" enctype="multipart/form-data">
             <div class="form-label-wrapper">
                 <label asp-for="Password" style="margin:5px; " class="form-label">Old Password<span class="formwarn">*</span></label>
                 <input id="oldpassword" name="oldpassword" onchange="clearOldPasswordError()" style="margin:5px;  " class="form-input" oninput="this.value = this.value.trim()" required type="password" />
-                <span id="oldpassword_error"  class="formwarn"></span>
+                <span id="oldpassword_error" class="formwarn"></span>
 
             </div>
             <div class="form-label-wrapper">
                 <label asp-for="Password" style="margin:5px;  " class="form-label">New Password<span class="formwarn">*</span></label>
-                <input asp-for="Password" style="margin:5px;  " id="password"class="form-input" oninput="this.value = this.value.trim()"  required/>
+                <input asp-for="Password" style="margin:5px;  " id="password" class="form-input" oninput="this.value = this.value.trim()" required />
                 <span asp-validation-for="Password" class="formwarn"></span>
             </div>
             <div class="form-label-wrapper">
                 <label class="form-label" style="margin:5px;  ">Confirm Password<span class="formwarn">*</span></label>
-                <input id="confirmPassword" style="margin:5px;  " class="form-input" onchange="ConfirmPassword()" type="password" oninput="this.value = this.value.trim()" required/>
+                <input id="confirmPassword" style="margin:5px;  " class="form-input" onchange="ConfirmPassword()" type="password" oninput="this.value = this.value.trim()" required />
                 <span id="confirmPassword_error" class="formwarn"></span>
             </div>
             <br />
             <div class="form-label-wrapper">
-                <a  onclick="Update_pass()"  class="form-btn primary-default-btn transparent-btn">Update Password</a>
+                <a onclick="Update_pass()" class="form-btn primary-default-btn transparent-btn">Update Password</a>
             </div>
         </form>
     </main>
@@ -108,9 +108,17 @@
 
     <script>
 
+
+        document.getElementById("Dashboard").classList.remove("active");
+        document.getElementById("Bus").classList.remove("active");
+        document.getElementById("Trip").classList.remove('active');
+        document.getElementById("Driver").classList.remove("active");
+        document.getElementById("Station").classList.remove("active");
+        document.getElementById("PersonalData").classList.remove("active");
+        document.getElementById("Password").classList.add("active");
         function clearOldPasswordError() {
-    document.getElementById("oldpassword_error").innerText = "";
-}
+            document.getElementById("oldpassword_error").innerText = "";
+        }
         function ConfirmPassword() {
             var pass1 = document.getElementById("password").value;
             var pass2 = document.getElementById("confirmPassword").value;

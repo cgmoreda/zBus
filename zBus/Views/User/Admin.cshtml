@@ -44,27 +44,27 @@
                 <div class="sidebar-body">
                     <ul class="sidebar-body-menu">
                         <li>
-                            <a class="active" asp-action="Admin" asp-controller="User" id ="Dashboard" >
+                            <a asp-action="Admin" asp-controller="User" id ="Dashboard" >
                                 <span class="icon home" aria-hidden="true"></span>Dashboard
                             </a>
                         </li>
                         <li>
-                            <a class="show-cat-btn" onclick="loadPartialViewBtn(1)">
+                            <a class="show-cat-btn" onclick="loadPartialViewBtn(1)" id="Bus">
                                 <span class="icon document" aria-hidden="true"></span>Bus
                             </a>
                         </li>
                         <li>
-                            <a class="show-cat-btn" onclick="loadPartialViewBtn(2)">
+                            <a class="show-cat-btn" onclick="loadPartialViewBtn(2)" id="Driver">
                                 <span class="icon document" aria-hidden="true"></span>Driver
                             </a>
                         </li>
                         <li>
-                            <a class="show-cat-btn" onclick="loadPartialViewBtn(3)">
+                            <a class="show-cat-btn" onclick="loadPartialViewBtn(3)" id ="Station">
                                 <span class="icon document" aria-hidden="true"></span>Station
                             </a>
                         </li>
                         <li>
-                            <a class="show-cat-btn" onclick="loadPartialViewBtn(4)">
+                            <a class="show-cat-btn" onclick="loadPartialViewBtn(4)" id="Trip">
                                 <span class="icon document" aria-hidden="true"></span>Trip
                             </a>
                         </li>
@@ -73,7 +73,7 @@
                     <span class="system-menu__title">System</span>
                     <ul class="sidebar-body-menu">
                         <li>
-                            <a class="show-cat-btn" onclick="change()">
+                            <a class="show-cat-btn" onclick="change()" id="Users">
                                 <span class="icon user-3" aria-hidden="true"></span>Users
                                 <span class="category__btn transparent-btn" title="Open list">
                                     <span class="sr-only">Open list</span>
@@ -82,12 +82,12 @@
                             </a>
                         </li>
                         <li>
-                            <a onclick="Profile(5)">
+                            <a onclick="Profile(5)" id="PersonalData">
                                 <span class="icon setting" aria-hidden="true"></span>Personal Data
                             </a>
                         </li>
                         <li>
-                            <a onclick="Profile(6)">
+                            <a onclick="Profile(6)" id="Password">
                                 <span class="icon setting" aria-hidden="true"></span>Password
                             </a>
                         </li>

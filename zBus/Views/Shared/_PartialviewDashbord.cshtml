@@ -92,7 +92,7 @@
             <div class="col-lg-3">
                 <article class="customers-wrapper" style="background-color:white">
                     <canvas id="myChart2" aria-label="Site statistics" role="img"></canvas>
-                  </article>
+                </article>
                 <article class="white-block">
                     <div class="top-cat-title">
                         <h3>Top categories</h3>
@@ -136,9 +136,16 @@
         </div>
     </div>
 </main>
- <script>
+<script>
 
 
+    document.getElementById("Dashboard").classList.add("active");
+    document.getElementById("Bus").classList.remove("active");
+    document.getElementById("Trip").classList.remove('active');
+    document.getElementById("Driver").classList.remove("active");
+    document.getElementById("Station").classList.remove("active");
+    document.getElementById("PersonalData").classList.remove("active");
+    document.getElementById("Password").classList.remove("active");
     var chartData = {
         labels: ['Buses', 'Drivers', 'Stations', 'Trips'],
         datasets: [{
@@ -149,8 +156,8 @@
         }]
     };
 
-    
- </script>
+
+</script>
 
 <!-- Chart library -->
 <script src="~/assets3/plugins/chart.min.js"></script>
