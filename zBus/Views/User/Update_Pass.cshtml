@@ -72,19 +72,19 @@
         </main>
         <form id="submitpass"  class="sign-up-form form" asp-action="UpdatePass" asp-controller="User" method="post" enctype="multipart/form-data">
             <div class="form-label-wrapper">
-                <label asp-for="Password" style="margin:5px; color:white" class="text-black">Old Password<span class="formwarn">*</span></label>
-                <input id="oldpassword" name="oldpassword" onchange="clearOldPasswordError()" style="margin:5px; color:white" class="form-input" oninput="this.value = this.value.trim()" required />
+                <label asp-for="Password" style="margin:5px; " class="form-label">Old Password<span class="formwarn">*</span></label>
+                <input id="oldpassword" name="oldpassword" onchange="clearOldPasswordError()" style="margin:5px;  " class="form-input" oninput="this.value = this.value.trim()" required type="password" />
                 <span id="oldpassword_error"  class="formwarn"></span>
 
             </div>
             <div class="form-label-wrapper">
-                <label asp-for="Password" style="margin:5px; color:white" class="text-black">New Password<span class="formwarn">*</span></label>
-                <input asp-for="Password" style="margin:5px; color:white" id="password"class="form-input" oninput="this.value = this.value.trim()"  required/>
+                <label asp-for="Password" style="margin:5px;  " class="form-label">New Password<span class="formwarn">*</span></label>
+                <input asp-for="Password" style="margin:5px;  " id="password"class="form-input" oninput="this.value = this.value.trim()"  required/>
                 <span asp-validation-for="Password" class="formwarn"></span>
             </div>
             <div class="form-label-wrapper">
-                <label class="text-black" style="margin:5px; color:white">Confirm Password<span class="formwarn">*</span></label>
-                <input id="confirmPassword" style="margin:5px; color:white" class="form-input" onchange="ConfirmPassword()" type="password" oninput="this.value = this.value.trim()" required/>
+                <label class="form-label" style="margin:5px;  ">Confirm Password<span class="formwarn">*</span></label>
+                <input id="confirmPassword" style="margin:5px;  " class="form-input" onchange="ConfirmPassword()" type="password" oninput="this.value = this.value.trim()" required/>
                 <span id="confirmPassword_error" class="formwarn"></span>
             </div>
             <br />

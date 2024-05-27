@@ -43,6 +43,6 @@ namespace zBus.Models
         public int YearsOfExperience { get; set; }
 
 
-        public ICollection<Bus> buses { get; set; }
+        public ICollection<Bus>? buses { get; set; }
     }
 }

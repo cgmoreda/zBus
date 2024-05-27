@@ -35,8 +35,8 @@ namespace zBus.Models
         public string PhotoUrl { get; set; }
 
         [NotMapped]
-        public ICollection<Trip> ArrivalTrips { get; set; }
+        public ICollection<Trip>? ArrivalTrips { get; set; }
         [NotMapped]
-        public ICollection<Trip> DepartureTrips { get; set; }
+        public ICollection<Trip>? DepartureTrips { get; set; }
     }
 }

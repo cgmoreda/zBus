@@ -42,27 +42,27 @@
         <article class="sign-up">
             <h1 class="sign-up__title">Add New Trip</h1>
             <form class="sign-up-form form" asp-action="Valid_Add" asp-controller="Trip" method="post" enctype="multipart/form-data">
-
+                <input asp-for="TripId" style="visibility:hidden" />
                 <div class="form-label-wrapper">
-                    <label asp-for="DepartureTime" class="text-black">Departure Time<span class="formwarn">*</span></label>
+                    <label asp-for="DepartureTime" class="form-label">Departure Time<span class="formwarn">*</span></label>
                     <input asp-for="DepartureTime" class="form-input" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                     <span asp-validation-for="DepartureTime" style="color:red"></span>
                 </div>
 
                 <div class="form-label-wrapper">
-                    <label asp-for="ArrivalTime" class="text-black">Arrival Time<span class="formwarn">*</span></label>
+                    <label asp-for="ArrivalTime" class="form-label">Arrival Time<span class="formwarn">*</span></label>
                     <input asp-for="ArrivalTime" class="form-input" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                     <span asp-validation-for="ArrivalTime" style="color:red"></span>
                 </div>
 
                 <div class="form-label-wrapper">
-                    <label asp-for="TripPrice" class="text-black">Trip Price<span class="formwarn">*</span></label>
+                    <label asp-for="TripPrice" class="form-label">Trip Price<span class="formwarn">*</span></label>
                     <input asp-for="TripPrice" min="1" class="form-input" required />
                     <span asp-validation-for="TripPrice" style="color:red"></span>
                 </div>
 
                 <div class="form-label-wrapper">
-                    <label asp-for="DepartureStationID" class="text-black">Departure Station<span class="formwarn">*</span></label>
+                    <label asp-for="DepartureStationID" class="form-label">Departure Station<span class="formwarn">*</span></label>
                     <!-- Replace with your own logic for selecting Departure City -->
                     <select asp-for="DepartureStationID" class="form-input" required>
                         <option value="">Select</option>
@@ -75,7 +75,7 @@
                 </div>
 
                 <div class="form-label-wrapper">
-                    <label asp-for="ArrivalStationID" class="text-black">Arrival Station<span class="formwarn">*</span></label>
+                    <label asp-for="ArrivalStationID" class="form-label">Arrival Station<span class="formwarn">*</span></label>
                     <!-- Replace with your own logic for selecting Arrival City -->
                     <select asp-for="ArrivalStationID" class="form-input" required>
                         <option value="">Select</option>
@@ -89,7 +89,7 @@
                 </div>
 
                 <div class="form-label-wrapper">
-                    <label asp-for="BusId" class="text-black">Bus Trip<span class="formwarn">*</span></label>
+                    <label asp-for="BusId" class="form-label">Bus Trip<span class="formwarn">*</span></label>
                     <!-- Replace with your own logic for selecting Bus ID -->
                     <select asp-for="BusId" class="form-input" required>
                         <option value="">Select</option>
@@ -106,7 +106,7 @@
                 </div>
                 <br />
 
-                <button class="form-btn primary-default-btn transparent-btn">Add Trip</button>
+                <button type="submit" asp-action="Valid_Add" asp-controller="Trip" asp-route-id="@Model.TripId" class="form-btn primary-default-btn transparent-btn">Add Trip</button>
             </form>
         </article>
     </main>

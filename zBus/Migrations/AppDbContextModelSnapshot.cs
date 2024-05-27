@@ -367,7 +367,7 @@ namespace zBus.Migrations
             modelBuilder.Entity("zBus.Models.Order", b =>
                 {
                     b.HasOne("zBus.Models.User", "User")
-                        .WithMany()
+                        .WithMany("orders")
                         .HasForeignKey("Userid")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -414,6 +414,8 @@ namespace zBus.Migrations
             modelBuilder.Entity("zBus.Models.User", b =>
                 {
                     b.Navigation("Trips");
+
+                    b.Navigation("orders");
                 });
 #pragma warning restore 612, 618
         }

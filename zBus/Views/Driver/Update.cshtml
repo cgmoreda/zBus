@@ -50,7 +50,7 @@
 
 
     <main class="page-center">
-        <form class="sign-up-form form" asp-action="Valid_Update" asp-controller="Driver" method="post" enctype="multipart/form-data">
+        <form class="sign-up-form form" asp-action="Update_Valid" asp-controller="Driver" method="post" enctype="multipart/form-data">
             <div class="container">
                 <div class="photo-container">
                     <label class="form-label-wrapper" style="display: block; text-align: center;justify-content:center">
@@ -68,7 +68,7 @@
 
                 <div class="form-container">
                     <article class="sign-up">
-                        <h1 class="sign-up__title">Get started</h1>
+                        <h1 class="sign-up__title">Update Driver</h1>
                         <div class="form-label-wrapper">
                             <label asp-for="Fisrt_name" class="form-label">First Name<span class="formwarn">*</span></label>
 
@@ -124,8 +124,8 @@
                         <br />
 
                         <div class="form-group">
-                            <button type="submit" class="form-btn primary-default-btn transparent-btn">Update</button>
-                            <button type="button" onclick="openPopup(@Model.DriverId)" class="form-btn primary-default-btn transparent-btn" style="background-color:darkred">Delete</button>
+                            <button type="submit" asp-action="Update_Valid" asp-controller="Driver" class="form-btn primary-default-btn transparent-btn" asp-route-id="@Model.DriverId">Update</button>
+                            <button asp-action="Delete" asp-controller="Driver" asp-route-id="@Model.DriverId" class="form-btn primary-default-btn transparent-btn" style="background-color:darkred">Delete</button>
                         </div>
         </form>
 
@@ -146,6 +146,23 @@
 
 
     <script>
+        window.onload = function () {
+            var profilePicturePath = document.getElementById('ProfilePicturePath').value;
+
+            // Get the file input element
+            var photoInput = document.getElementById('photo');
+
+            // Set the value of the file input to the filename
+            photoInput.value = profilePicturePath;
+
+            // Display the selected image if needed
+            displaySelectedImage(photoInput);
+        };
+
+        // Function to display selected image (You need to implement this function)
+      
+
+
         function displaySelectedImage(input) {
             console.log("name");
             if (input.files && input.files[0]) {
@@ -171,31 +188,7 @@
         }
 
 
-        function openPopup(id) {
-            console.log("sds");
-            $.ajax({
-                url: "/Driver/Delete",
-                data: { id: id },
-
-                success: function (response) {
-
-                    if (response.loggedIn === false) {
-                        let popup = document.getElementById("popup");
-                        popup.classList.add("open-popup");
-                    }
-
-                },
-                error: function (error) {
-                    console.error("Error:", error);
-                }
-            });
-        }
-
-
-        function closePopup() {
-            let popup = document.getElementById("popup");
-            popup.classList.remove("open-popup");
-        }
+        
 
     </script>
 </body>

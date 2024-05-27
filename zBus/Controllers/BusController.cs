@@ -8,6 +8,7 @@ using zBus.Data;
 using zBus.Data.Services;
 using zBus.Filters;
 using zBus.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace zBus.Controllers
 {
@@ -33,9 +34,9 @@ namespace zBus.Controllers
             return PartialView("_PartialviewBus", data);
         }
         [HttpGet]
-        public IActionResult Add()
+        public async Task< IActionResult> Add()
         {
-            var drivers = _DriverService.GetAll();
+            var drivers = await _DriverService.GetAll();
             if (!TempData.ContainsKey("Drivers"))
             {
                 TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
@@ -47,7 +48,7 @@ namespace zBus.Controllers
         public IActionResult Valid_Add(Bus Bus, IFormFile photo)
         {
 
-            ModelState["Driver"]!.ValidationState = ModelValidationState.Valid;
+           // ModelState["Driver"]!.ValidationState = ModelValidationState.Valid;
             if (!TempData.ContainsKey("Drivers"))
             {
                 var drivers = _DriverService.GetAll();
@@ -119,16 +120,19 @@ namespace zBus.Controllers
         [HttpPost]
         public IActionResult Update_Add(Bus Bus, IFormFile photo, int id)
         {
+            if (photo == null && Bus.BusPicture != null)
+            {
+                ModelState["photo"].ValidationState = ModelValidationState.Valid;
+                //photo.Equals(Driver.ProfilePicturePath);
+            }
             if (!TempData.ContainsKey("Drivers"))
             {
                 var drivers = _DriverService.GetAll();
                 TempData["Drivers"] = JsonConvert.SerializeObject(drivers);
                 TempData.Keep("Drivers");
             }
-            ModelState["Driver"]!.ValidationState = ModelValidationState.Valid;
             if (ModelState.IsValid)
             {
-                Bus.Driver = _DriverService.GetById(Bus.DriverId);
                 if (photo != null)
                 {
                     if (photo.ContentType.StartsWith("image/"))
@@ -141,23 +145,21 @@ namespace zBus.Controllers
                             photo.CopyTo(filestream);
                         }
                         Bus.BusPicture = "/Bus/" + fileName;
+
                     }
                     else
                     {
                         ModelState.AddModelError("BusPicture", "You must Upload a Photo");
                         return View("Update", Bus);
                     }
-                    _service.Update(id, Bus);
                    
-                    return RedirectToAction("Admin", "User", new {id=1});
                 }
-
-                ModelState.AddModelError("BusPicture", "You must Upload a Photo");
-                return View("Update", Bus);
+                _service.Update(id, Bus);
+                return RedirectToAction("Admin", "User", new { id = 1 });
             }
             else
             {
-                ModelState.AddModelError("BusPicture", "You must Upload a Photo");
+                
                 return View("Update", Bus);
             }
         }

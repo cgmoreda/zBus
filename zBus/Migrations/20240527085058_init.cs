@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace zBus.Migrations
 {
-    public partial class db1 : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -50,11 +50,12 @@ namespace zBus.Migrations
                 {
                     User_Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Admin = table.Column<bool>(type: "bit", nullable: false),
                     Fisrt_name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Last_name = table.Column<string>(type: "nvarchar(20)", maxLength: 20, nullable: false),
                     Email = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Phone_number = table.Column<string>(type: "varchar(11)", maxLength: 11, nullable: false),
-                    PhotoPhath = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PhotoPhath = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     Address = table.Column<string>(type: "nvarchar(255)", nullable: true),
                     Password = table.Column<string>(type: "nvarchar(100)", maxLength: 100, nullable: false)
                 },
@@ -89,6 +90,31 @@ namespace zBus.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Orders",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    name = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    address = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    city = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    zib = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    Price = table.Column<double>(type: "float", nullable: false),
+                    DateTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    Userid = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Orders", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Orders_Users_Userid",
+                        column: x => x.Userid,
+                        principalTable: "Users",
+                        principalColumn: "User_Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Trips",
                 columns: table => new
                 {
@@ -99,7 +125,8 @@ namespace zBus.Migrations
                     TripPrice = table.Column<double>(type: "float", nullable: false),
                     DepartureStationID = table.Column<int>(type: "int", nullable: false),
                     ArrivalStationID = table.Column<int>(type: "int", nullable: false),
-                    BusId = table.Column<int>(type: "int", nullable: false)
+                    BusId = table.Column<int>(type: "int", nullable: false),
+                    User_Id = table.Column<int>(type: "int", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -121,6 +148,38 @@ namespace zBus.Migrations
                         column: x => x.DepartureStationID,
                         principalTable: "Stations",
                         principalColumn: "StationId",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_Trips_Users_User_Id",
+                        column: x => x.User_Id,
+                        principalTable: "Users",
+                        principalColumn: "User_Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "OrderItems",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    quantity = table.Column<int>(type: "int", nullable: false),
+                    TripId = table.Column<int>(type: "int", nullable: false),
+                    OrderId = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_OrderItems", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Orders_OrderId",
+                        column: x => x.OrderId,
+                        principalTable: "Orders",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
+                        name: "FK_OrderItems_Trips_TripId",
+                        column: x => x.TripId,
+                        principalTable: "Trips",
+                        principalColumn: "TripId",
                         onDelete: ReferentialAction.NoAction);
                 });
 
@@ -144,34 +203,25 @@ namespace zBus.Migrations
                         onDelete: ReferentialAction.NoAction);
                 });
 
-            migrationBuilder.CreateTable(
-                name: "TripUser",
-                columns: table => new
-                {
-                    TripsTripId = table.Column<int>(type: "int", nullable: false),
-                    UsersUser_Id = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TripUser", x => new { x.TripsTripId, x.UsersUser_Id });
-                    table.ForeignKey(
-                        name: "FK_TripUser_Trips_TripsTripId",
-                        column: x => x.TripsTripId,
-                        principalTable: "Trips",
-                        principalColumn: "TripId",
-                        onDelete: ReferentialAction.NoAction);
-                    table.ForeignKey(
-                        name: "FK_TripUser_Users_UsersUser_Id",
-                        column: x => x.UsersUser_Id,
-                        principalTable: "Users",
-                        principalColumn: "User_Id",
-                        onDelete: ReferentialAction.NoAction);
-                });
-
             migrationBuilder.CreateIndex(
                 name: "IX_Buses_DriverId",
                 table: "Buses",
                 column: "DriverId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_OrderId",
+                table: "OrderItems",
+                column: "OrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_OrderItems_TripId",
+                table: "OrderItems",
+                column: "TripId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Orders_Userid",
+                table: "Orders",
+                column: "Userid");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Seats_TripId",
@@ -194,30 +244,33 @@ namespace zBus.Migrations
                 column: "DepartureStationID");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TripUser_UsersUser_Id",
-                table: "TripUser",
-                column: "UsersUser_Id");
+                name: "IX_Trips_User_Id",
+                table: "Trips",
+                column: "User_Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
+                name: "OrderItems");
+
+            migrationBuilder.DropTable(
                 name: "Seats");
 
             migrationBuilder.DropTable(
-                name: "TripUser");
+                name: "Orders");
 
             migrationBuilder.DropTable(
                 name: "Trips");
-
-            migrationBuilder.DropTable(
-                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Buses");
 
             migrationBuilder.DropTable(
                 name: "Stations");
+
+            migrationBuilder.DropTable(
+                name: "Users");
 
             migrationBuilder.DropTable(
                 name: "Drivers");

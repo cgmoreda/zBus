@@ -71,9 +71,9 @@
                         <button type="button" onclick="closePopup()">OK</button>
                     </main>
 
-                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0 darkmode" style="border-radius:20px">
+                    <div class="col-12 col-md-4 col-lg-3 mb-5 mb-md-0 darkmode" style="border-radius:20px;margin-right:5%">
                         <a class="product-item" asp-controller="Driver" asp-action="Update" asp-route-id="@driver.DriverId">
-                            <img src="@driver.ProfilePicturePath" class="img-fluid product-thumbnail" style="border-radius:20px">>
+                            <img src="@driver.ProfilePicturePath" class="img-fluid product-thumbnail" style="border-radius:20px">
                             <p class="stat-cards-info__num darkmode" da>@driver.Fisrt_name @driver.Last_name</p>
                             <p class="stat-cards-info__num darkmode">@driver.YearsOfExperience Years Of Experience</p>
                             <span class="icon-cross">

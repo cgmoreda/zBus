@@ -16,6 +16,7 @@ namespace zBus.Controllers
        
         public IActionResult Index()
         {
+            ViewBag.ActivePage = "Home";
             return View();
         }
 
@@ -31,17 +32,20 @@ namespace zBus.Controllers
 
         public IActionResult About()
         {
+            ViewBag.ActivePage = "About";
             return View();
         }
 
 
         public IActionResult Contact()
         {
+            ViewBag.ActivePage = "Contact";
             return View();
         }
 
         public IActionResult Services()
         {
+            ViewBag.ActivePage = "Services";
             return View();
         }
 

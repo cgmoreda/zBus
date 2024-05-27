@@ -12,8 +12,8 @@ using zBus.Data;
 namespace zBus.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20240509171757_db2")]
-    partial class db2
+    [Migration("20240527085058_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -71,6 +71,9 @@ namespace zBus.Migrations
                     b.Property<double>("TripPrice")
                         .HasColumnType("float");
 
+                    b.Property<int?>("User_Id")
+                        .HasColumnType("int");
+
                     b.HasKey("TripId");
 
                     b.HasIndex("ArrivalStationID");
@@ -79,22 +82,9 @@ namespace zBus.Migrations
 
                     b.HasIndex("DepartureStationID");
 
+                    b.HasIndex("User_Id");
+
                     b.ToTable("Trips");
-                });
-
-            modelBuilder.Entity("TripUser", b =>
-                {
-                    b.Property<int>("TripsTripId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("UsersUser_Id")
-                        .HasColumnType("int");
-
-                    b.HasKey("TripsTripId", "UsersUser_Id");
-
-                    b.HasIndex("UsersUser_Id");
-
-                    b.ToTable("TripUser");
                 });
 
             modelBuilder.Entity("zBus.Models.Bus", b =>
@@ -175,6 +165,72 @@ namespace zBus.Migrations
                     b.ToTable("Drivers");
                 });
 
+            modelBuilder.Entity("zBus.Models.Order", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("DateTime")
+                        .HasColumnType("datetime2");
+
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
+
+                    b.Property<int>("Userid")
+                        .HasColumnType("int");
+
+                    b.Property<string>("address")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("city")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("zib")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("Userid");
+
+                    b.ToTable("Orders");
+                });
+
+            modelBuilder.Entity("zBus.Models.OrderItem", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TripId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.HasIndex("TripId");
+
+                    b.ToTable("OrderItems");
+                });
+
             modelBuilder.Entity("zBus.Models.Station", b =>
                 {
                     b.Property<int>("StationId")
@@ -221,6 +277,9 @@ namespace zBus.Migrations
                     b.Property<string>("Address")
                         .HasColumnType("nvarchar(255)");
 
+                    b.Property<bool>("Admin")
+                        .HasColumnType("bit");
+
                     b.Property<string>("Email")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
@@ -246,6 +305,7 @@ namespace zBus.Migrations
                         .HasColumnType("varchar(11)");
 
                     b.Property<string>("PhotoPhath")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("User_Id");
@@ -255,11 +315,13 @@ namespace zBus.Migrations
 
             modelBuilder.Entity("Seat", b =>
                 {
-                    b.HasOne("Trip", null)
+                    b.HasOne("Trip", "Trip")
                         .WithMany("Seats")
                         .HasForeignKey("TripId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Trip");
                 });
 
             modelBuilder.Entity("Trip", b =>
@@ -282,6 +344,10 @@ namespace zBus.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("zBus.Models.User", null)
+                        .WithMany("Trips")
+                        .HasForeignKey("User_Id");
+
                     b.Navigation("ArrivalStation");
 
                     b.Navigation("Bus");
@@ -289,25 +355,10 @@ namespace zBus.Migrations
                     b.Navigation("DepartureStation");
                 });
 
-            modelBuilder.Entity("TripUser", b =>
-                {
-                    b.HasOne("Trip", null)
-                        .WithMany()
-                        .HasForeignKey("TripsTripId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("zBus.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersUser_Id")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("zBus.Models.Bus", b =>
                 {
                     b.HasOne("zBus.Models.Driver", "Driver")
-                        .WithMany()
+                        .WithMany("buses")
                         .HasForeignKey("DriverId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -315,9 +366,58 @@ namespace zBus.Migrations
                     b.Navigation("Driver");
                 });
 
+            modelBuilder.Entity("zBus.Models.Order", b =>
+                {
+                    b.HasOne("zBus.Models.User", "User")
+                        .WithMany("orders")
+                        .HasForeignKey("Userid")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("zBus.Models.OrderItem", b =>
+                {
+                    b.HasOne("zBus.Models.Order", "Order")
+                        .WithMany("Items")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Trip", "Trip")
+                        .WithMany("OrderItems")
+                        .HasForeignKey("TripId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+
+                    b.Navigation("Trip");
+                });
+
             modelBuilder.Entity("Trip", b =>
                 {
+                    b.Navigation("OrderItems");
+
                     b.Navigation("Seats");
+                });
+
+            modelBuilder.Entity("zBus.Models.Driver", b =>
+                {
+                    b.Navigation("buses");
+                });
+
+            modelBuilder.Entity("zBus.Models.Order", b =>
+                {
+                    b.Navigation("Items");
+                });
+
+            modelBuilder.Entity("zBus.Models.User", b =>
+                {
+                    b.Navigation("Trips");
+
+                    b.Navigation("orders");
                 });
 #pragma warning restore 612, 618
         }

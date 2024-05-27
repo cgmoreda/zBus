@@ -35,7 +35,7 @@ namespace zBus.Data.Services
 
         public async Task<IEnumerable<Bus>> GetAll()
         {
-            var Buss = await _context.Buses.Include(d=>d.Driver).ToListAsync();
+            var Buss = await _context.Buses.ToListAsync();
             return Buss;
         }
 

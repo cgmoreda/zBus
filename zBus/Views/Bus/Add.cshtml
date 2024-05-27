@@ -83,7 +83,7 @@
 
                             <label class="form-label-wrapper">
                                 <label asp-for="BusModel" class="form-label"> Model <span style="color:red">*</span></label>
-                                <input asp-for="BusModel" class="form-input" placeholder="Enter Bus Model" oninput="globalEval.trim()" />
+                                <input asp-for="BusModel" class="form-input" placeholder="Enter Bus Model" oninput="this.value = this.value.trim()" />
                                 <span asp-validation-for="BusModel" style="color:red"></span>
                             </label>
 

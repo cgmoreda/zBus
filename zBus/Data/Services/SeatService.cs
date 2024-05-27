@@ -18,12 +18,18 @@ namespace zBus.Data.Services
             _context.SaveChanges();
         }
 
-        public void Delete(int id)
+
+        public void Delete(int tripId)
         {
-            var _seat = _context.Seats.FirstOrDefault(s => s.SeatId == id); ;
-            _context.Seats.Remove(_seat!);
+
+            var res = _context.Seats.Where(x => x.TripId == tripId).ToList();
+            foreach (var item in res)
+            {
+                _context.Seats.Remove(item);
+            }
             _context.SaveChanges();
         }
+
 
         public async Task<IEnumerable<Seat>> GetAll()
         {

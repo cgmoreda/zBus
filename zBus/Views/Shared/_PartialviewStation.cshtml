@@ -82,7 +82,7 @@
                             </div>
                             <div class="meta" style=" display:flex;justify-content: center">
 
-                                <a onclick="openPopup(@station.StationId)" class="btn btn-black btn-sm" style="background-color:darkred">X</a>
+                                <bu onclick="openPopup(@station.StationId)" class="btn btn-black btn-sm" style="background-color:darkred">X</bu>
 
                             </div>
 
@@ -121,8 +121,9 @@
                         let popup = document.getElementById("popup");
                         popup.classList.add("open-popup");
                     }
-
-
+                    else { 
+                        window.location.href = "3";
+                    }
                 },
                 error: function (error) {
                     console.error("Error:", error);

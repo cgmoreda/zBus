@@ -9,10 +9,8 @@ public class Seat
     public int SeatId { get; set; }
 
     public SeatStatus Status { get; set; }
-
+    [ForeignKey("Trip")]
     public int TripId { get; set; }
-
-    // Navigation property
-    [ForeignKey("TripId")]
-    public virtual Trip Trip { get; set; }
+   
+    public virtual Trip? Trip { get; set; }
 }

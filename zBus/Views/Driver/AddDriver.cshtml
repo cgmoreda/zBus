@@ -67,7 +67,7 @@
 
                 <div class="form-container">
                     <article class="sign-up">
-                        <h1 class="sign-up__title">Get started</h1>
+                        <h1 class="sign-up__title">Add Driver</h1>
                         <div class="form-label-wrapper">
                             <label asp-for="Fisrt_name" class="form-label">First Name<span class="formwarn">*</span></label>
 
@@ -104,7 +104,7 @@
                             <label asp-for="YearsOfExperience" class="form-label">Years Of Experience<span class="formwarn">*</span></label>
                             <select asp-for="YearsOfExperience" class="form-input" required>
                                 <option value="">Years Of Experience</option>
-                                @for (int i = 0; i <= 50; i++)
+                                @for (int i = 1; i <= 50; i++)
                                 {
                                     <option required value="@i">@i</option>
                                 }
@@ -118,7 +118,7 @@
                         <br />
 
 
-                        <button class="form-btn primary-default-btn transparent-btn">Add Driver</button>
+                        <button type="submit" class="form-btn primary-default-btn transparent-btn">Add Driver</button>
         </form>
 
         </article>

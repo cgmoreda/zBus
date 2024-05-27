@@ -114,12 +114,12 @@
                         <div style="display:flex">
 
                             <div class="form-label-wrapper" style="width:50%">
-                                <label asp-for="Fisrt_name" class="text-black" style="margin:5px; color:white;">First Name<span class="formwarn">*</span></label>
+                                <label asp-for="Fisrt_name" class="form-label" style="margin:5px; color:white;">First Name<span class="formwarn">*</span></label>
                                 <input asp-for="Fisrt_name" style="margin:5px; color:white;" class="form-input" oninput="this.value = this.value.trim()" />
                                 <span asp-validation-for="Fisrt_name" class="formwarn"></span>
                             </div>
                             <div class="form-label-wrapper" style="width:50%">
-                                <label asp-for="Last_name" class="text-black" style="margin:5px; color:white;">Last Name<span class="formwarn">*</span></label>
+                                <label asp-for="Last_name" class="form-label" style="margin:5px; color:white;">Last Name<span class="formwarn">*</span></label>
                                 <input asp-for="Last_name" style="margin:5px; color:white;" class="form-input" oninput="this.value = this.value.trim()" />
                                 <span asp-validation-for="Last_name" class="formwarn"></span>
                             </div>
@@ -128,7 +128,7 @@
                        
 
                         <div class="form-label-wrapper">
-                            <label asp-for="Email" style="margin:5px ;color:white" class="text-black">Email<span class="formwarn">*</span></label>
+                            <label asp-for="Email" style="margin:5px ;color:white" class="form-label">Email<span class="formwarn">*</span></label>
                             <input asp-for="Email" style="margin:5px ;color:white" class="form-input" oninput="this.value = this.value.trim()" />
                             <span asp-validation-for="Email" class="formwarn"></span>
                         </div>
@@ -137,7 +137,7 @@
                         <div style="display:flex">
 
                             <div class="form-label-wrapper" style="width:50%">
-                                    <label asp-for="Phone_number" style="margin:5px ;color:white" class="text-black">Phone Number<span class="formwarn">*</span></label>
+                                    <label asp-for="Phone_number" style="margin:5px ;color:white" class="form-label">Phone Number<span class="formwarn">*</span></label>
                                     <input asp-for="Phone_number" style="margin:5px ;color:white" class="form-input" oninput="this.value = this.value.trim()" />
                                     <span asp-validation-for="Phone_number" class="formwarn"></span>
                              </div>
@@ -155,19 +155,19 @@
                         
 
                         <div class="form-label-wrapper">
-                            <label asp-for="Address" style="margin:5px ;color:white" class="text-black">Address</label>
-                            <input asp-for="Address" style="margin:5px ;color:white" class="form-input" oninput="this.value = this.value.trim()" />
+                            <label asp-for="Address" style="margin:5px ;color:white" class="form-label">Address</label>
+                            <input asp-for="Address" style="margin:5px ;color:white !important" class="form-input" oninput="this.value = this.value.trim()" />
                             <span asp-validation-for="Address" class="formwarn"></span>
                         </div>
 
                         <div class="form-label-wrapper">
-                            <label asp-for="Password" style="margin:5px ;color:white" class="text-black">Password<span class="formwarn">*</span></label>
+                            <label asp-for="Password" style="margin:5px ;color:white" class="form-label">Password<span class="formwarn">*</span></label>
                             <input asp-for="Password" style="margin:5px ;color:white" id="password" class="form-input" oninput="this.value = this.value.trim()" />
                             <span asp-validation-for="Password" class="formwarn"></span>
                         </div>
 
                         <div class="form-label-wrapper">
-                            <label class="text-black" style="margin:5px ;color:white">Confirm Password<span class="formwarn">*</span></label>
+                            <label class="form-label" style="margin:5px ;color:white">Confirm Password<span class="formwarn">*</span></label>
                             <input id="confirmPassword" style="margin:5px ;color:white" class="form-input" onchange="ConfirmPassword()" type="password" oninput="this.value = this.value.trim()" />
                             <span asp-validation-for="Password" class="formwarn"></span>
                             <span id="confirmPassword_error" class="formwarn"></span>

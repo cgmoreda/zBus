@@ -12,7 +12,6 @@ using Microsoft.AspNetCore.Authorization;
 using zBus.Filters;
 using System.Data.OracleClient;
 using Microsoft.AspNetCore.Authentication;
-using zBus.Migrations;
 using NuGet.Protocol;
 
 namespace zBus.Controllers
@@ -62,10 +61,10 @@ namespace zBus.Controllers
             return View(new Trip());
         }
 
-        public Trip Modlestate(Trip trip)
+        public void Modlestate(Trip trip)
         {
+            _seatService.Delete(trip.TripId);
             int numberOfSeats = _busService.GetById(trip.BusId).NumberOfSeats;
-            var seats = new List<Seat>();
             for (int i = 1; i <= numberOfSeats; i++)
             {
                 var newSeat = new Seat
@@ -74,27 +73,21 @@ namespace zBus.Controllers
                     TripId = trip.TripId,
    
                 };
-                seats.Add(newSeat);
                 _seatService.Add(newSeat);
             }
-      
-            ModelState["Seats"]!.ValidationState = ModelValidationState.Valid;
-            ModelState["Users"]!.ValidationState = ModelValidationState.Valid;
-            ModelState["ArrivalStation"]!.ValidationState = ModelValidationState.Valid;
-            ModelState["DepartureStation"]!.ValidationState = ModelValidationState.Valid;
-            ModelState["Bus"]!.ValidationState = ModelValidationState.Valid;
-            return trip;
         }
         [ServiceFilter(typeof(LoginAuthorizationFilter))]
         [ServiceFilter(typeof(RoleAuthorizationFilter))]
-        public IActionResult Valid_Add(Trip trip)
+        public IActionResult Valid_Add(Trip trip, int id)
         {
-            trip = Modlestate(trip);
+            trip.TripId=id;
+            
             if (ModelState.IsValid)
-            {
+            { 
                 _TripService.Add(trip);
+                 Modlestate(trip);
 
-                return RedirectToAction("Admin", "User", new { id = 4 });
+               return RedirectToAction("Admin", "User", new { id = 4 });
             }
             return RedirectToAction("AddTrip", trip);
         }
@@ -115,12 +108,13 @@ namespace zBus.Controllers
         [HttpPost]
         [ServiceFilter(typeof(LoginAuthorizationFilter))]
         [ServiceFilter(typeof(RoleAuthorizationFilter))]
-        public IActionResult Valid_Update(Trip trip)
+        public IActionResult Valid_Update(Trip trip, int id )
         {
-            Modlestate(trip);
+            trip.TripId = id;
             if (ModelState.IsValid)
             {
-                _TripService.Add(trip);
+                 Modlestate(trip);
+                _TripService.Update(trip.TripId,trip);
                 return RedirectToAction("Admin", "User", new { id = 4 });
             }
             return RedirectToAction("AddTrip", trip);

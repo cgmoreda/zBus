@@ -31,13 +31,13 @@ public class Trip
 
     // Navigation properties
   
-    public virtual Station DepartureStation { get; set; }
+    public virtual Station? DepartureStation { get; set; }
    
-    public virtual Station ArrivalStation { get; set; }
+    public virtual Station? ArrivalStation { get; set; }
 
-    public virtual Bus Bus { get; set; }
+    public virtual Bus? Bus { get; set; }
 
-     public virtual ICollection<Seat> Seats { get; set; }
+     public virtual ICollection<Seat>? Seats { get; set; }
  
-     public virtual ICollection<OrderItem> OrderItems { get; set; }
+     public virtual ICollection<OrderItem>? OrderItems { get; set; }
 }

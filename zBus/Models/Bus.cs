@@ -27,6 +27,6 @@ namespace zBus.Models
         public int DriverId { get; set; }
 
         // Navigation property for the associated driver
-        public virtual Driver Driver { get; set; }
+        public virtual Driver? Driver { get; set; }
     }
 }

@@ -107,17 +107,8 @@ namespace zBus.Data.Services
         }
         public void Update(int id, Trip _trip)
         {
-            var old=GetById(id);
-            old.DepartureStationID = _trip.DepartureStationID;
-            old.DepartureStation= _trip.DepartureStation;
-            old.ArrivalStationID = _trip.ArrivalStationID;
-            old.ArrivalStation= _trip.ArrivalStation;
-            old.Bus= _trip.Bus;
-            old.BusId= _trip.BusId;
-            old.DepartureTime= _trip.DepartureTime;
-            old.ArrivalTime = _trip.ArrivalTime;
-            old.TripPrice= _trip.TripPrice;
-            _context.Trips.Update(old);
+             _trip.TripId = id;
+            _context.Trips.Update(_trip);
             _context.SaveChanges();
         }
     }

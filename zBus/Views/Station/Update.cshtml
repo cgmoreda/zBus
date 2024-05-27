@@ -74,7 +74,7 @@
                     </div>
 
                     <div class="form-container">
-                        <h1 class="sign-up__title">Add New Station</h1>
+                        <h1 class="sign-up__title">Update Station</h1>
                         <div class="form-label-wrapper">
                             <label asp-for="StationCity" class="form-label">City<span class="formwarn">*</span></label>
                             <input asp-for="StationCity" class="form-input" oninput="this.value = this.value.trim()" />
@@ -102,7 +102,7 @@
                             <span asp-validation-summary="All" class="formwarn"></span>
                         </div>
                         <div>
-                            <button class="form-btn primary-default-btn transparent-btn">Update Station</button>
+                            <button type="submit" asp-action="Update_Valid" asp-controller="Station" asp-route-id="@Model.StationId" class="form-btn primary-default-btn transparent-btn">Update Station</button>
                         </div>
                     </div>
                 </div>

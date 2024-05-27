@@ -1,4 +1,4 @@
-﻿@model List<Bus> 
+﻿@model List<Bus>
 @{
     Layout=null;
 }
@@ -16,7 +16,7 @@
     <link href="/css/site.css" rel="stylesheet">
 
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
-  
+
     <link href="/assets2/css/style.css" rel="stylesheet">
 
     <style>
@@ -39,8 +39,7 @@
             position: absolute;
         }
 
-        btn:hover
-        {
+        btn:hover {
             opacity: 0.50 !important;
             transform: scale(1.1);
         }
@@ -49,96 +48,96 @@
 </head>
 <body>
     <div id="yourElementId">
-    <div class="banner_area">
-        <div class="booking_table d_flex align-items-center">
+        <div class="banner_area">
+            <div class="booking_table d_flex align-items-center">
 
-            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
+                <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
+                </div>
+                <div class="container">
+
+                    <div class="banner_content text-center">
+                        <h2>Welcome To Bus Managment Board </h2>
+                        <h3>You Can Add Delete And Update Buses Status</h3>
+                        <a asp-action="Add" asp-controller="Bus" class="btn btn-secondary me-2"> Add Bus</a>
+                    </div>
+                </div>
             </div>
-            <div class="container">
-               
-            <div class="banner_content text-center">
-                <h2>Welcome To Bus Managment Board </h2>
-                <h3>You Can Add Delete And Update Buses Status</h3>
-               <a asp-action="Add" asp-controller="Bus" class="btn btn-secondary me-2" > Add Bus</a>
-            </div>
-        </div>
+
         </div>
 
-    </div>
-
-        <div class="row mb-5" >
+        <div class="row mb-5">
             <form class="col-md-12" method="post">
                 <div class="site-blocks-table">
                     <table class="table">
                         <thead>
                             <tr>
-                            <th class="stat-cards-info__num"> Image</th>
-                            <th class="stat-cards-info__num">Model</th>
-                            <th class="stat-cards-info__num">Seats</th>
-                            <th class="stat-cards-info__num">Wifi </th>
-                            <th class="stat-cards-info__num"> Air Conditioning </th>
-                            <th class="stat-cards-info__num">Restroom </th>
-                            <th class="stat-cards-info__num">Update</th>
-                            <th class="stat-cards-info__num">Remove</th>
+                                <th class="stat-cards-info__num"> Image</th>
+                                <th class="stat-cards-info__num">Model</th>
+                                <th class="stat-cards-info__num">Seats</th>
+                                <th class="stat-cards-info__num">Wifi </th>
+                                <th class="stat-cards-info__num"> Air Conditioning </th>
+                                <th class="stat-cards-info__num">Restroom </th>
+                                <th class="stat-cards-info__num">Update</th>
+                                <th class="stat-cards-info__num">Remove</th>
                             </tr>
                         </thead>
-                    
-        @foreach (var bus in @Model)
+
+                        @foreach (var bus in @Model)
                         {
-                        <main class="popup" id="popup" style="justify-content:center; align-items: center;">
-                            <h2>Hello!</h2>
-                            <p style="font-size:15px">The bus is already in Trip Try later!</p>
-                            <button type="button" onclick="closePopup()">OK</button>
-                        </main>
+                            <main class="popup" id="popup" style="justify-content:center; align-items: center;">
+                                <h2>Hello!</h2>
+                                <p style="font-size:15px">The bus is already in Trip Try later!</p>
+                                <button type="button" onclick="closePopup()">OK</button>
+                            </main>
                             <tbody>
                                 <tr>
                                     <td class="product-thumbnail">
                                         <img src="@bus.BusPicture" style="border-radius:20px" alt="Image" class="img-fluid">
                                     </td>
                                     <td class="product-name">
-                                    <h2 class="stat-cards-info__num">@bus.BusModel</h2>
+                                        <h2 class="stat-cards-info__num">@bus.BusModel</h2>
                                     </td>
-                                <td class="stat-cards-info__num">
+                                    <td class="stat-cards-info__num">
                                         @bus.NumberOfSeats
                                     </td>
 
-                                    @if (@bus.WifiAvailable == true)
+                                    @if (@bus.WifiAvailable == false)
                                     {
-                                    <td class="stat-cards-info__num"> Not Avaliable </td>
+                                        <td class="stat-cards-info__num"> Not Avaliable </td>
                                     }
                                     else
                                     {
-                                    <td class="stat-cards-info__num"> Avaliable </td>
+                                        <td class="stat-cards-info__num"> Avaliable </td>
                                     }
 
 
-                                @if (@bus.AirConditioningAvailable == true)
-                                {
-                                    <td class="stat-cards-info__num"> Not Avaliable </td>
-                                }
-                                else
-                                {
-                                    <td class="stat-cards-info__num"> Avaliable </td>
-                                }
+                                    @if (@bus.AirConditioningAvailable == false)
+                                    {
+                                        <td class="stat-cards-info__num"> Not Avaliable </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="stat-cards-info__num"> Avaliable </td>
+                                    }
 
-                                @if (@bus.RestroomAvailable == true)
-                                {
-                                    <td class="stat-cards-info__num"> Not Avaliable </td>
-                                }
-                                else
-                                {
-                                    <td class="stat-cards-info__num"> Avaliable </td>
-                                }
+                                    @if (@bus.RestroomAvailable == false)
+                                    {
+                                        <td class="stat-cards-info__num"> Not Avaliable </td>
+                                    }
+                                    else
+                                    {
+                                        <td class="stat-cards-info__num"> Avaliable </td>
+                                    }
 
-                                <td><a asp-action="Update" asp-controller="Bus" asp-route-id="@bus.BusId" class="btn" style="background-color:darkorange !important">Update</a></td>
-                                <td><a onclick="openPopup(@bus.BusId)" class="btn" style="background-color:darkred !important">X</a></td>
+                                    <td><a asp-action="Update" asp-controller="Bus" asp-route-id="@bus.BusId" class="btn" style="background-color:darkorange !important">Update</a></td>
+                                    <td><a onclick="openPopup(@bus.BusId)" class="btn" style="background-color:darkred !important">X</a></td>
                                 </tr>
                             </tbody>
                         }
                     </table>
-                  </div>
-                </form>
-              </div>
+                </div>
+            </form>
+        </div>
     </div>
 
     <script src="~/assets/js/jquery-3.2.1.min.js"></script>
@@ -163,7 +162,7 @@
                 data: { id: id },
                 type: "Delete",
                 success: function (response) {
-                    
+
                     if (response.loggedIn === false) {
                         let popup = document.getElementById("popup");
                         popup.classList.add("open-popup");
@@ -178,7 +177,7 @@
                             }
                         });
                     }
-                   
+
                 },
                 error: function (error) {
                     console.error("Error:", error);
