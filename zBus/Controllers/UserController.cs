@@ -156,7 +156,8 @@ namespace zBus.Controllers
         public IActionResult Delete()
         {
             _userService.Delete(GlobalVariables.User!);
-            return RedirectToAction("Index", "Home");
+
+            return Logout();
         }
         [ServiceFilter(typeof(LoginAuthorizationFilter))]
         [HttpGet]

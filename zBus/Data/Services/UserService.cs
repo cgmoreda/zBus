@@ -74,8 +74,8 @@ namespace zBus.Data.Services
         }
         public bool Exist(string mail)
         {
-            bool test = _context.Users.Any(u => u.Email == mail);
-            if (test)
+            var test = _context.Users.FirstOrDefault(u => u.Email == mail);
+            if (test is not null)
                 return true;
             else
                 return false;
