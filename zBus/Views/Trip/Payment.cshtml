@@ -1,11 +1,13 @@
-﻿
-@{
+﻿@{
     Layout = "_MyLayout";
-}<!DOCTYPE html>
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="icon" href="/assets/image/favicon.png" type="/assets/image/png">
     <title>Payment Checkout</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <style>
@@ -13,6 +15,7 @@
             background-color: #f7f7f7;
             font-family: Arial, sans-serif;
         }
+
         .checkout-container {
             max-width: 50%;
             margin: 50px auto;
@@ -21,71 +24,86 @@
             border-radius: 5px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
+
         .checkout-header {
             margin-bottom: 20px;
             text-align: center;
         }
+
         .form-group label {
             font-weight: bold;
         }
+
         .form-control {
             border-radius: 0;
         }
+
         .order-summary {
             padding: 20px;
             background-color: #f9f9f9;
             border: 1px solid #ddd;
             border-radius: 5px;
         }
-        .order-summary h4 {
-            margin-bottom: 15px;
-        }
-        .order-summary p {
-            margin-bottom: 5px;
-        }
+
+            .order-summary h4 {
+                margin-bottom: 15px;
+            }
+
+            .order-summary p {
+                margin-bottom: 5px;
+            }
     </style>
 </head>
 <body>
 
-<div class="checkout-container">
-    <div class="checkout-header">
-        <h2>Payment Checkout</h2>
-    </div>
+    <div class="checkout-container">
+        <div class="checkout-header">
+            <h2>Payment Checkout</h2>
+        </div>
+        <div class="container mt-5">
             <form id="checkout-form">
                 <div class="form-group">
                     <label for="name">Full Name</label>
                     <input type="text" class="form-control" id="name" required>
+                    <span class="error" id="name-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="address">Shipping Address</label>
                     <input type="text" class="form-control" id="address" required>
+                    <span class="error" id="address-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="city">City</label>
                     <input type="text" class="form-control" id="city" required>
+                    <span class="error" id="city-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="zip">ZIP Code</label>
-                    <input type="text" class="form-control" id="zip" required>
+                    <input type="text" class="form-control" id="zip" pattern="\d{5}" title="Please enter a valid 5-digit ZIP code" required>
+                    <span class="error" id="zip-error"></span>
                 </div>
                 <div class="form-group">
                     <label for="card-number">Card Number</label>
-                <input type="text" class="form-control" placeholder="0000-0000-0000-0000" id="card-number" required>
+                    <input type="text" class="form-control" placeholder="0000-0000-0000-0000" id="card-number" pattern="\d{4}-\d{4}-\d{4}-\d{4}" title="Please enter a valid card number in the format 0000-0000-0000-0000" required>
+                    <span class="error" id="card-number-error"></span>
                 </div>
                 <div class="form-row">
                     <div class="form-group col-md-6">
                         <label for="expiry-date">Expiry Date</label>
-                        <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY" required>
+                        <input type="text" class="form-control" id="expiry-date" placeholder="MM/YY" pattern="(0[1-9]|1[0-2])\/[0-9]{2}" title="Please enter a valid expiry date in the format MM/YY" required>
+                        <span class="error" id="expiry-date-error"></span>
                     </div>
                     <div class="form-group col-md-6">
                         <label for="cvv">CVV</label>
-                        <input type="text" class="form-control" id="cvv" required>
+                        <input type="text" class="form-control" id="cvv" pattern="\d{3}" title="Please enter a valid 3-digit CVV" required>
+                        <span class="error" id="cvv-error"></span>
                     </div>
                 </div>
                 <button type="submit" class="btn btn-primary btn-block mt-3">Place Order</button>
             </form>
-    
-</div>
+        </div>
+
+    </div>
 
     <!-- Include only one version of jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -114,7 +132,7 @@
                         } else {
                             alert(res.message);
 
-                           // window.location.href = "/Home/Index";
+                            // window.location.href = "/Home/Index";
                         }
                     },
                     error: function (error) {
@@ -125,6 +143,80 @@
         });
     </script>
 
+
+    <script>
+        document.getElementById('checkout-form').addEventListener('submit', function (event) {
+            let valid = true;
+
+            // Full Name Validation
+            const name = document.getElementById('name');
+            if (!name.value) {
+                valid = false;
+                document.getElementById('name-error').textContent = 'Full name is required.';
+            } else {
+                document.getElementById('name-error').textContent = '';
+            }
+
+            // Address Validation
+            const address = document.getElementById('address');
+            if (!address.value) {
+                valid = false;
+                document.getElementById('address-error').textContent = 'Address is required.';
+            } else {
+                document.getElementById('address-error').textContent = '';
+            }
+
+            // City Validation
+            const city = document.getElementById('city');
+            if (!city.value) {
+                valid = false;
+                document.getElementById('city-error').textContent = 'City is required.';
+            } else {
+                document.getElementById('city-error').textContent = '';
+            }
+
+            // ZIP Code Validation
+            const zip = document.getElementById('zip');
+            if (!zip.checkValidity()) {
+                valid = false;
+                document.getElementById('zip-error').textContent = zip.validationMessage;
+            } else {
+                document.getElementById('zip-error').textContent = '';
+            }
+
+            // Card Number Validation
+            const cardNumber = document.getElementById('card-number');
+            if (!cardNumber.checkValidity()) {
+                valid = false;
+                document.getElementById('card-number-error').textContent = cardNumber.validationMessage;
+            } else {
+                document.getElementById('card-number-error').textContent = '';
+            }
+
+            // Expiry Date Validation
+            const expiryDate = document.getElementById('expiry-date');
+            if (!expiryDate.checkValidity()) {
+                valid = false;
+                document.getElementById('expiry-date-error').textContent = expiryDate.validationMessage;
+            } else {
+                document.getElementById('expiry-date-error').textContent = '';
+            }
+
+            // CVV Validation
+            const cvv = document.getElementById('cvv');
+            if (!cvv.checkValidity()) {
+                valid = false;
+                document.getElementById('cvv-error').textContent = cvv.validationMessage;
+            } else {
+                document.getElementById('cvv-error').textContent = '';
+            }
+
+            // Prevent form submission if any field is invalid
+            if (!valid) {
+                event.preventDefault();
+            }
+        });
+    </script>
 
 </body>
 </html>

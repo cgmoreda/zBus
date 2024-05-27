@@ -22,67 +22,75 @@
     <link rel="stylesheet" href="/assets/css/style.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="/assets2/css/style.css">
-
     <style>
         .formwarn {
             color: red;
             font-size: 12px; /* Corrected font size property */
-        }
-        /* Footer styles */
-        /* Footer styles */
-        .footer {
-            background-color: #04091e; /* Dark blue background color */
-            color: #fff;
-            padding: 50px 0;
-        }
-
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 15px;
-        }
-
-        .footer-content {
+        }  
+        
+        <!--Footer sty;es-->
+        .zbus-footer-container {
+            background-color: #2c3e50;
+            color: white;
+            padding: 40px 20px;
             display: flex;
             justify-content: space-between;
             flex-wrap: wrap;
         }
 
-        .footer-section {
-            width: 30%;
+        .zbus-footer-container > div {
+            flex: 1;
+            margin-right: 20px;
         }
 
-            .footer-section h2 {
-                font-size: 20px;
-                margin-bottom: 20px;
+            .zbus-footer-container > div:last-child {
+                margin-right: 0;
             }
 
-            .footer-section p, .footer-section ul {
-                font-size: 14px;
-                line-height: 1.6;
+        .zbus-logo h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .zbus-logo p {
+            font-size: 14px;
+            margin: 5px 0 0;
+        }
+
+        .zbus-links ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+            .zbus-links ul li {
+                margin-bottom: 10px;
             }
 
-            .footer-section ul {
-                list-style-type: none;
-                padding: 0;
-            }
-
-                .footer-section ul li {
-                    margin-bottom: 10px;
+                .zbus-links ul li a {
+                    color: white;
+                    text-decoration: none;
+                    font-size: 16px;
                 }
 
-                    .footer-section ul li a {
-                        color: #fff;
-                        text-decoration: none;
-                    }
+        .zbus-contact-info p {
+            margin: 5px 0;
+        }
 
-                        .footer-section ul li a:hover {
-                            color: #ccc;
-                        }
+        .zbus-social-links a {
+            color: white;
+            text-decoration: none;
+            margin-right: 10px;
+        }
 
-                    .footer-section ul li i {
-                        margin-right: 10px;
-                    }
+        .zbus-footer-bottom {
+            background-color: #34495e;
+            color: white;
+            text-align: center;
+            padding: 10px 0;
+            clear: both;
+            width: 100%;
+        }
 
     </style>
 </head>
@@ -113,33 +121,13 @@
     <!-- End Header/Navigation -->
     @RenderBody()
     <!--================Footer Area =================-->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section about">
-                    <h2>About Us</h2>
-                    <p>Your company description goes here. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </div>
-                <div class="footer-section quick-links">
-                    <h2>Quick Links</h2>
-                    <ul>
-                        <li><a href="#">Home</a></li>
-                        <li><a href="#">Services</a></li>
-                        <li><a href="#">About Us</a></li>
-                        <li><a href="#">Contact Us</a></li>
-                    </ul>
-                </div>
-                <div class="footer-section contact">
-                    <h2>Contact Info</h2>
-                    <ul>
-                        <li><i class="fas fa-map-marker-alt"></i> 123 Street, City, Country</li>
-                        <li><i class="fas fa-envelope"></i> info@example.com</li>
-                        <li><i class="fas fa-phone"></i> +123 456 7890</li>
-                    </ul>
-                </div>
-            </div>
+    <footer>
+       
+        <div class="zbus-footer-bottom">
+            <p>&copy; 2024 Zbus. All rights reserved.</p>
         </div>
     </footer>
+
 
     <!--================ End footer Area  =================-->
     <!-- Optional JavaScript -->
@@ -159,7 +147,7 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // TBD
+            
             if (@ViewBag.ActivePage!= null) {
                 var activePage = "@ViewBag.ActivePage";
 

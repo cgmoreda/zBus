@@ -50,6 +50,7 @@ namespace zBus.Controllers
             return View(new User());
 
         }
+
         public IActionResult Register_Save(User user, IFormFile photo)
         {
             if (!_userService.Exist(user.Email))
@@ -160,7 +161,6 @@ namespace zBus.Controllers
             return Logout();
         }
         [ServiceFilter(typeof(LoginAuthorizationFilter))]
-        [HttpGet]
         public IActionResult Update_Data()
         {
             var UserEmail = HttpContext.Session.GetString("UserEmail");

@@ -11,6 +11,9 @@
 }
 
 <head>
+
+    <link rel="icon" href="/assets/image/favicon.png" type="/assets/image/png">
+    <title>Add Trip</title>
     <link rel="stylesheet" href="/assets3/css/style.min.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <style>
@@ -35,15 +38,29 @@
             color: red !important;
             font-size: 13px;
         }
+       
     </style>
 </head>
 <body>
+
+   
     <main class="page-center">
+
         <article class="sign-up">
+
+
             <h1 class="sign-up__title">Add New Trip</h1>
             <form class="sign-up-form form" asp-action="Valid_Add" asp-controller="Trip" method="post" enctype="multipart/form-data">
                 <input asp-for="TripId" style="visibility:hidden" />
+                
                 <div class="form-label-wrapper">
+                    <label asp-for="DepartureTime" class="form-label">Departure Time<span class="formwarn">*</span></label>
+                    <input asp-for="DepartureTime" class="form-input" type="datetime-local" required />
+                    <span asp-validation-for="DepartureTime" style="color:red"></span>
+                </div>
+
+                <div class="form-label-wrapper">
+              
                     <label asp-for="DepartureTime" class="form-label">Departure Time<span class="formwarn">*</span></label>
                     <input asp-for="DepartureTime" class="form-input" type="datetime-local" value="@DateTime.Now.ToString("yyyy-MM-ddTHH:mm")" required />
                     <span asp-validation-for="DepartureTime" style="color:red"></span>
@@ -122,5 +139,7 @@
     <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
 
     <script>
+
+       
     </script>
 </body>
