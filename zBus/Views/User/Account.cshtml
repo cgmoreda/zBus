@@ -25,6 +25,80 @@
             background-color: #198754 !important;
         }
 
+
+
+        btn:hover {
+            opacity: 0.50 !important;
+            transform: scale(1.1);
+        }
+
+        .container {
+            display: block;
+            text-decoration: none;
+        }
+
+        .card {
+            display: flex;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-left: 50px;
+            margin-bottom: 50px;
+            display: block;
+            justify-content: center;
+        }
+
+        h1 {
+            color: #04091e;
+        }
+
+        .trip-detail {
+            margin-bottom: 10px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #555;
+        }
+
+        /* Dynamic styles */
+        .trip-detail span {
+            color: orange;
+            font-weight: bold;
+        }
+
+        /* Attractive styles */
+        .trip-detail:nth-child(odd) {
+            background-color: #f1f1f1;
+        }
+
+        .btn {
+            background-color: #04091e;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .dander {
+            background-color: red;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #333;
+        }
+
     </style>
 </head>
 <body>
@@ -85,7 +159,7 @@
                 </div>
             </nav>
             <div id="partialViewContainer">
-                <div>
+                <div style="display:flex;margin:3%">
                     <div class="col-md-6 col-xl-3">
                         <article class="stat-cards-item">
                             <div class="stat-cards-icon warning">
@@ -93,7 +167,7 @@
                             </div>
                             <div class="stat-cards-info">
                                 <p class="stat-cards-info__num">@Model.orders.Count()</p>
-                                <p class="stat-cards-info__title">Total Payment Number</p>
+                                <p class="stat-cards-info__title">Payment Number</p>
                                 <p class="stat-cards-info__progress">
                                     <span class="stat-cards-info__profit success">
                                         <i data-feather="trending-up" aria-hidden="true"></i>0.24%
@@ -138,7 +212,7 @@
                         </article>
                     </div>
                 </div>
-                <div class="row">
+                <div class="row" style="margin:3%">
                     <div class="col-lg-9">
                         <div class="chart">
                             <canvas id="myChart" aria-label="Site statistics" role="img"></canvas>
@@ -191,10 +265,6 @@
                 </div>
 
 
-                <div class="row">
-
-                    <div>
-
                         @foreach (var trip in Model.orders)
                         {
                             <div class="card">
@@ -241,9 +311,7 @@
                             </div>
                         }
 
-
-                    </div>
-                </div>
+                        </div>
                 <!-- dash --!>
 
                     </div>

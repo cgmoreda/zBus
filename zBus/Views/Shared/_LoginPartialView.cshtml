@@ -14,10 +14,10 @@
     {
         if (userRole == "Customer")
         {
-            <button asp-action="Account" asp-controller="User" style="color:white!important; margin-right:20px">
+            <a asp-action="Account" asp-controller="User" style="color:white!important;">
                 <i data-feather="user" aria-hidden="true"></i>
-            <h1 >Profile</h1>
-            </button>
+                <span>Profile</span>
+            </a>
         }
         else
         {
