@@ -152,7 +152,7 @@ namespace zBus.Controllers
         }
 
 
-        [ServiceFilter(typeof(LoginAuthorizationFilter))]
+            
         public IActionResult Delete()
         {
             _userService.Delete(GlobalVariables.User!);

@@ -205,7 +205,7 @@ namespace zBus.Controllers
                 List<int> seats = JsonConvert.DeserializeObject<List<int>>(TempData["selectedseats"].ToString());
                 int tripId = int.Parse(TempData["trip"]?.ToString() ?? "0");
                 var userEmail = HttpContext.Session.GetString("UserEmail");
-                var trip = _TripService.GetById(tripId);
+                var trip =   _TripService.GetById(tripId);
                 int quantity = seats.Count;
                 double price = quantity * trip.TripPrice;
                  var orderItems =  new OrderItem { 
