@@ -41,5 +41,8 @@ namespace zBus.Models
         [Range(1, 45, ErrorMessage = "Years of Experience must be between 1 and 50")]
         [Required(ErrorMessage = "Years of Experience is required")]
         public int YearsOfExperience { get; set; }
+
+
+        public ICollection<Bus> buses { get; set; }
     }
 }

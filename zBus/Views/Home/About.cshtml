@@ -1,0 +1,240 @@
+﻿@{
+    Layout = "_MyLayout";
+}
+<head>
+    <link rel="stylesheet" href="/assets/css/bootstrap.css">
+    <link rel="stylesheet" href="/assets/vendors/linericon/style.css">
+    <link rel="stylesheet" href="/assets/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.css">
+    <link rel="stylesheet" href="/assets/vendors/nice-select/css/nice-select.css">
+    <link rel="stylesheet" href="/assets/vendors/owl-carousel/owl.carousel.min.css">
+    <link rel="stylesheet" href="/assets/css/style.css">
+    <link rel="stylesheet" href="/assets/css/responsive.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="/assets2/css/style.css" rel="stylesheet">
+    <link href="/assets2/css/tiny-slider.css" rel="stylesheet">
+    <link href="/assets2/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .banner_area {
+            background: #04091e;
+            position: relative;
+            z-index: 1;
+            max-height: 80%;
+        }
+
+        .bg-parallax {
+            background: url("/imgs/rs.jpg") no-repeat scroll center / cover !important;
+            opacity: 0.50;
+            max-height: 70%;
+        }
+
+        .position {
+            width: 100%;
+            bottom: 0;
+            left: 0;
+            position: absolute;
+        }
+
+         .testimonial-slider {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-slider .item {
+            display: none;
+            transition: opacity 0.5s ease-in-out;
+        }
+
+            .testimonial-slider .item.active {
+                display: block;
+            }
+    </style>
+</head>
+<body>
+    <div class="banner_area">
+        <div class="booking_table d_flex align-items-center">
+            <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background=""></div>
+            <div class="container">
+                <div class="banner_content text-center">
+                    <h2>Our Team</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="untree_co-section product-section before-footer-section" style="background-color:aliceblue;color:darkgrey">
+        <div class="container" style="background-color:aliceblue;color:darkgrey">
+            <!-- Start Testimonial Slider -->
+            <div class="testimonial-section before-footer-section">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-7 mx-auto text-center"></div>
+                    </div>
+                    <div class="row justify-content-center">
+                        <div class="col-lg-12">
+                            <div class="why-choose-section" style="background-color:aliceblue;color:darkgrey">
+                                <div class="container">
+                                    <div class="row justify-content-between">
+                                        <div class="col-lg-6">
+                                            <h2 class="section-title">Why Choose Us</h2>
+                                            <div class="row my-5">
+                                                <div class="col-6 col-md-6">
+                                                    <div class="feature">
+                                                        <div class="icon">
+                                                            <img src="/assets2/imgs/truck.svg" alt="Image" class="imf-fluid">
+                                                        </div>
+                                                        <h3>Fast &amp; Free Shipping</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-6">
+                                                    <div class="feature">
+                                                        <div class="icon">
+                                                            <img src="/assets2/imgs/bag.svg" alt="Image" class="imf-fluid">
+                                                        </div>
+                                                        <h3>Easy to Shop</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-6">
+                                                    <div class="feature">
+                                                        <div class="icon">
+                                                            <img src="/assets2/imgs/support.svg" alt="Image" class="imf-fluid">
+                                                        </div>
+                                                        <h3>24/7 Support</h3>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6 col-md-6">
+                                                    <div class="feature">
+                                                        <div class="icon">
+                                                            <img src="/assets2/imgs/return.svg" alt="Image" class="imf-fluid">
+                                                        </div>
+                                                        <h3>Hassle Free Returns</h3>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-5" style="display:flex">
+                                            <div class="img-wrap">
+                                                <img src="/imgs/trip.jpg" alt="Image" class="img-fluid" style="display:flex">
+                                                <img src="/imgs/6.jpg" alt="Image" class="img-fluid" style="display:flex">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="testimonial-slider-wrap text-center">
+                                <div class="testimonial-slider" id="testimonial-slider">
+                                    <div class="item active">
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-8 mx-auto">
+                                                <div class="testimonial-block text-center">
+                                                    
+                                                    <div class="author-info">
+                                                        <div class="author-pic">
+                                                            <img src="~/imgs/sherif.jpg" alt="Sherif Elglaly" class="img-fluid">
+                                                        </div>
+                                                        <h3 class="font-weight-bold">Sherif Elglaly</h3>
+                                                        <span style="margin-bottom:20% !important">USAID Scholar | Software Engineering student</span>
+                                                        <blockquote class="mb-5">
+                                                            <p>In the dynamic intersection of technology and education, Sherif Elglaly emerges as a dedicated USAID Scholar and Software Engineering student at Assuit University.</p>
+                                                        </blockquote>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END item -->
+                                    <div class="item">
+                                        <div class="row justify-content-center">
+                                            <div class="col-lg-8 mx-auto">
+                                                <div class="testimonial-block text-center">
+                                                   
+                                                    <div class="author-info">
+                                                        <div class="author-pic">
+                                                            <img src="~/imgs/reda.jpeg" alt ="Mohamed Reda" class="img-fluid">
+                                                        </div>
+                                                         <h3 class="font-weight-bold">Mohamed Reda</h3>
+                                                        <span style="margin-bottom:20%!important" >Microsoft Internee | ACPC Finalist | 3D Generalist</span>
+                                                     
+                                                        <blockquote class="mb-5">
+                                                            <p>Software engineering student at Asyut University in Egypt. My passion lies in competitive programming, which offers endless possibilities for innovation and problem-solving.</p>
+                                                        </blockquote>
+                                                    </div>
+                                                   
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- END item -->
+                                </div>
+                                <div id="testimonial-nav" class="text-center mt-3">
+                                    <span class="prev" data-controls="prev"><span style="padding-top:35%" class="fa fa-chevron-left"></span></span>
+                                    <span class="next" data-controls="next"><span style="padding-top:35%" class="fa fa-chevron-right"></span></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Testimonial Slider -->
+        </div>
+    </div>
+
+    <script>
+        // Set initial index
+        let currentIndex = 0;
+
+        // Get all testimonial items
+        const items = document.querySelectorAll('.testimonial-slider .item');
+
+        // Function to show the current item
+        const showItem = (index) => {
+            // Remove active class from all items
+            items.forEach(item => item.classList.remove('active', 'enter', 'leave'));
+            // Add active class to the item at the given index
+            items[index].classList.add('active');
+        };
+
+        // Function to show the next item
+        const showNext = () => {
+            items[currentIndex].classList.add('leave');
+            currentIndex = (currentIndex + 1) % items.length;
+            items[currentIndex].classList.add('enter');
+            showItem(currentIndex);
+        };
+
+        // Function to show the previous item
+        const showPrev = () => {
+            items[currentIndex].classList.add('leave');
+            currentIndex = (currentIndex - 1 + items.length) % items.length;
+            items[currentIndex].classList.add('enter');
+            showItem(currentIndex);
+        };
+
+        // Automatically show the next item every 5 seconds
+        setInterval(showNext, 4000);
+
+        // Add event listeners to navigation buttons
+        document.querySelector('.prev').addEventListener('click', showPrev);
+        document.querySelector('.next').addEventListener('click', showNext);
+
+        // Show the initial item
+        showItem(currentIndex);
+    </script>
+
+    <script src="~/assets2/js/bootstrap.bundle.min.js"></script>
+    <script src="~/assets2/js/tiny-slider.js"></script>
+    <script src="~/assets2/js/custom.js"></script>
+    <script src="~/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="~/assets/js/popper.js"></script>
+    <script src="~/assets/js/bootstrap.min.js"></script>
+    <script src="~/assets/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script src="~/assets/js/jquery.ajaxchimp.min.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/vendors/bootstrap-datepicker/bootstrap-datetimepicker.min.js"></script>
+    <script src="~/assets/vendors/nice-select/js/jquery.nice-select.js"></script>
+    <script src="~/assets/js/mail-script.js"></script>
+    <script src="~/assets/js/stellar.js"></script>
+    <script src="~/assets/vendors/lightbox/simpleLightbox.min.js"></script>
+    <script src="~/assets/js/custom.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+</body>

@@ -8,7 +8,7 @@ namespace zBus.Models
 
         [Key]
         public int User_Id { get; set; }
-
+        public bool Admin { get; set; } = false;
 
         [Required(ErrorMessage = "Required Feild")]
         [MinLength(3, ErrorMessage = "At least 3 charachters")]
@@ -43,6 +43,7 @@ namespace zBus.Models
         public string? Phone_number { get; set; }
 
         [Display(Name = "Image")]
+        [Required(ErrorMessage = "Add Valid Photo")]
         public string? PhotoPhath { get; set; }
 
         [Column(TypeName = "nvarchar(255)")]
@@ -57,7 +58,8 @@ namespace zBus.Models
         [Required( ErrorMessage="Enter Password")]
         public string? Password { get; set; }
 
-        public virtual ICollection<Trip>? Trips { get; set; }
+        public virtual ICollection<Order>? orders { get; set; }
+         public virtual ICollection<Trip>? Trips { get; set; }
     }
 
 }

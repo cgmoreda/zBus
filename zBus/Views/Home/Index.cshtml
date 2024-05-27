@@ -1,7 +1,12 @@
 ﻿@using zBus.GLobal
+@inject Microsoft.AspNetCore.Http.IHttpContextAccessor HttpContextAccessor
+
 @{
     ViewData["Title"] = "Home Page";
     Layout = "_MyLayout";
+    var userEmail = HttpContextAccessor.HttpContext.Session.GetString("UserEmail");
+    var showLoginReminder = string.IsNullOrEmpty(userEmail);
+
 }
 <head>
 
@@ -40,7 +45,7 @@
     <section class="banner_area">
         <div class="booking_table d_flex align-items-center">
             <div class="overlay bg-parallax" data-stellar-ratio="0.9" data-stellar-vertical-offset="0" data-background="">
-
+               
                 <video autoplay muted loop class="bg-video">
                     <source src="/vid/Book ticket.mp4" type="video/mp4">
                     Your browser does not support the video tag.
@@ -52,7 +57,14 @@
 
                     <h6>Assuit City</h6>
                     <h2>Book Your Tickets</h2>
-                    <a class="btn btn-secondary me-2" onclick="openPopup()"> Book Now</a>
+                    @if (showLoginReminder == false)
+                    {
+                        <a class="btn btn-secondary me-2" asp-action="Book" asp-controller="Trip"> Book Now</a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-secondary me-2" onclick="openPopup()"> Book Now</a>
+                    }
                     <main class="popup" id="popup" style="justify-content:center; align-items: center;">
                         <h2>Hello!</h2>
                         <p style="font-size:15px">You Have to Login Or Create Account First!</p>

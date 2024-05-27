@@ -9,9 +9,14 @@ namespace zBus.Data
         }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-          
+            modelBuilder.Entity<Trip>()
+              .HasOne(t => t.DepartureStation)
+              .WithMany()
+              .HasForeignKey(t => t.DepartureStationID);
         }
         public DbSet<Bus> Buses { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<Seat> Seats { get; set; }
         public DbSet<Driver> Drivers { get; set; }

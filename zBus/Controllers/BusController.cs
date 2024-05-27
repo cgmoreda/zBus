@@ -6,10 +6,13 @@ using Newtonsoft.Json;
 using System.Collections.Generic;
 using zBus.Data;
 using zBus.Data.Services;
+using zBus.Filters;
 using zBus.Models;
 
 namespace zBus.Controllers
 {
+    [ServiceFilter(typeof(LoginAuthorizationFilter))]
+    [ServiceFilter(typeof(RoleAuthorizationFilter))]
     public class BusController : Controller
     {
         private readonly IBusService _service;
@@ -66,15 +69,14 @@ namespace zBus.Controllers
                             photo.CopyTo(filestream);
                         }
                         Bus.BusPicture = "/Bus/" + fileName;
+                        _service.Add(Bus);
+            
+                        return RedirectToAction("Admin", "User", new { id = 1 });
                     }
-                    else
-                    {
+                 
                         ModelState.AddModelError("BusPicture", "You must Upload a Photo");
                         return View("Add", Bus);
-                    }
-                    _service.Add(Bus);
-                    int id = 1;
-                    return RedirectToAction("Admin","User", new {id=1});
+                    
                 }
                 ModelState.AddModelError("BusPicture", "You must Upload a Photo");
                 return View("Add", Bus);

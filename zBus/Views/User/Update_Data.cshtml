@@ -1,0 +1,210 @@
+﻿@model User;
+@{
+    Layout = null;
+}
+<head>
+    <link rel="stylesheet" href="/assets3/css/style.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <style>
+        .formwarn {
+            color: red;
+            font-size: 13px;
+        }
+
+        img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            justify-content: center !important;
+            display: flex
+        }
+
+        .upload {
+            width: 150;
+            background: #e3362c;
+            color: #fff;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            justify-content: center !important;
+        }
+
+        }
+
+        span.formwarn {
+            color: red !important;
+            font-size: 13px;
+        }
+
+        danger {
+            color: red !important;
+            font-size: 13px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+        }
+
+        .form-container {
+            width: 50%; /* Adjust the width as needed */
+        }
+
+        .photo-container {
+            justify-content: center;
+            /* Adjust the margin as needed */
+        }
+
+        .layer video {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transform: translate(-50%, -50%);
+            z-index: -1;
+        }
+    </style>
+</head>
+<body>
+
+
+    <div class="layer">
+    </div>
+    <main class="page-center">
+
+        <form class="sign-up-form form" asp-action="UpdateData" asp-controller="User" method="post" enctype="multipart/form-data">
+
+            <div class="container">
+
+
+                <div class="photo-container" style="justify-content:center">
+
+
+                    <div class="form-label-wrapper" style="display:block;justify-content:center">
+                        <input style="visibility:hidden" asp-for="PhotoPhath" />
+                        <input asp-for="Password" hidden/>
+                        <img id="image" src="@Model.PhotoPhath" alt="No Photo" />
+
+                        <input type="file" accept="image/jpeg, image/png, image/jpg" id="photo" name="photo" class="form-input" required onchange="displaySelectedImage(this);" style="display:none" />
+                        <br />
+                        <span id="photo_valid" class="formwarn" style="color:red !important;text-align:center;margin:15px"></span>
+                        <span asp-validation-for="PhotoPhath" class="formwarn" id="PhotoPhath_asp" style="color:red;display:block;padding-bottom:20px;padding-left:40px"></span>
+
+                        <span id="photo_" class="formwarn" style="color:red !important;text-align:center;margin:15px"></span>
+
+                        <label class="upload" for="photo">Uplaod Image</label>
+
+                    </div>
+
+                </div>
+
+                <div class="form-container">
+                    <article class="sign-up">
+                    
+
+                        <div style="display:flex">
+
+                            <div class="form-label-wrapper" style="width:50%">
+                                <label asp-for="Fisrt_name" class="text-black" style="margin:5px; color:white;">First Name<span class="formwarn">*</span></label>
+                                <input asp-for="Fisrt_name" style="margin:5px; color:white;" class="form-input" oninput="this.value = this.value.trim()" />
+                                <span asp-validation-for="Fisrt_name" class="formwarn"></span>
+                            </div>
+                            <div class="form-label-wrapper" style="width:50%">
+                                <label asp-for="Last_name" class="text-black" style="margin:5px; color:white;">Last Name<span class="formwarn">*</span></label>
+                                <input asp-for="Last_name" style="margin:5px; color:white;" class="form-input" oninput="this.value = this.value.trim()" />
+                                <span asp-validation-for="Last_name" class="formwarn"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-label-wrapper">
+                            <label asp-for="Email" style="margin:5px ;color:white" class="text-black">Email<span class="formwarn">*</span></label>
+                            <input asp-for="Email" style="margin:5px ;color:white" class="form-input" oninput="this.value = this.value.trim()"  readonly/>
+                            <span asp-validation-for="Email" class="formwarn"></span>
+                        </div>
+
+
+                        <div style="display:flex">
+
+                            <div class="form-label-wrapper" style="width:50%">
+                                <label asp-for="Phone_number" style="margin:5px ;color:white" class="text-black">Phone Number<span class="formwarn">*</span></label>
+                                <input asp-for="Phone_number" style="margin:5px ;color:white" class="form-input" oninput="this.value = this.value.trim()" />
+                                <span asp-validation-for="Phone_number" class="formwarn"></span>
+                            </div>
+                            <div class="form-label-wrapper" style="width:50%">
+                                <label class="form-label">Role<span style="color:red">*</span></label>
+                                <select asp-for="Admin" class="form-input" required>
+                                    <option value="">Select</option>
+                                    <option value="true">Admin</option>
+                                    <option value="false">Customer</option>
+                                </select>
+                                <span asp-validation-for="Admin" style="color:red"></span>
+                            </div>
+
+                        </div>
+
+
+                        <div class="form-label-wrapper">
+                            <label asp-for="Address" style="margin:5px ;color:white" class="text-black">Address</label>
+                            <input asp-for="Address" style="margin:5px ;color:white" class="form-input" oninput="this.value = this.value.trim()" />
+                            <span asp-validation-for="Address" class="formwarn"></span>
+                        </div>
+                        <div>
+                            <span asp-validation-summary="User" class="formwarn"></span>
+                        </div>
+                        <br />
+
+                            <div style="display:flex">
+                                <div class="col-md-6">
+                                    <button type="submit" class="form-btn primary-default-btn transparent-btn">Updata Account</button>
+                                </div>
+                                <div class="col-md-6">
+                                    <a asp-action="Delete" class="form-btn primary-default-btn transparent-btn" style="background-color:darkred">Delete Account</a>
+                                </div>
+                            </div>
+                    </article>
+                </div>
+            </div>
+        </form>
+    </main>
+    <script src="~/assets3/plugins/chart.min.js"></script>
+    <script src="~/assets3/plugins/feather.min.js"></script>
+    <script src="~/assets3/js/script.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="~/lib/jquery/dist/jquery.js">  </script>
+    <script src="~/lib/jquery-validation/dist/jquery.validate.min.js">  </script>
+    <script src="~/lib/jquery-validation-unobtrusive/jquery.validate.unobtrusive.js"></script>
+
+    <script>
+
+        
+        function displaySelectedImage(input) {
+            if (input.files && input.files[0]) {
+                var filename = input.files[0].name;
+                document.getElementById('PhotoPhath').value = filename;
+                document.getElementById('PhotoPhath_asp').innerHTML = '';
+                document.getElementById('image').src = URL.createObjectURL(input.files[0]);
+                let flag = document.getElementById('PhotoPhath').value;
+                console.log(flag)
+              
+                if ((filename.toLowerCase().endsWith(".jpg") || filename.toLowerCase().endsWith(".png") || filename.toLowerCase().endsWith(".jpeg")) && flag != '') {
+                    document.getElementById("photo_valid").innerHTML = "";
+                    console.log(filename.toLowerCase().endsWith(".jpg"))
+
+                } else {
+                 
+                    let out = filename.split('.').pop().toLowerCase()
+                    document.getElementById("photo_valid").innerHTML = `You uploaded ${out} You must upload  (.jpg - .png - .jpeg) format`;
+                }
+
+            }
+        }
+    </script>
+
+
+
+</body>

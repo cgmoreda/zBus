@@ -1,0 +1,44 @@
+﻿@{
+    ViewData["Title"] = "Login Required";
+    Layout = null;
+}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="icon" href="/assets/image/favicon.png" type="/assets/image/png">
+    <title>ZBUS</title>
+</head>
+<div class="container">
+    <h2>@ViewData["Title"]</h2>
+    <p>Your session has expired or you need to log in to access this page.</p>
+    <button onclick="Login()" style="background-color:darkred" class="btn btn-primary">Login</button>
+</div>
+
+<script>
+    function Login(){
+        window.location.href = "/User/Login_Page";
+    }
+</script>
+<style>
+    .container {
+        max-width: 600px;
+        margin: 50px auto;
+        padding: 20px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        background-color: #f9f9f9;
+        text-align: center;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px 0;
+        //background: #6fd649;
+        background-color: darkred;
+        color: #fff;
+        border: 0;
+        outline: none;
+        font-size: 18px;
+        border-radius: 4px;
+        cursor: pointer; }
+</style>

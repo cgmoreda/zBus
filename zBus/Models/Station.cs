@@ -2,6 +2,7 @@
 using static System.Collections.Specialized.BitVector32;
 using System.Xml.Linq;
 using System.ComponentModel;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace zBus.Models
 {
@@ -32,5 +33,10 @@ namespace zBus.Models
         [DisplayName("Photo")]
         [Required(ErrorMessage = "Photo is required")]
         public string PhotoUrl { get; set; }
+
+        [NotMapped]
+        public ICollection<Trip> ArrivalTrips { get; set; }
+        [NotMapped]
+        public ICollection<Trip> DepartureTrips { get; set; }
     }
 }

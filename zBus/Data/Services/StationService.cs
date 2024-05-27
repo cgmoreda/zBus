@@ -4,6 +4,7 @@ using static System.Collections.Specialized.BitVector32;
 
 namespace zBus.Data.Services
 {
+
     public class StationService : IStationService
     {
         private readonly AppDbContext _context;
